@@ -467,8 +467,7 @@
 .galleryInner {
   max-width: 1400px;
   margin: 0 auto;
-  padding: 0 2.5rem 5rem;
-}
+padding: 0 2.5rem 1rem;}
 
 .galleryHeader {
   display: flex;
