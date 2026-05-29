@@ -8,7 +8,6 @@ import styles from './page.module.css'
 
 const { agent, property } = propertyData
 
-// ── ICONS ──────────────────────────────────────────
 const IconArea = () => (
   <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1}>
     <rect x="2" y="2" width="9" height="9" /><rect x="13" y="2" width="9" height="9" />
@@ -103,61 +102,32 @@ const heroStats = [
 const features = [
   {
     icon: <svg width="28" height="28" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1}><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/><path d="M3.5 8.5l2 2M18.5 8.5l-2 2M12 3v2M12 19v2"/></svg>,
-    title: 'ARQUITECTURA',
-    desc: 'Atención al detalle en cada línea y material.',
+    title: 'ARQUITECTURA', desc: 'Atención al detalle en cada línea y material.',
   },
   {
     icon: <svg width="28" height="28" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1}><rect x="2" y="2" width="9" height="9" rx="1"/><rect x="13" y="2" width="9" height="9" rx="1"/><rect x="2" y="13" width="9" height="9" rx="1"/><rect x="13" y="13" width="9" height="9" rx="1"/></svg>,
-    title: 'PRIVACIDAD',
-    desc: 'Ubicación estratégica y acceso controlado.',
+    title: 'PRIVACIDAD', desc: 'Ubicación estratégica y acceso controlado.',
   },
   {
     icon: <svg width="28" height="28" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1}><path d="M3 12h18M12 3v18M5.6 5.6l12.8 12.8M18.4 5.6L5.6 18.4"/></svg>,
-    title: 'AMPLITUD',
-    desc: 'Ambientes generosos que fluyen con naturalidad.',
+    title: 'AMPLITUD', desc: 'Ambientes generosos que fluyen con naturalidad.',
   },
   {
     icon: <svg width="28" height="28" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1}><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M2 12h2M20 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>,
-    title: 'LUZ NATURAL',
-    desc: 'Grandes ventanales que conectan con el exterior.',
+    title: 'LUZ NATURAL', desc: 'Grandes ventanales que conectan con el exterior.',
   },
   {
     icon: <svg width="28" height="28" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1}><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/><path d="M9 22V12h6v10"/></svg>,
-    title: 'ACABADOS PREMIUM',
-    desc: 'Materiales nobles seleccionados con criterio y propósito.',
-  },
-  {
-    icon: <svg width="28" height="28" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1}><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>,
-    title: 'SEGURIDAD TOTAL',
-    desc: 'Sistema integrado de vigilancia y acceso privado.',
+    title: 'ACABADOS PREMIUM', desc: 'Materiales nobles seleccionados con criterio y propósito.',
   },
 ]
 
 const amenitiesList = [
-  {
-    icon: <svg width="36" height="36" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1}><path d="M3 16h18M3 16a9 9 0 0118 0M6 16V10a6 6 0 0112 0v6"/><path d="M2 20h20M12 4v2"/></svg>,
-    label: 'PISCINA INFINITA',
-  },
-  {
-    icon: <svg width="36" height="36" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1}><path d="M3 22V8a1 1 0 011-1h4V5a1 1 0 011-1h8a1 1 0 011 1v2h4a1 1 0 011 1v14"/><path d="M10 22v-5h4v5M7 10h2v3H7zM15 10h2v3h-2z"/></svg>,
-    label: 'ÁREA GOURMET',
-  },
-  {
-    icon: <svg width="36" height="36" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1}><path d="M6 18V9M18 18V9M3 9h18M7 9V5a2 2 0 012-2h6a2 2 0 012 2v4"/><path d="M10 13h4M10 16h4M3 18h18v2H3z"/></svg>,
-    label: 'GIMNASIO PRIVADO',
-  },
-  {
-    icon: <svg width="36" height="36" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1}><rect x="2" y="4" width="20" height="14" rx="2"/><path d="M8 20h8M12 18v2"/><circle cx="12" cy="11" r="3"/></svg>,
-    label: 'HOME THEATER',
-  },
-  {
-    icon: <svg width="36" height="36" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1}><path d="M12 2a5 5 0 000 10 5 5 0 000-10z"/><path d="M12 12v10M7 17c1.5-1 3.5-1 5 0s3.5 1 5 0"/><path d="M4 21c1.5-1 3.5-1 5 0s3.5 1 5 0s3.5 1 5 0"/></svg>,
-    label: 'JARDÍN INTERNO',
-  },
-  {
-    icon: <svg width="36" height="36" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1}><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg>,
-    label: 'JACUZZI EXTERIOR',
-  },
+  { icon: <svg width="36" height="36" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1}><path d="M3 16h18M3 16a9 9 0 0118 0M6 16V10a6 6 0 0112 0v6"/><path d="M2 20h20M12 4v2"/></svg>, label: 'PISCINA INFINITA' },
+  { icon: <svg width="36" height="36" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1}><path d="M3 22V8a1 1 0 011-1h4V5a1 1 0 011-1h8a1 1 0 011 1v2h4a1 1 0 011 1v14"/><path d="M10 22v-5h4v5M7 10h2v3H7zM15 10h2v3h-2z"/></svg>, label: 'ÁREA GOURMET' },
+  { icon: <svg width="36" height="36" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1}><path d="M6 18V9M18 18V9M3 9h18M7 9V5a2 2 0 012-2h6a2 2 0 012 2v4"/><path d="M10 13h4M10 16h4M3 18h18v2H3z"/></svg>, label: 'GIMNASIO PRIVADO' },
+  { icon: <svg width="36" height="36" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1}><rect x="2" y="4" width="20" height="14" rx="2"/><path d="M8 20h8M12 18v2"/><circle cx="12" cy="11" r="3"/></svg>, label: 'HOME THEATER' },
+  { icon: <svg width="36" height="36" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1}><path d="M12 2a5 5 0 000 10 5 5 0 000-10z"/><path d="M12 12v10M7 17c1.5-1 3.5-1 5 0s3.5 1 5 0"/><path d="M4 21c1.5-1 3.5-1 5 0s3.5 1 5 0s3.5 1 5 0"/></svg>, label: 'JARDÍN INTERNO' },
 ]
 
 const landmarks = [
@@ -192,18 +162,12 @@ function PageContent() {
       {/* ── NAVBAR ── */}
       <nav className={`${styles.navbar} ${scrolled ? styles.navbarScrolled : ''}`}>
         <div className={styles.navInner}>
-          <a href="#residencia" className={styles.navLogo}>
-            LARUM<span>STUDIO</span>
-          </a>
+          <a href="#residencia" className={styles.navLogo}>LARUM<span>STUDIO</span></a>
           <div className={styles.navLinks}>
-            {navLinks.map(l => (
-              <a key={l.href} href={l.href} className={styles.navLink}>{l.label}</a>
-            ))}
+            {navLinks.map(l => <a key={l.href} href={l.href} className={styles.navLink}>{l.label}</a>)}
           </div>
           <div className={styles.navRight}>
-            <a href={whatsappUrl} className={styles.navCta} target="_blank" rel="noopener">
-              Agendar Visita
-            </a>
+            <a href={whatsappUrl} className={styles.navCta} target="_blank" rel="noopener">Agendar Visita</a>
             <button className={styles.menuBtn} onClick={() => setMenuOpen(!menuOpen)}>
               {menuOpen ? <IconClose /> : <IconMenu />}
             </button>
@@ -213,44 +177,28 @@ function PageContent() {
 
       {menuOpen && (
         <div className={styles.mobileMenu}>
-          {navLinks.map(l => (
-            <a key={l.href} href={l.href} onClick={() => setMenuOpen(false)}>{l.label}</a>
-          ))}
+          {navLinks.map(l => <a key={l.href} href={l.href} onClick={() => setMenuOpen(false)}>{l.label}</a>)}
         </div>
       )}
 
       {/* ── HERO ── */}
       <section id="residencia" className={styles.hero}>
-        <video
-          className={styles.heroBgVideo}
-          autoPlay
-          muted
-          loop
-          playsInline
-          poster="https://larumstudio.com/wp-content/uploads/2026/05/atardecer.webp"
-        >
+        <video className={styles.heroBgVideo} autoPlay muted loop playsInline
+          poster="https://larumstudio.com/wp-content/uploads/2026/05/atardecer.webp">
           <source src="https://larumstudio.com/wp-content/uploads/2026/05/Transicion-dia-a-noche-cinematica-Optimizada-Web.mp4" type="video/mp4" />
         </video>
         <div className={styles.heroGradientLR} />
         <div className={styles.heroGradientTB} />
-
         <div className={styles.heroInner}>
           <div className={styles.heroLeft}>
             <p className={styles.heroEyebrow}>San Bernardino, Paraguay</p>
-            <h1 className={styles.heroTitle}>
-              Una villa de ensueño<br />
-              que redefine el lujo.
-            </h1>
-            <p className={styles.heroDesc}>
-              Diseñada para quienes valoran la arquitectura,
-              la privacidad y los detalles que elevan cada momento.
-            </p>
+            <h1 className={styles.heroTitle}>Una villa de ensueño<br />que redefine el lujo.</h1>
+            <p className={styles.heroDesc}>Diseñada para quienes valoran la arquitectura, la privacidad y los detalles que elevan cada momento.</p>
             <a href="#video" className={styles.heroPlayBtn}>
               <span className={styles.heroPlayCircle}><IconPlay /></span>
               <span className={styles.heroPlayLabel}>Ver Presentación</span>
             </a>
           </div>
-
           <div className={styles.heroCard}>
             {heroStats.map((s, i) => (
               <div key={i} className={`${styles.heroStat} ${i < heroStats.length - 1 ? styles.heroStatBorder : ''}`}>
@@ -262,13 +210,10 @@ function PageContent() {
               </div>
             ))}
             <div className={styles.heroCardFooter}>
-              <a href="#caracteristicas" className={styles.heroCardLink}>
-                Ver Detalles <span>———</span>
-              </a>
+              <a href="#caracteristicas" className={styles.heroCardLink}>Ver Detalles <span>———</span></a>
             </div>
           </div>
         </div>
-
         <div className={styles.heroBadge}>
           <span className={styles.heroBadgeLine} />
           <span className={styles.heroBadgeText}>Exclusiva en Venta</span>
@@ -280,23 +225,12 @@ function PageContent() {
         <div className={styles.storyInner}>
           <div className={styles.storyLeft}>
             <p className={styles.eyebrow}>La Historia</p>
-            <h2 className={styles.storyTitle}>
-              Una residencia que<br />se siente antes de verse.
-            </h2>
-            <p className={styles.storyDesc}>
-              Con 400 m² construidos sobre un lote de 800 m², esta villa en San Bernardino fue concebida para quienes buscan algo más que una casa: presencia, exclusividad y una experiencia de vida difícil de igualar.
-            </p>
-            <p className={styles.storyDesc} style={{ marginTop: '1.25rem' }}>
-              Desde el exterior, la propiedad impresiona por su escala y su arquitectura limpia. La piscina exterior se convierte en el corazón visual y emocional de la casa.
-            </p>
+            <h2 className={styles.storyTitle}>Una residencia que<br />se siente antes de verse.</h2>
+            <p className={styles.storyDesc}>Con 400 m² construidos sobre un lote de 800 m², esta villa en San Bernardino fue concebida para quienes buscan algo más que una casa: presencia, exclusividad y una experiencia de vida difícil de igualar.</p>
+            <p className={styles.storyDesc} style={{ marginTop: '1.25rem' }}>Desde el exterior, la propiedad impresiona por su escala y su arquitectura limpia. La piscina exterior se convierte en el corazón visual y emocional de la casa.</p>
           </div>
           <div className={styles.storyRight} id="video">
-            <video
-              controls
-              poster="https://larumstudio.com/wp-content/uploads/2026/05/atardecer.webp"
-              className={styles.storyVideo}
-              preload="none"
-            >
+            <video controls poster="https://larumstudio.com/wp-content/uploads/2026/05/atardecer.webp" className={styles.storyVideo} preload="none">
               <source src={property.videoUrl} type="video/mp4" />
             </video>
           </div>
@@ -327,12 +261,8 @@ function PageContent() {
               <p className={styles.eyebrow}>Galería</p>
               <h2 className={styles.galleryTitle}>Recorre cada espacio.</h2>
             </div>
-            <a href="#galeria-completa" className={styles.galleryMoreBtn}>
-              Ver toda la galería <IconArrow />
-            </a>
+            <a href="#galeria-completa" className={styles.galleryMoreBtn}>Ver toda la galería <IconArrow /></a>
           </div>
-
-          {/* Row 1 */}
           <div className={styles.galRow1}>
             <div className={styles.galBig}>
               <img src="https://larumstudio.com/wp-content/uploads/2026/05/atardecer.webp" alt="Villa al atardecer" />
@@ -344,13 +274,11 @@ function PageContent() {
                 <div className={styles.galCaption}>Amanecer</div>
               </div>
               <div className={styles.galSmall}>
-                <img src="https://larumstudio.com/wp-content/uploads/2026/05/noche.webp" alt="Noche" style={{ objectPosition: 'center 20%' }} />
+                <img src="https://larumstudio.com/wp-content/uploads/2026/05/noche.webp" alt="Noche" style={{ objectPosition: 'center bottom' }} />
                 <div className={styles.galCaption}>Noche</div>
               </div>
             </div>
           </div>
-
-          {/* Row 2 */}
           <div className={styles.galRow2}>
             {[
               { url: "https://larumstudio.com/wp-content/uploads/2026/04/unnamed-5.webp", cap: "Terraza exterior" },
@@ -363,8 +291,6 @@ function PageContent() {
               </div>
             ))}
           </div>
-
-          {/* Row 3 */}
           <div className={styles.galRow3}>
             <div className={styles.galStack}>
               <div className={styles.galSmall}>
@@ -393,12 +319,8 @@ function PageContent() {
       <section className={styles.amenities} id="amenities">
         <div className={styles.amenitiesLeft}>
           <p className={styles.eyebrow}>Amenities</p>
-          <h2 className={styles.amenitiesTitle}>
-            Bienestar en<br />cada detalle.
-          </h2>
-          <p className={styles.amenitiesDesc}>
-            Espacios diseñados para disfrutar en familia, recibir con elegancia y relajarse en completo confort.
-          </p>
+          <h2 className={styles.amenitiesTitle}>Bienestar en<br />cada detalle.</h2>
+          <p className={styles.amenitiesDesc}>Espacios diseñados para disfrutar en familia, recibir con elegancia y relajarse en completo confort.</p>
           <div className={styles.amenitiesIcons}>
             {amenitiesList.map((a, i) => (
               <div key={i} className={styles.amenityItem}>
@@ -409,10 +331,7 @@ function PageContent() {
           </div>
         </div>
         <div className={styles.amenitiesRight}>
-          <img
-            src="https://larumstudio.com/wp-content/uploads/2026/04/unnamed-22.webp"
-            alt="Amenities de la villa"
-          />
+          <img src="https://larumstudio.com/wp-content/uploads/2026/04/unnamed-22.webp" alt="Amenities de la villa" />
           <div className={styles.amenitiesImgOverlay} />
         </div>
       </section>
@@ -434,8 +353,7 @@ function PageContent() {
                 <ul className={styles.featList}>
                   {(items as string[]).map((item, i) => (
                     <li key={i} className={styles.featItem}>
-                      <span className={styles.featCheck}><IconCheck /></span>
-                      {item}
+                      <span className={styles.featCheck}><IconCheck /></span>{item}
                     </li>
                   ))}
                 </ul>
@@ -450,28 +368,13 @@ function PageContent() {
         <div className={styles.locationInner}>
           <div className={styles.locationLeft}>
             <p className={styles.eyebrow}>Ubicación</p>
-            <h2 className={styles.locationTitle}>
-              San Bernardino,<br />el corazón del lago.
-            </h2>
-            <p className={styles.locationDesc}>
-              A orillas del lago Ypacaraí, en la ciudad más exclusiva del Paraguay. Un entorno residencial con conectividad, naturaleza y privacidad en perfecta armonía.
-            </p>
-            <a
-              href={`https://www.google.com/maps/place/San+Bernardino/@-25.3277542,-57.2992066,13z`}
-              target="_blank"
-              rel="noopener"
-              className={styles.locationBtn}
-            >
-              Ver Ubicación en Mapa
-            </a>
+            <h2 className={styles.locationTitle}>San Bernardino,<br />el corazón del lago.</h2>
+            <p className={styles.locationDesc}>A orillas del lago Ypacaraí, en la ciudad más exclusiva del Paraguay. Un entorno residencial con conectividad, naturaleza y privacidad en perfecta armonía.</p>
+            <a href="https://www.google.com/maps/place/San+Bernardino/@-25.3277542,-57.2992066,13z" target="_blank" rel="noopener" className={styles.locationBtn}>Ver Ubicación en Mapa</a>
           </div>
           <div className={styles.locationMap}>
             <svg className={styles.mapGrid} preserveAspectRatio="none">
-              <defs>
-                <pattern id="grid" width="30" height="30" patternUnits="userSpaceOnUse">
-                  <path d="M 30 0 L 0 0 0 30" fill="none" stroke="#ffffff" strokeWidth="0.4" />
-                </pattern>
-              </defs>
+              <defs><pattern id="grid" width="30" height="30" patternUnits="userSpaceOnUse"><path d="M 30 0 L 0 0 0 30" fill="none" stroke="#ffffff" strokeWidth="0.4" /></pattern></defs>
               <rect width="100%" height="100%" fill="url(#grid)" />
             </svg>
             <svg className={styles.mapStreets} preserveAspectRatio="none">
@@ -479,23 +382,13 @@ function PageContent() {
               <line x1="0" y1="65%" x2="100%" y2="65%" stroke="#ffffff" strokeWidth="0.8" opacity="0.12" />
               <line x1="35%" y1="0" x2="35%" y2="100%" stroke="#c9a96e" strokeWidth="1.5" opacity="0.2" />
               <line x1="65%" y1="0" x2="65%" y2="100%" stroke="#ffffff" strokeWidth="0.8" opacity="0.12" />
-              <line x1="0" y1="20%" x2="100%" y2="20%" stroke="#ffffff" strokeWidth="0.5" opacity="0.08" />
-              <line x1="0" y1="80%" x2="100%" y2="80%" stroke="#ffffff" strokeWidth="0.5" opacity="0.08" />
             </svg>
             {landmarks.map((lm, i) => (
               <div key={i} className={styles.landmark} style={{ top: lm.top, left: lm.left }}>
                 <div className={styles.landmarkDotWrap}>
-                  {lm.isMain ? (
-                    <div className={styles.landmarkMain}>
-                      <div className={styles.landmarkPulse} />
-                    </div>
-                  ) : (
-                    <div className={styles.landmarkDot} />
-                  )}
+                  {lm.isMain ? <div className={styles.landmarkMain}><div className={styles.landmarkPulse} /></div> : <div className={styles.landmarkDot} />}
                 </div>
-                <div className={`${styles.landmarkLabel} ${lm.isMain ? styles.landmarkLabelMain : ''}`}>
-                  {lm.label}
-                </div>
+                <div className={`${styles.landmarkLabel} ${lm.isMain ? styles.landmarkLabelMain : ''}`}>{lm.label}</div>
               </div>
             ))}
           </div>
@@ -515,9 +408,7 @@ function PageContent() {
             </div>
             <div className={styles.planoTable}>
               <table className={styles.areaTable}>
-                <thead>
-                  <tr><th>Ambiente</th><th>Superficie</th></tr>
-                </thead>
+                <thead><tr><th>Ambiente</th><th>Superficie</th></tr></thead>
                 <tbody>
                   {property.floorPlan.areas.map((a, i) => (
                     <tr key={i}><td>{a.ambiente}</td><td>{a.superficie}</td></tr>
@@ -547,39 +438,30 @@ function PageContent() {
         </div>
       </section>
 
-      {/* ── MEMORIA DE LA RESIDENCIA (Brochure) ── */}
+      {/* ── MEMORIA DE LA RESIDENCIA ── */}
       <section className={styles.memoria}>
         <div className={styles.memoriaInner}>
           <div className={styles.memoriaLeft}>
             <p className={styles.eyebrow}>Documentación</p>
-            <h2 className={styles.memoriaTitle}>
-              Memoria de<br />la Residencia.
-            </h2>
-            <p className={styles.memoriaDesc}>
-              Un documento de presentación diseñado para quienes desean conocer esta propiedad en profundidad. Arquitectura, espacios, acabados y experiencia reunidos en un solo lugar.
-            </p>
-            <a
-              href="/brochure-san-bernardino.pdf"
-              download
-              className={styles.memoriaBtn}
-            >
-              <IconDownload />
-              Descargar Memoria
+            <h2 className={styles.memoriaTitle}>Memoria de<br />la Residencia.</h2>
+            <p className={styles.memoriaDesc}>Un documento de presentación diseñado para quienes desean conocer esta propiedad en profundidad. Arquitectura, espacios, acabados y experiencia reunidos en un solo lugar.</p>
+            <a href="/brochure-san-bernardino.pdf" download className={styles.memoriaBtn}>
+              <IconDownload />Descargar Memoria
             </a>
           </div>
           <div className={styles.memoriaRight}>
             <div className={styles.memoriaPreview}>
               <div className={styles.memoriaPages}>
                 <div className={styles.memoriaPage} style={{ transform: 'rotate(-3deg) translateX(-8px)', zIndex: 1 }}>
-                  <img src="https://larumstudio.com/wp-content/uploads/2026/05/atardecer.webp" alt="" />
-                  <div className={styles.memoriaPageOverlay} />
-                </div>
-                <div className={styles.memoriaPage} style={{ transform: 'rotate(1.5deg)', zIndex: 2 }}>
                   <img src="https://larumstudio.com/wp-content/uploads/2026/04/unnamed-3.webp" alt="" />
                   <div className={styles.memoriaPageOverlay} />
                 </div>
-                <div className={styles.memoriaPage} style={{ transform: 'rotate(-0.5deg) translateX(8px)', zIndex: 3 }}>
+                <div className={styles.memoriaPage} style={{ transform: 'rotate(1.5deg)', zIndex: 2 }}>
                   <img src="https://larumstudio.com/wp-content/uploads/2026/04/unnamed-22.webp" alt="" />
+                  <div className={styles.memoriaPageOverlay} />
+                </div>
+                <div className={styles.memoriaPage} style={{ transform: 'rotate(-0.5deg) translateX(8px)', zIndex: 3 }}>
+                  <img src="https://larumstudio.com/wp-content/uploads/2026/05/atardecer.webp" alt="" style={{ objectPosition: 'center center' }} />
                   <div className={styles.memoriaPageOverlay} />
                   <div className={styles.memoriaPageLabel}>
                     <span>LARUM</span>
@@ -606,7 +488,6 @@ function PageContent() {
       {/* ── CONTACT ── */}
       <section className={styles.contact} id="contacto">
         <div className={styles.contactInner}>
-
           <div className={styles.contactAgent}>
             <div className={styles.agentPhoto}>
               <img src={agent.photo} alt={agent.name} onError={e => (e.currentTarget.style.display = 'none')} />
@@ -622,19 +503,13 @@ function PageContent() {
               </div>
             </div>
           </div>
-
           <div className={styles.contactCta}>
-            <h2 className={styles.contactTitle}>
-              Agenda una visita privada<br />y descubre esta propiedad.
-            </h2>
-            <p className={styles.contactDesc}>
-              Experiencias exclusivas para compradores que buscan excelencia.
-            </p>
+            <h2 className={styles.contactTitle}>Agenda una visita privada<br />y descubre esta propiedad.</h2>
+            <p className={styles.contactDesc}>Experiencias exclusivas para compradores que buscan excelencia.</p>
             <a href={whatsappUrl} className={styles.contactWa} target="_blank" rel="noopener">
               <IconWhatsapp /> Contactar por WhatsApp
             </a>
           </div>
-
           <div className={styles.contactForm}>
             {[
               { name: 'nombre', placeholder: 'NOMBRE', type: 'text' },
@@ -643,19 +518,14 @@ function PageContent() {
               { name: 'fecha', placeholder: 'FECHA PREFERIDA', type: 'text' },
             ].map(field => (
               <div key={field.name} className={styles.formField}>
-                <input
-                  type={field.type}
-                  name={field.name}
-                  placeholder={field.placeholder}
+                <input type={field.type} name={field.name} placeholder={field.placeholder}
                   value={form[field.name as keyof typeof form]}
                   onChange={e => setForm({ ...form, [e.target.name]: e.target.value })}
-                  className={styles.formInput}
-                />
+                  className={styles.formInput} />
               </div>
             ))}
             <button className={styles.formBtn}>Agendar Visita Privada</button>
           </div>
-
         </div>
       </section>
 
@@ -664,9 +534,7 @@ function PageContent() {
         <div className={styles.footerInner}>
           <div className={styles.footerLogo}>LARUM<span>STUDIO</span></div>
           <nav className={styles.footerNav}>
-            {navLinks.map(l => (
-              <a key={l.href} href={l.href} className={styles.footerLink}>{l.label}</a>
-            ))}
+            {navLinks.map(l => <a key={l.href} href={l.href} className={styles.footerLink}>{l.label}</a>)}
           </nav>
           <div className={styles.footerSocials}>
             <a href={agent.instagram} target="_blank" rel="noopener"><IconInstagram /></a>
