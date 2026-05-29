@@ -344,7 +344,7 @@ function PageContent() {
                 <div className={styles.galCaption}>Amanecer</div>
               </div>
               <div className={styles.galSmall}>
-                <img src="https://larumstudio.com/wp-content/uploads/2026/05/noche.webp" alt="Noche" style={{ objectPosition: 'center top' }} />
+                <img src="https://larumstudio.com/wp-content/uploads/2026/05/noche.webp" alt="Noche" style={{ objectPosition: 'center 20%' }} />
                 <div className={styles.galCaption}>Noche</div>
               </div>
             </div>

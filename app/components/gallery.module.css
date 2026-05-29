@@ -1,3 +1,4 @@
+/* gallery.module.css — con fix huérfano */
 .gallerySection {
   background: var(--black);
   padding: 7rem 0;
@@ -330,14 +331,27 @@
 .lbPrev { left: 1.5rem; }
 .lbNext { right: 1.5rem; }
 
-/* Responsive */
+/* ── RESPONSIVE ── */
 @media (max-width: 768px) {
   .thumbRow { grid-template-columns: repeat(2, 1fr); }
   .grid5 { grid-template-columns: repeat(3, 1fr); }
   .heroWrap { aspect-ratio: 4/3; }
   .lbNav { display: none; }
+  /* Huérfano en grid de 3 columnas: si hay 25 items, últimos 1 o 2 solos */
+  /* nth-child: si el último item ocupa la primera celda de una fila, ocultarlo */
+  .gridItem:last-child:nth-child(3n + 1) {
+    display: none;
+  }
 }
 
 @media (max-width: 480px) {
   .grid5 { grid-template-columns: repeat(2, 1fr); }
+  /* Huérfano en grid de 2 columnas */
+  .gridItem:last-child:nth-child(odd) {
+    display: none;
+  }
+  /* Resetear la regla de 3 columnas */
+  .gridItem:last-child:nth-child(3n + 1) {
+    display: revert;
+  }
 }
