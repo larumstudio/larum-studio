@@ -1484,7 +1484,7 @@
   grid-template-columns: 1.5fr 1fr;
   gap: 4px;
   margin-bottom: 4px;
-  height: 420px;
+  height: 560px;
 }
 
 .galBig {
@@ -1541,7 +1541,7 @@
   grid-template-columns: repeat(3, 1fr);
   gap: 4px;
   margin-bottom: 4px;
-  height: 220px;
+  height: 260px;
 }
 
 .galMid {
@@ -1568,7 +1568,7 @@
   display: grid;
   grid-template-columns: 1fr 1.5fr;
   gap: 4px;
-  height: 320px;
+  height: 380px;
 }
 
 .galCaption {

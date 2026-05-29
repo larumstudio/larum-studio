@@ -28,7 +28,7 @@
 
 .title {
   font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-size: clamp(1.6rem, 4vw, 3rem);
   font-weight: 400;
   color: var(--white);
   margin-bottom: 1rem;
@@ -346,12 +346,12 @@
 
 @media (max-width: 480px) {
   .grid5 { grid-template-columns: repeat(2, 1fr); }
-  /* Huérfano en grid de 2 columnas */
-  .gridItem:last-child:nth-child(odd) {
+  /* Ocultar huérfana: último item cuando ocupa posición impar en grid de 2 cols */
+  .gridItem:last-child:nth-child(2n + 1) {
     display: none;
   }
   /* Resetear la regla de 3 columnas */
   .gridItem:last-child:nth-child(3n + 1) {
-    display: revert;
+    display: unset;
   }
 }
