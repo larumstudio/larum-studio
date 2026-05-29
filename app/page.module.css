@@ -464,10 +464,13 @@
   padding: 5rem 0 6rem;
 }
 
+/* FIX: el bloque estaba malformado (padding en la misma línea que el cierre)
+   lo que causaba el loop de compilación en Next.js */
 .galleryInner {
   max-width: 1400px;
   margin: 0 auto;
-padding: 0 2.5rem 1rem;}
+  padding: 0 2.5rem 1rem;
+}
 
 .galleryHeader {
   display: flex;
@@ -1520,11 +1523,14 @@ padding: 0 2.5rem 1rem;}
   flex: 1;
 }
 
+/* FIX: object-position era "center bottom" lo que mostraba solo el cielo en
+   la foto de noche. Con "center 65%" se centra en el tercio inferior
+   donde está la casa iluminada, sin cortar el techo. */
 .galSmall img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center bottom;
+  object-position: center 65%;
   display: block;
   filter: brightness(0.82);
   transition: transform 0.7s ease, filter 0.4s ease;
@@ -1662,7 +1668,7 @@ padding: 0 2.5rem 1rem;}
   .galStack { flex-direction: row; }
   .galSmall { height: 160px; }
   .galRow2 { grid-template-columns: 1fr 1fr; height: auto; }
-  .galRow2 .galMid:last-child { display: none; } /* quitar última imagen huérfana */
+  .galRow2 .galMid:last-child { display: none; }
   .galMid { height: 180px; }
   .galRow3 { grid-template-columns: 1fr; height: auto; }
   .galRow3 .galStack { flex-direction: row; }

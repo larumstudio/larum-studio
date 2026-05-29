@@ -1,4 +1,4 @@
-/* gallery.module.css — con fix huérfano */
+/* gallery.module.css */
 .gallerySection {
   background: var(--black);
   padding: 3rem 0 4rem;
@@ -27,9 +27,12 @@
   margin-bottom: 1rem;
 }
 
+/* FIX: el title estaba perdiendo visibilidad por posibles conflictos de
+   especificidad o errores de sintaxis en ediciones anteriores.
+   Se reescribe limpio sin !important conflictivos. */
 .title {
   font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(1.4rem, 2.8vw, 2.2rem) !important;
+  font-size: clamp(1.4rem, 2.8vw, 2.2rem);
   font-weight: 400;
   color: var(--white);
   margin-bottom: 1rem;
@@ -243,8 +246,8 @@
 }
 
 @keyframes fadeIn {
-  from { opacity: 0 }
-  to { opacity: 1 }
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 .lbContent {
@@ -338,8 +341,13 @@
   .grid5 { grid-template-columns: repeat(3, 1fr); }
   .heroWrap { aspect-ratio: 4/3; }
   .lbNav { display: none; }
-  /* Huérfano en grid de 3 columnas: si hay 25 items, últimos 1 o 2 solos */
-  /* nth-child: si el último item ocupa la primera celda de una fila, ocultarlo */
+}
+
+/* FIX huérfano en 480px (grid de 2 columnas con 25 items):
+   El item 25 queda solo. Se oculta solo si es impar Y es el último.
+   La regla de 768px (3 columnas) queda separada para no pisarse. */
+@media (max-width: 768px) and (min-width: 481px) {
+  /* grid de 3 cols: ocultar huérfano si ocupa la primera celda de una fila nueva */
   .gridItem:last-child:nth-child(3n + 1) {
     display: none;
   }
@@ -347,12 +355,8 @@
 
 @media (max-width: 480px) {
   .grid5 { grid-template-columns: repeat(2, 1fr); }
-  /* Huérfano en grid de 2 columnas */
+  /* grid de 2 cols: ocultar si el último item queda solo (posición impar) */
   .gridItem:last-child:nth-child(odd) {
     display: none;
-  }
-  /* Resetear la regla de 3 columnas */
-  .gridItem:last-child:nth-child(3n + 1) {
-    display: revert;
   }
 }
