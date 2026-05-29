@@ -77,6 +77,13 @@ const IconCheck = () => (
     <polyline points="20,6 9,17 4,12" />
   </svg>
 )
+const IconDownload = () => (
+  <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
+    <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" />
+    <polyline points="7,10 12,15 17,10" />
+    <line x1="12" y1="15" x2="12" y2="3" />
+  </svg>
+)
 
 const navLinks = [
   { href: '#residencia', label: 'Residencia' },
@@ -119,6 +126,11 @@ const features = [
     title: 'ACABADOS PREMIUM',
     desc: 'Materiales nobles seleccionados con criterio y propósito.',
   },
+  {
+    icon: <svg width="28" height="28" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1}><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>,
+    title: 'SEGURIDAD TOTAL',
+    desc: 'Sistema integrado de vigilancia y acceso privado.',
+  },
 ]
 
 const amenitiesList = [
@@ -141,6 +153,10 @@ const amenitiesList = [
   {
     icon: <svg width="36" height="36" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1}><path d="M12 2a5 5 0 000 10 5 5 0 000-10z"/><path d="M12 12v10M7 17c1.5-1 3.5-1 5 0s3.5 1 5 0"/><path d="M4 21c1.5-1 3.5-1 5 0s3.5 1 5 0s3.5 1 5 0"/></svg>,
     label: 'JARDÍN INTERNO',
+  },
+  {
+    icon: <svg width="36" height="36" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1}><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg>,
+    label: 'JACUZZI EXTERIOR',
   },
 ]
 
@@ -219,7 +235,6 @@ function PageContent() {
         <div className={styles.heroGradientTB} />
 
         <div className={styles.heroInner}>
-          {/* Left */}
           <div className={styles.heroLeft}>
             <p className={styles.heroEyebrow}>San Bernardino, Paraguay</p>
             <h1 className={styles.heroTitle}>
@@ -236,7 +251,6 @@ function PageContent() {
             </a>
           </div>
 
-          {/* Right Stats Card */}
           <div className={styles.heroCard}>
             {heroStats.map((s, i) => (
               <div key={i} className={`${styles.heroStat} ${i < heroStats.length - 1 ? styles.heroStatBorder : ''}`}>
@@ -261,7 +275,7 @@ function PageContent() {
         </div>
       </section>
 
-      {/* ── STORY (Narrativa + Video) ── */}
+      {/* ── STORY ── */}
       <section className={styles.story} id="narrativa">
         <div className={styles.storyInner}>
           <div className={styles.storyLeft}>
@@ -305,11 +319,9 @@ function PageContent() {
         </div>
       </section>
 
-      {/* ── GALLERY ── */}
+      {/* ── GALLERY PREVIEW ── */}
       <section className={styles.gallerySection} id="galeria">
         <div className={styles.galleryInner}>
-
-          {/* Header */}
           <div className={styles.galleryHeader}>
             <div>
               <p className={styles.eyebrow}>Galería</p>
@@ -320,7 +332,7 @@ function PageContent() {
             </a>
           </div>
 
-          {/* Row 1: hero grande izquierda + 2 apiladas derecha */}
+          {/* Row 1 */}
           <div className={styles.galRow1}>
             <div className={styles.galBig}>
               <img src="https://larumstudio.com/wp-content/uploads/2026/05/atardecer.webp" alt="Villa al atardecer" />
@@ -332,13 +344,13 @@ function PageContent() {
                 <div className={styles.galCaption}>Amanecer</div>
               </div>
               <div className={styles.galSmall}>
-                <img src="https://larumstudio.com/wp-content/uploads/2026/05/noche.webp" alt="Noche" />
+                <img src="https://larumstudio.com/wp-content/uploads/2026/05/noche.webp" alt="Noche" style={{ objectPosition: 'center top' }} />
                 <div className={styles.galCaption}>Noche</div>
               </div>
             </div>
           </div>
 
-          {/* Row 2: 3 imágenes iguales */}
+          {/* Row 2 */}
           <div className={styles.galRow2}>
             {[
               { url: "https://larumstudio.com/wp-content/uploads/2026/04/unnamed-5.webp", cap: "Terraza exterior" },
@@ -352,7 +364,7 @@ function PageContent() {
             ))}
           </div>
 
-          {/* Row 3: 2 pequeñas + 1 grande derecha */}
+          {/* Row 3 */}
           <div className={styles.galRow3}>
             <div className={styles.galStack}>
               <div className={styles.galSmall}>
@@ -369,9 +381,7 @@ function PageContent() {
               <div className={styles.galCaption}>Comedor</div>
             </div>
           </div>
-
         </div>
-
       </section>
 
       {/* ── GALERÍA COMPLETA ── */}
@@ -401,7 +411,7 @@ function PageContent() {
         <div className={styles.amenitiesRight}>
           <img
             src="https://larumstudio.com/wp-content/uploads/2026/04/unnamed-22.webp"
-            alt="Gimnasio privado"
+            alt="Amenities de la villa"
           />
           <div className={styles.amenitiesImgOverlay} />
         </div>
@@ -537,11 +547,66 @@ function PageContent() {
         </div>
       </section>
 
+      {/* ── MEMORIA DE LA RESIDENCIA (Brochure) ── */}
+      <section className={styles.memoria}>
+        <div className={styles.memoriaInner}>
+          <div className={styles.memoriaLeft}>
+            <p className={styles.eyebrow}>Documentación</p>
+            <h2 className={styles.memoriaTitle}>
+              Memoria de<br />la Residencia.
+            </h2>
+            <p className={styles.memoriaDesc}>
+              Un documento de presentación diseñado para quienes desean conocer esta propiedad en profundidad. Arquitectura, espacios, acabados y experiencia reunidos en un solo lugar.
+            </p>
+            <a
+              href="/brochure-san-bernardino.pdf"
+              download
+              className={styles.memoriaBtn}
+            >
+              <IconDownload />
+              Descargar Memoria
+            </a>
+          </div>
+          <div className={styles.memoriaRight}>
+            <div className={styles.memoriaPreview}>
+              <div className={styles.memoriaPages}>
+                <div className={styles.memoriaPage} style={{ transform: 'rotate(-3deg) translateX(-8px)', zIndex: 1 }}>
+                  <img src="https://larumstudio.com/wp-content/uploads/2026/05/atardecer.webp" alt="" />
+                  <div className={styles.memoriaPageOverlay} />
+                </div>
+                <div className={styles.memoriaPage} style={{ transform: 'rotate(1.5deg)', zIndex: 2 }}>
+                  <img src="https://larumstudio.com/wp-content/uploads/2026/04/unnamed-3.webp" alt="" />
+                  <div className={styles.memoriaPageOverlay} />
+                </div>
+                <div className={styles.memoriaPage} style={{ transform: 'rotate(-0.5deg) translateX(8px)', zIndex: 3 }}>
+                  <img src="https://larumstudio.com/wp-content/uploads/2026/04/unnamed-22.webp" alt="" />
+                  <div className={styles.memoriaPageOverlay} />
+                  <div className={styles.memoriaPageLabel}>
+                    <span>LARUM</span>
+                    <span>Residencia San Bernardino</span>
+                  </div>
+                </div>
+              </div>
+              <div className={styles.memoriaStats}>
+                <div className={styles.memoriaStatItem}>
+                  <span className={styles.memoriaStatNum}>16</span>
+                  <span className={styles.memoriaStatLabel}>páginas</span>
+                </div>
+                <div className={styles.memoriaStatDivider} />
+                <div className={styles.memoriaStatItem}>
+                  <span className={styles.memoriaStatNum}>PDF</span>
+                  <span className={styles.memoriaStatLabel}>descarga inmediata</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* ── CONTACT ── */}
       <section className={styles.contact} id="contacto">
         <div className={styles.contactInner}>
 
-          {/* Agent — foto + datos en la misma fila, como mockup */}
           <div className={styles.contactAgent}>
             <div className={styles.agentPhoto}>
               <img src={agent.photo} alt={agent.name} onError={e => (e.currentTarget.style.display = 'none')} />
@@ -558,7 +623,6 @@ function PageContent() {
             </div>
           </div>
 
-          {/* CTA Text */}
           <div className={styles.contactCta}>
             <h2 className={styles.contactTitle}>
               Agenda una visita privada<br />y descubre esta propiedad.
@@ -571,7 +635,6 @@ function PageContent() {
             </a>
           </div>
 
-          {/* Form */}
           <div className={styles.contactForm}>
             {[
               { name: 'nombre', placeholder: 'NOMBRE', type: 'text' },

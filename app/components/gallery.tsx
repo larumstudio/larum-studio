@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import styles from './gallery.module.css'
 
 interface GalleryImage {
@@ -16,14 +16,36 @@ interface GalleryProps {
 export default function Gallery({ images, heroVideo }: GalleryProps) {
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null)
 
+  // Touch swipe state
+  const touchStartX = useRef<number | null>(null)
+  const touchStartY = useRef<number | null>(null)
+
   const open = (i: number) => setLightboxIndex(i)
   const close = () => setLightboxIndex(null)
   const prev = () => setLightboxIndex(i => i !== null ? (i - 1 + images.length) % images.length : 0)
   const next = () => setLightboxIndex(i => i !== null ? (i + 1) % images.length : 0)
 
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX
+    touchStartY.current = e.touches[0].clientY
+  }
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartX.current === null || touchStartY.current === null) return
+    const deltaX = e.changedTouches[0].clientX - touchStartX.current
+    const deltaY = Math.abs(e.changedTouches[0].clientY - touchStartY.current)
+    // Solo swipe horizontal (más de 50px en X, menos de 80px en Y para no interferir con scroll)
+    if (Math.abs(deltaX) > 50 && deltaY < 80) {
+      if (deltaX < 0) next()
+      else prev()
+    }
+    touchStartX.current = null
+    touchStartY.current = null
+  }
+
   const heroImage = images[0]
-  const thumbImages = images.slice(1, 5)      // 4 imágenes
-  const gridImages = images.slice(5, 30)       // 25 imágenes (5x5)
+  const thumbImages = images.slice(1, 5)
+  const gridImages = images.slice(5, 30)
 
   return (
     <section className={styles.gallerySection} id="galeria">
@@ -95,7 +117,12 @@ export default function Gallery({ images, heroVideo }: GalleryProps) {
 
       {/* Lightbox */}
       {lightboxIndex !== null && (
-        <div className={styles.lightbox} onClick={close}>
+        <div
+          className={styles.lightbox}
+          onClick={close}
+          onTouchStart={handleTouchStart}
+          onTouchEnd={handleTouchEnd}
+        >
           <button className={styles.lbClose} onClick={close} aria-label="Cerrar">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
               <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
