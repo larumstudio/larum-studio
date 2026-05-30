@@ -283,7 +283,7 @@ function PageContent() {
               </div>
               <div className={styles.galSmallNoche}>
                 <img
-                  src="https://larumstudio.com/wp-content/uploads/2026/04/unnamed-10.webp"
+                  src="https://larumstudio.com/wp-content/uploads/2026/05/noche.webp"
                   alt="Noche"
                   style={{ objectPosition: 'center 70%' }}
                 />
@@ -425,54 +425,48 @@ function PageContent() {
       {/* ── MEMORIA DE LA RESIDENCIA ── */}
       <section className={styles.memoria}>
         <div className={styles.memoriaInner}>
+
+          {/* Columna izquierda: texto */}
           <div className={styles.memoriaLeft}>
             <p className={styles.eyebrow}>Documentación</p>
             <h2 className={styles.memoriaTitle}>Memoria de<br />la Residencia.</h2>
             <p className={styles.memoriaDesc}>Un documento de presentación diseñado para quienes desean conocer esta propiedad en profundidad. Arquitectura, espacios, acabados y experiencia reunidos en un solo lugar.</p>
+            <div className={styles.memoriaMetaRow}>
+              <div className={styles.memoriaMetaItem}>
+                <span className={styles.memoriaMetaNum}>16</span>
+                <span className={styles.memoriaMetaLabel}>páginas</span>
+              </div>
+              <div className={styles.memoriaMetaDivider} />
+              <div className={styles.memoriaMetaItem}>
+                <span className={styles.memoriaMetaNum}>PDF</span>
+                <span className={styles.memoriaMetaLabel}>descarga inmediata</span>
+              </div>
+            </div>
             <a href="/brochure-san-bernardino.pdf" download className={styles.memoriaBtn}>
               <IconDownload />Descargar Memoria
             </a>
           </div>
+
+          {/* Columna derecha: dos páginas del brochure lado a lado */}
           <div className={styles.memoriaRight}>
-            <div className={styles.memoriaPreview}>
-              <div className={styles.memoriaPages}>
-                {/* Página trasera */}
-                <div className={styles.memoriaPage} style={{ transform: 'rotate(-3deg) translateX(-8px)', zIndex: 1 }}>
-                  <img src="https://larumstudio.com/wp-content/uploads/2026/04/unnamed-3.webp" alt="" />
-                  <div className={styles.memoriaPageOverlay} />
-                </div>
-                {/* Página central */}
-                <div className={styles.memoriaPage} style={{ transform: 'rotate(1.5deg)', zIndex: 2 }}>
-                  <img src="https://larumstudio.com/wp-content/uploads/2026/04/unnamed-22.webp" alt="" />
-                  <div className={styles.memoriaPageOverlay} />
-                </div>
-                {/* FIX portada: imagen de la portada real del brochure — casa de noche con piscina */}
-                <div className={styles.memoriaPage} style={{ transform: 'rotate(-0.5deg) translateX(8px)', zIndex: 3 }}>
-                  <img
-                    src="https://larumstudio.com/wp-content/uploads/2026/05/noche.webp"
-                    alt="Portada brochure"
-                    style={{ objectPosition: 'center 60%' }}
-                  />
-                  <div className={styles.memoriaPageOverlay} />
-                  <div className={styles.memoriaPageLabel}>
-                    <span>LARUM</span>
-                    <span>Residencia San Bernardino</span>
-                  </div>
-                </div>
+            <div className={styles.memoriaDuoWrap}>
+              <div className={styles.memoriaDuoPage}>
+                <img
+                  src="https://larumstudio.com/wp-content/uploads/2026/05/BROCHURE_PROPIEDAD_1.png"
+                  alt="Brochure página 1"
+                />
+                <div className={styles.memoriaDuoOverlay} />
               </div>
-              <div className={styles.memoriaStats}>
-                <div className={styles.memoriaStatItem}>
-                  <span className={styles.memoriaStatNum}>16</span>
-                  <span className={styles.memoriaStatLabel}>páginas</span>
-                </div>
-                <div className={styles.memoriaStatDivider} />
-                <div className={styles.memoriaStatItem}>
-                  <span className={styles.memoriaStatNum}>PDF</span>
-                  <span className={styles.memoriaStatLabel}>descarga inmediata</span>
-                </div>
+              <div className={styles.memoriaDuoPage}>
+                <img
+                  src="https://larumstudio.com/wp-content/uploads/2026/05/BROCHURE_PROPIEDAD_2.png"
+                  alt="Brochure página 2"
+                />
+                <div className={styles.memoriaDuoOverlay} />
               </div>
             </div>
           </div>
+
         </div>
       </section>
 
