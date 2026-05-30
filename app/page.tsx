@@ -99,6 +99,7 @@ const heroStats = [
   { icon: <IconBath />, value: '5', label: 'BAÑOS' },
 ]
 
+// FIX: 6 tarjetas para que en móvil queden 2 columnas × 3 filas
 const features = [
   {
     icon: <svg width="28" height="28" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1}><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/><path d="M3.5 8.5l2 2M18.5 8.5l-2 2M12 3v2M12 19v2"/></svg>,
@@ -119,6 +120,10 @@ const features = [
   {
     icon: <svg width="28" height="28" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1}><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/><path d="M9 22V12h6v10"/></svg>,
     title: 'ACABADOS PREMIUM', desc: 'Materiales nobles seleccionados con criterio y propósito.',
+  },
+  {
+    icon: <svg width="28" height="28" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1}><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>,
+    title: 'EXCLUSIVIDAD', desc: 'Una propiedad única en su entorno. Sin comparación posible.',
   },
 ]
 
@@ -254,6 +259,9 @@ function PageContent() {
       </section>
 
       {/* ── GALLERY PREVIEW ── */}
+      {/* FIX: layout simplificado. Solo galRow1: atardecer a la izquierda,
+          amanecer y noche apiladas a la derecha. Sin galRow2 ni galRow3
+          que causaban solapamiento y complejidad innecesaria. */}
       <section className={styles.gallerySection} id="galeria">
         <div className={styles.galleryInner}>
           <div className={styles.galleryHeader}>
@@ -273,45 +281,21 @@ function PageContent() {
                 <img src="https://larumstudio.com/wp-content/uploads/2026/05/amanecer.webp" alt="Al amanecer" />
                 <div className={styles.galCaption}>Amanecer</div>
               </div>
-              <div className={styles.galSmall}>
-                <img src="https://larumstudio.com/wp-content/uploads/2026/04/unnamed-10.webp" alt="Noche" />
+              <div className={styles.galSmallNoche}>
+                <img
+                  src="https://larumstudio.com/wp-content/uploads/2026/04/unnamed-10.webp"
+                  alt="Noche"
+                  style={{ objectPosition: 'center 70%' }}
+                />
                 <div className={styles.galCaption}>Noche</div>
               </div>
-            </div>
-          </div>
-          <div className={styles.galRow2}>
-            {[
-              { url: "https://larumstudio.com/wp-content/uploads/2026/04/unnamed-5.webp", cap: "Terraza exterior" },
-              { url: "https://larumstudio.com/wp-content/uploads/2026/04/unnamed-3.webp", cap: "Área social" },
-              { url: "https://larumstudio.com/wp-content/uploads/2026/04/unnamed-10.webp", cap: "Vista nocturna" },
-            ].map((img, i) => (
-              <div key={i} className={styles.galMid}>
-                <img src={img.url} alt={img.cap} />
-                <div className={styles.galCaption}>{img.cap}</div>
-              </div>
-            ))}
-          </div>
-          <div className={styles.galRow3}>
-            <div className={styles.galStack}>
-              <div className={styles.galSmall}>
-                <img src="https://larumstudio.com/wp-content/uploads/2026/04/unnamed-22.webp" alt="Jardín y piscina" />
-                <div className={styles.galCaption}>Jardín</div>
-              </div>
-              <div className={styles.galSmall}>
-                <img src="https://larumstudio.com/wp-content/uploads/2026/04/unnamed-11.webp" alt="Living" />
-                <div className={styles.galCaption}>Living</div>
-              </div>
-            </div>
-            <div className={styles.galBig}>
-              <img src="https://larumstudio.com/wp-content/uploads/2026/04/unnamed-2.webp" alt="Comedor" />
-              <div className={styles.galCaption}>Comedor</div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* ── GALERÍA COMPLETA ── */}
-      <div id="galeria-completa">
+      {/* ── GALERÍA COMPLETA ── separación explícita con borde top */}
+      <div id="galeria-completa" className={styles.galeriaCompletaWrap}>
         <Gallery images={property.gallery} heroVideo="https://larumstudio.com/wp-content/uploads/2026/05/dron-aereo-Optimizada-Web.mp4" />
       </div>
 
@@ -452,16 +436,23 @@ function PageContent() {
           <div className={styles.memoriaRight}>
             <div className={styles.memoriaPreview}>
               <div className={styles.memoriaPages}>
+                {/* Página trasera */}
                 <div className={styles.memoriaPage} style={{ transform: 'rotate(-3deg) translateX(-8px)', zIndex: 1 }}>
                   <img src="https://larumstudio.com/wp-content/uploads/2026/04/unnamed-3.webp" alt="" />
                   <div className={styles.memoriaPageOverlay} />
                 </div>
+                {/* Página central */}
                 <div className={styles.memoriaPage} style={{ transform: 'rotate(1.5deg)', zIndex: 2 }}>
                   <img src="https://larumstudio.com/wp-content/uploads/2026/04/unnamed-22.webp" alt="" />
                   <div className={styles.memoriaPageOverlay} />
                 </div>
+                {/* FIX portada: imagen de la portada real del brochure — casa de noche con piscina */}
                 <div className={styles.memoriaPage} style={{ transform: 'rotate(-0.5deg) translateX(8px)', zIndex: 3 }}>
-                  <img src="https://larumstudio.com/wp-content/uploads/2026/05/atardecer.webp" alt="" style={{ objectPosition: 'center center' }} />
+                  <img
+                    src="https://larumstudio.com/wp-content/uploads/2026/05/noche.webp"
+                    alt="Portada brochure"
+                    style={{ objectPosition: 'center 60%' }}
+                  />
                   <div className={styles.memoriaPageOverlay} />
                   <div className={styles.memoriaPageLabel}>
                     <span>LARUM</span>

@@ -1601,6 +1601,41 @@
   transform: translateY(0);
 }
 
+
+/* ── GALERÍA COMPLETA SEPARACIÓN ── */
+.galeriaCompletaWrap {
+  border-top: 1px solid rgba(255,255,255,0.06);
+  background: #0a0a0a;
+}
+
+/* ── GALSMALL NOCHE: foco en la casa, no en el cielo ── */
+.galSmallNoche {
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  flex: 1;
+}
+
+.galSmallNoche img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 70%;
+  display: block;
+  filter: brightness(0.85);
+  transition: transform 0.7s ease, filter 0.4s ease;
+}
+
+.galSmallNoche:hover img {
+  transform: scale(1.06);
+  filter: brightness(1);
+}
+
+.galSmallNoche:hover .galCaption {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 /* ══════════════════════════════════════════════════
    RESPONSIVE
 ══════════════════════════════════════════════════ */
