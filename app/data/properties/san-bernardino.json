@@ -1,0 +1,113 @@
+{
+  "slug": "san-bernardino",
+  "status": "active",
+  "meta": {
+    "title": "Residencia San Bernardino — Larum Studio",
+    "description": "Villa exclusiva de 800 m² construidos sobre 3.900 m² en San Bernardino, Paraguay."
+  },
+  "property": {
+    "name": "Residencia San Bernardino",
+    "tagline": "Donde la arquitectura se encuentra con la calma",
+    "location": {
+      "city": "San Bernardino",
+      "country": "Paraguay",
+      "address": "San Bernardino, Paraguay",
+      "mapsUrl": "https://www.google.com/maps/place/San+Bernardino/@-25.3277542,-57.2992066,13z"
+    },
+    "price": null,
+    "stats": {
+      "terreno": "3.900 m²",
+      "construidos": "800 m²",
+      "dormitorios": "6",
+      "banos": "5"
+    },
+    "videoHero": "https://larumstudio.com/wp-content/uploads/2026/05/Transicion-dia-a-noche-cinematica-Optimizada-Web.mp4",
+    "videoPresentacion": "https://larumstudio.com/wp-content/uploads/2026/05/dron-aereo-Optimizada-Web.mp4",
+    "posterHero": "https://larumstudio.com/wp-content/uploads/2026/05/atardecer.webp",
+    "galleryPreview": {
+      "main": {
+        "url": "https://larumstudio.com/wp-content/uploads/2026/05/atardecer.webp",
+        "caption": "Atardecer"
+      },
+      "secondary": [
+        {
+          "url": "https://larumstudio.com/wp-content/uploads/2026/05/amanecer.webp",
+          "caption": "Amanecer"
+        },
+        {
+          "url": "https://larumstudio.com/wp-content/uploads/2026/05/noche.webp",
+          "caption": "Noche",
+          "objectPosition": "center 70%"
+        }
+      ]
+    },
+    "features": {
+      "espacios": [
+        "6 dormitorios en suite",
+        "Living comedor integrado",
+        "Cocina gourmet equipada",
+        "Sala de estar familiar",
+        "Estudio privado",
+        "Vestuario principal"
+      ],
+      "equipamiento": [
+        "Piscina infinity exterior",
+        "Jacuzzi exterior",
+        "Gimnasio privado equipado",
+        "Home theater",
+        "Área gourmet con parrilla",
+        "Sistema domótico completo"
+      ],
+      "extras": [
+        "Jardín interno diseñado",
+        "4+ estacionamientos cubiertos",
+        "Seguridad perimetral 24h",
+        "Generador eléctrico",
+        "Cisterna y pozo propio",
+        "Documentación al día"
+      ]
+    },
+    "amenities": [
+      "PISCINA INFINITA",
+      "ÁREA GOURMET",
+      "GIMNASIO PRIVADO",
+      "HOME THEATER",
+      "JARDÍN INTERNO",
+      "JACUZZI EXTERIOR"
+    ],
+    "trust": [
+      "Escritura pública registrada",
+      "Libre de gravámenes",
+      "Planos municipales aprobados",
+      "Asesoramiento profesional incluido"
+    ],
+    "floorPlan": {
+      "image": "/plano-san-bernardino.jpg",
+      "areas": [
+        { "ambiente": "Living / Comedor", "superficie": "120 m²" },
+        { "ambiente": "Cocina Gourmet", "superficie": "45 m²" },
+        { "ambiente": "Suite Principal", "superficie": "85 m²" },
+        { "ambiente": "Dormitorios (x5)", "superficie": "220 m²" },
+        { "ambiente": "Gimnasio", "superficie": "60 m²" },
+        { "ambiente": "Home Theater", "superficie": "50 m²" },
+        { "ambiente": "Terraza / Piscina", "superficie": "180 m²" },
+        { "ambiente": "Jardines", "superficie": "3.100 m²" }
+      ]
+    },
+    "brochure": "/brochure-san-bernardino.pdf",
+    "brochurePages": [
+      "https://larumstudio.com/wp-content/uploads/2026/05/BROCHURE-PROPIEDAD-1.webp",
+      "https://larumstudio.com/wp-content/uploads/2026/05/BROCHURE-PROPIEDAD-2.webp"
+    ],
+    "gallery": []
+  },
+  "agent": {
+    "name": "Jennifer",
+    "title": "Directora · Larum Studio",
+    "phone": "+595 981 123 456",
+    "email": "hola@larumstudio.com",
+    "whatsapp": "595981123456",
+    "instagram": "https://instagram.com/larum.studio",
+    "photo": ""
+  }
+}
