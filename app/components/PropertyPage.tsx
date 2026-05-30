@@ -31,6 +31,15 @@ const amenityIcons: Record<string, React.ReactNode> = {
   'JACUZZI EXTERIOR': <svg width="36" height="36" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1}><ellipse cx="12" cy="17" rx="8" ry="3"/><path d="M4 17v-3a8 8 0 0116 0v3"/><path d="M8 14c0-2.2 1.8-4 4-4s4 1.8 4 4"/><circle cx="12" cy="7" r="2"/></svg>,
 }
 
+const featureIcons: React.ReactNode[] = [
+  <svg width="28" height="28" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1}><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>,
+  <svg width="28" height="28" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1}><rect x="2" y="2" width="9" height="9" rx="1"/><rect x="13" y="2" width="9" height="9" rx="1"/><rect x="2" y="13" width="9" height="9" rx="1"/><rect x="13" y="13" width="9" height="9" rx="1"/></svg>,
+  <svg width="28" height="28" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1}><path d="M3 12h18M12 3v18"/></svg>,
+  <svg width="28" height="28" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1}><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M2 12h2M20 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>,
+  <svg width="28" height="28" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1}><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/><path d="M9 22V12h6v10"/></svg>,
+  <svg width="28" height="28" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1}><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>,
+]
+
 const defaultIcon = <svg width="36" height="36" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1}><circle cx="12" cy="12" r="9"/></svg>
 
 export default function PropertyPage({ data }: { data: any }) {
@@ -50,6 +59,7 @@ export default function PropertyPage({ data }: { data: any }) {
   return (
     <div className={styles.page}>
 
+      {/* NAVBAR */}
       <nav className={`${styles.navbar} ${scrolled ? styles.navbarScrolled : ''}`}>
         <div className={styles.navInner}>
           <a href="#residencia" className={styles.navLogo}>LARUM<span>STUDIO</span></a>
@@ -71,6 +81,7 @@ export default function PropertyPage({ data }: { data: any }) {
         </div>
       )}
 
+      {/* HERO */}
       <section id="residencia" className={styles.hero}>
         {property.videoHero ? (
           <video className={styles.heroBgVideo} autoPlay muted loop playsInline poster={property.posterHero}>
@@ -116,12 +127,19 @@ export default function PropertyPage({ data }: { data: any }) {
         </div>
       </section>
 
+      {/* STORY */}
       <section className={styles.story} id="narrativa">
         <div className={styles.storyInner}>
           <div className={styles.storyLeft}>
             <p className={styles.eyebrow}>La Historia</p>
-            <h2 className={styles.storyTitle}>{property.name}</h2>
-            <p className={styles.storyDesc}>{property.tagline}</p>
+            <h2 className={styles.storyTitle}>{property.story?.title || property.name}</h2>
+            {property.story?.paragraphs ? (
+              property.story.paragraphs.map((p: string, i: number) => (
+                <p key={i} className={styles.storyDesc} style={i > 0 ? { marginTop: '1.25rem' } : {}}>{p}</p>
+              ))
+            ) : (
+              <p className={styles.storyDesc}>{property.tagline}</p>
+            )}
           </div>
           <div className={styles.storyRight} id="video">
             {property.videoPresentacion ? (
@@ -135,6 +153,25 @@ export default function PropertyPage({ data }: { data: any }) {
         </div>
       </section>
 
+      {/* FEATURES — Diseñada sin Compromisos */}
+      {property.featuresGrid && (
+        <section className={styles.features}>
+          <div className={styles.featuresInner}>
+            <p className={styles.eyebrow}>{property.featuresGrid.eyebrow || 'Diseñada sin Compromisos'}</p>
+            <div className={styles.featuresGrid}>
+              {property.featuresGrid.items.map((f: any, i: number) => (
+                <div key={i} className={styles.featureItem}>
+                  <div className={styles.featureIcon}>{featureIcons[i] || featureIcons[0]}</div>
+                  <h3 className={styles.featureTitle}>{f.title}</h3>
+                  <p className={styles.featureDesc}>{f.desc}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* GALLERY PREVIEW */}
       <section className={styles.gallerySection} id="galeria">
         <div className={styles.galleryInner}>
           <div className={styles.galleryHeader}>
@@ -163,12 +200,14 @@ export default function PropertyPage({ data }: { data: any }) {
         </div>
       </section>
 
+      {/* GALERÍA COMPLETA */}
       {property.gallery && property.gallery.length > 0 && (
         <div id="galeria-completa" className={styles.galeriaCompletaWrap}>
           <Gallery images={property.gallery} heroVideo={property.videoPresentacion} />
         </div>
       )}
 
+      {/* AMENITIES */}
       {property.amenities && (
         <section className={styles.amenities} id="amenities">
           <div className={styles.amenitiesLeft}>
@@ -185,12 +224,13 @@ export default function PropertyPage({ data }: { data: any }) {
             </div>
           </div>
           <div className={styles.amenitiesRight}>
-            <img src={property.galleryPreview?.secondary[0]?.url || property.posterHero} alt="Amenities" />
+            <img src={property.amenitiesImage || property.galleryPreview?.secondary[0]?.url || property.posterHero} alt="Amenities" />
             <div className={styles.amenitiesImgOverlay} />
           </div>
         </section>
       )}
 
+      {/* CARACTERÍSTICAS */}
       {property.features && (
         <section className={styles.caracteristicas} id="caracteristicas">
           <div className={styles.caracteristicasInner}>
@@ -219,12 +259,13 @@ export default function PropertyPage({ data }: { data: any }) {
         </section>
       )}
 
+      {/* UBICACIÓN */}
       <section className={styles.location} id="ubicacion">
         <div className={styles.locationInner}>
           <div className={styles.locationLeft}>
             <p className={styles.eyebrow}>Ubicación</p>
             <h2 className={styles.locationTitle}>{property.location.city}</h2>
-            <p className={styles.locationDesc}>{property.location.address}</p>
+            <p className={styles.locationDesc}>{property.location.description || property.location.address}</p>
             {property.location.mapsUrl && (
               <a href={property.location.mapsUrl} target="_blank" rel="noopener" className={styles.locationBtn}>
                 Ver Ubicación en Mapa
@@ -233,13 +274,60 @@ export default function PropertyPage({ data }: { data: any }) {
           </div>
           <div className={styles.locationMap}>
             <svg className={styles.mapGrid} preserveAspectRatio="none">
-              <defs><pattern id="grid2" width="30" height="30" patternUnits="userSpaceOnUse"><path d="M 30 0 L 0 0 0 30" fill="none" stroke="#ffffff" strokeWidth="0.4" /></pattern></defs>
-              <rect width="100%" height="100%" fill="url(#grid2)" />
+              <defs><pattern id="gridP" width="30" height="30" patternUnits="userSpaceOnUse"><path d="M 30 0 L 0 0 0 30" fill="none" stroke="#ffffff" strokeWidth="0.4" /></pattern></defs>
+              <rect width="100%" height="100%" fill="url(#gridP)" />
             </svg>
+            <svg className={styles.mapStreets} preserveAspectRatio="none">
+              <line x1="0" y1="45%" x2="100%" y2="45%" stroke="#c9a96e" strokeWidth="1.5" opacity="0.2" />
+              <line x1="0" y1="65%" x2="100%" y2="65%" stroke="#ffffff" strokeWidth="0.8" opacity="0.12" />
+              <line x1="35%" y1="0" x2="35%" y2="100%" stroke="#c9a96e" strokeWidth="1.5" opacity="0.2" />
+              <line x1="65%" y1="0" x2="65%" y2="100%" stroke="#ffffff" strokeWidth="0.8" opacity="0.12" />
+            </svg>
+            {property.location.landmarks && property.location.landmarks.map((lm: any, i: number) => (
+              <div key={i} className={styles.landmark} style={{ top: lm.top, left: lm.left }}>
+                <div className={styles.landmarkDotWrap}>
+                  {lm.isMain
+                    ? <div className={styles.landmarkMain}><div className={styles.landmarkPulse} /></div>
+                    : <div className={styles.landmarkDot} />
+                  }
+                </div>
+                <div className={`${styles.landmarkLabel} ${lm.isMain ? styles.landmarkLabelMain : ''}`}>{lm.label}</div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
+      {/* PLANO */}
+      {property.floorPlan && property.floorPlan.areas && property.floorPlan.areas.length > 0 && (
+        <section className={styles.plano} id="plano">
+          <div className={styles.planoInner}>
+            <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
+              <p className={styles.eyebrow}>Distribución</p>
+              <h2 className={styles.sectionTitle}>La distribución ideal</h2>
+            </div>
+            <div className={styles.planoLayout}>
+              {property.floorPlan.image && (
+                <div className={styles.planoImg}>
+                  <img src={property.floorPlan.image} alt="Plano" />
+                </div>
+              )}
+              <div className={styles.planoTable}>
+                <table className={styles.areaTable}>
+                  <thead><tr><th>Ambiente</th><th>Superficie</th></tr></thead>
+                  <tbody>
+                    {property.floorPlan.areas.map((a: any, i: number) => (
+                      <tr key={i}><td>{a.ambiente}</td><td>{a.superficie}</td></tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* GARANTÍA */}
       {property.trust && (
         <section className={styles.garantia}>
           <div className={styles.garantiaInner}>
@@ -259,13 +347,14 @@ export default function PropertyPage({ data }: { data: any }) {
         </section>
       )}
 
+      {/* MEMORIA */}
       {property.brochure && (
         <section className={styles.memoria}>
           <div className={styles.memoriaInner}>
             <div className={styles.memoriaLeft}>
               <p className={styles.eyebrow}>Documentación</p>
               <h2 className={styles.memoriaTitle}>Memoria de<br />la Residencia.</h2>
-              <p className={styles.memoriaDesc}>Un documento de presentación diseñado para quienes desean conocer esta propiedad en profundidad.</p>
+              <p className={styles.memoriaDesc}>Un documento de presentación diseñado para quienes desean conocer esta propiedad en profundidad. Arquitectura, espacios, acabados y experiencia reunidos en un solo lugar.</p>
               <div className={styles.memoriaMetaRow}>
                 <div className={styles.memoriaMetaItem}>
                   <span className={styles.memoriaMetaNum}>16</span>
@@ -281,7 +370,7 @@ export default function PropertyPage({ data }: { data: any }) {
                 <IconDownload />Descargar Memoria
               </a>
             </div>
-            {property.brochurePages && (
+            {property.brochurePages && Array.isArray(property.brochurePages) && (
               <div className={styles.memoriaRight}>
                 <div className={styles.memoriaDuoWrap}>
                   {property.brochurePages.map((url: string, i: number) => (
@@ -297,12 +386,13 @@ export default function PropertyPage({ data }: { data: any }) {
         </section>
       )}
 
+      {/* CONTACTO */}
       <section className={styles.contact} id="contacto">
         <div className={styles.contactInner}>
           <div className={styles.contactAgent}>
             {agent.photo && (
               <div className={styles.agentPhoto}>
-                <img src={agent.photo} alt={agent.name} />
+                <img src={agent.photo} alt={agent.name} onError={(e) => (e.currentTarget.style.display = 'none')} />
               </div>
             )}
             <div className={styles.agentData}>
@@ -339,6 +429,7 @@ export default function PropertyPage({ data }: { data: any }) {
         </div>
       </section>
 
+      {/* FOOTER */}
       <footer className={styles.footer}>
         <div className={styles.footerInner}>
           <div className={styles.footerLogo}>LARUM<span>STUDIO</span></div>
