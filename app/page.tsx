@@ -133,6 +133,7 @@ const amenitiesList = [
   { icon: <svg width="36" height="36" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1}><path d="M6 18V9M18 18V9M3 9h18M7 9V5a2 2 0 012-2h6a2 2 0 012 2v4"/><path d="M10 13h4M10 16h4M3 18h18v2H3z"/></svg>, label: 'GIMNASIO PRIVADO' },
   { icon: <svg width="36" height="36" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1}><rect x="2" y="4" width="20" height="14" rx="2"/><path d="M8 20h8M12 18v2"/><circle cx="12" cy="11" r="3"/></svg>, label: 'HOME THEATER' },
   { icon: <svg width="36" height="36" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1}><path d="M12 2a5 5 0 000 10 5 5 0 000-10z"/><path d="M12 12v10M7 17c1.5-1 3.5-1 5 0s3.5 1 5 0"/><path d="M4 21c1.5-1 3.5-1 5 0s3.5 1 5 0s3.5 1 5 0"/></svg>, label: 'JARDÍN INTERNO' },
+  { icon: <svg width="36" height="36" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1}><ellipse cx="12" cy="17" rx="8" ry="3"/><path d="M4 17v-3a8 8 0 0116 0v3"/><path d="M8 14c0-2.2 1.8-4 4-4s4 1.8 4 4"/><circle cx="12" cy="7" r="2"/></svg>, label: 'JACUZZI EXTERIOR' },
 ]
 
 const landmarks = [
@@ -452,14 +453,14 @@ function PageContent() {
             <div className={styles.memoriaDuoWrap}>
               <div className={styles.memoriaDuoPage}>
                 <img
-                  src="https://larumstudio.com/wp-content/uploads/2026/05/BROCHURE_PROPIEDAD_1.png"
+                  src="https://larumstudio.com/wp-content/uploads/2026/05/BROCHURE-PROPIEDAD-1.webp"
                   alt="Brochure página 1"
                 />
                 <div className={styles.memoriaDuoOverlay} />
               </div>
               <div className={styles.memoriaDuoPage}>
                 <img
-                  src="https://larumstudio.com/wp-content/uploads/2026/05/BROCHURE_PROPIEDAD_2.png"
+                  src="https://larumstudio.com/wp-content/uploads/2026/05/BROCHURE-PROPIEDAD-2.webp"
                   alt="Brochure página 2"
                 />
                 <div className={styles.memoriaDuoOverlay} />
