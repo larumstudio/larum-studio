@@ -337,7 +337,7 @@
   font-weight: 400;
   letter-spacing: 0.45em;
   text-transform: uppercase;
-  color: rgba(255,255,255,0.28);
+  color: #c9a96e;
   display: block;
   margin-bottom: 1.5rem;
 }
@@ -1123,7 +1123,7 @@
 .agentRole {
   font-family: 'Outfit', sans-serif;
   font-size: 0.6rem;
-  color: rgba(255,255,255,0.28);
+  color: #c9a96e;
   letter-spacing: 0.08em;
   margin-bottom: 1.25rem;
 }
