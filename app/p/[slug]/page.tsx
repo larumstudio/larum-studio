@@ -1,4 +1,4 @@
-﻿import { notFound } from 'next/navigation';
+import { notFound } from 'next/navigation';
 import PropertyPage from '@/app/components/PropertyPage';
 
 interface PageProps {
@@ -58,6 +58,7 @@ export default async function Page({ params }: PageProps) {
       brochure: raw.brochure_pdf_url,
       brochurePages: raw.brochure_imagenes || [],
       gallery: raw.galeria_completa || [],
+      amenitiesImage: raw.amenities_image || '',
     },
     agent: {
       name: raw.agente_nombre || '',
