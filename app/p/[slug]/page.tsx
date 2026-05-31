@@ -1,17 +1,25 @@
-'use client'
-import React from 'react'
-import { useParams } from 'next/navigation'
-import PropertyPage from '../../components/PropertyPage'
-import sanBernardino from '../../data/properties/san-bernardino.json'
+﻿import { notFound } from 'next/navigation';
+import PropertyPage from '@/app/components/PropertyPage';
 
-const PROPERTIES: Record<string, any> = {
-  'san-bernardino': sanBernardino,
+interface PageProps {
+  params: Promise<{ slug: string }>;
 }
 
-export default function Page() {
-  const params = useParams()
-  const slug = params?.slug as string
-  const data = PROPERTIES[slug]
-  if (!data) return <div style={{ background: '#0a0a0a', minHeight: '100vh' }}>No encontrado</div>
-  return <PropertyPage data={data} />
+export default async function Page({ params }: PageProps) {
+  const { slug } = await params;
+
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';
+
+  let data;
+  try {
+    const res = await fetch(`${apiUrl}/propiedades/${slug}`, {
+      next: { revalidate: 60 },
+    });
+    if (!res.ok) return notFound();
+    data = await res.json();
+  } catch {
+    return notFound();
+  }
+
+  return <PropertyPage data={data} />;
 }
