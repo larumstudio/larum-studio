@@ -60,13 +60,13 @@ export default async function Page({ params }: PageProps) {
       gallery: raw.galeria_completa || [],
     },
     agent: {
-      name: raw.nombre_agente || '',
-      title: raw.cargo_agente || '',
-      phone: raw.telefono_agente || '',
-      email: raw.email_agente || '',
-      whatsapp: raw.whatsapp_agente || '',
-      instagram: raw.instagram_agente || '',
-      photo: raw.foto_agente || '',
+      name: raw.agente_nombre || '',
+      title: raw.agente_cargo || '',
+      phone: raw.agente_telefono || '',
+      email: raw.agente_email || '',
+      whatsapp: raw.agente_whatsapp || '',
+      instagram: raw.agente_instagram || '',
+      photo: raw.agente_foto || '',
     },
   };
 
