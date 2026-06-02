@@ -8,6 +8,12 @@ import styles from './page.module.css'
 
 const { agent, property } = propertyData
 
+const IconPrice = () => (
+  <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1}>
+    <circle cx="12" cy="12" r="10"/>
+    <path d="M12 6v12M9 8h4a2 2 0 010 4H9m0 0h4a2 2 0 010 4H9"/>
+  </svg>
+)
 const IconArea = () => (
   <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1}>
     <rect x="2" y="2" width="9" height="9" /><rect x="13" y="2" width="9" height="9" />
@@ -93,6 +99,7 @@ const navLinks = [
 ]
 
 const heroStats = [
+  { icon: <IconPrice />, value: property.price, label: 'PRECIO' },
   { icon: <IconArea />, value: '3.900 m²', label: 'TERRENO' },
   { icon: <IconBuilding />, value: '800 m²', label: 'CONSTRUIDOS' },
   { icon: <IconBed />, value: '6', label: 'DORMITORIOS' },
