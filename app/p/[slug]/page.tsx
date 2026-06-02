@@ -1,14 +1,11 @@
 import { notFound } from 'next/navigation';
 import PropertyPage from '@/app/components/PropertyPage';
-
 interface PageProps {
   params: Promise<{ slug: string }>;
 }
-
 export default async function Page({ params }: PageProps) {
   const { slug } = await params;
   const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';
-
   let raw;
   try {
     const res = await fetch(`${apiUrl}/propiedades/${slug}`, {
@@ -19,13 +16,13 @@ export default async function Page({ params }: PageProps) {
   } catch {
     return notFound();
   }
-
   const data = {
     slug: raw.slug,
     status: raw.activa === 1 ? 'active' : 'inactive',
     property: {
       name: raw.nombre,
       tagline: raw.tagline,
+      precio: raw.precio || '',
       story: {
         title: raw.historia_titulo,
         paragraphs: raw.historia_parrafos || [],
@@ -59,7 +56,6 @@ export default async function Page({ params }: PageProps) {
       brochurePages: raw.brochure_imagenes || [],
       gallery: raw.galeria_completa || [],
       amenitiesImage: raw.amenities_image || '',
-      precio: raw.precio || '',
     },
     agent: {
       name: raw.agente_nombre || '',
@@ -71,6 +67,5 @@ export default async function Page({ params }: PageProps) {
       photo: raw.agente_foto || '',
     },
   };
-
   return <PropertyPage data={data} />;
 }
