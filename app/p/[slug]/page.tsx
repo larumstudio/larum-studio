@@ -9,7 +9,7 @@ export default async function Page({ params }: PageProps) {
   let raw;
   try {
     const res = await fetch(`${apiUrl}/propiedades/${slug}`, {
-      next: { revalidate: 60 },
+      next: { revalidate: 0 },
     });
     if (!res.ok) return notFound();
     raw = await res.json();
