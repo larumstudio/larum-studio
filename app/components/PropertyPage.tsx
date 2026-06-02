@@ -147,6 +147,7 @@ export default function PropertyPage({ data }: { data: any }) {
           </div>
           <div className={styles.heroCard}>
             {[
+              { value: property.precio, label: 'PRECIO' },
               { value: property.stats.terreno, label: 'TERRENO' },
               { value: property.stats.construidos, label: 'CONSTRUIDOS' },
               { value: property.stats.dormitorios, label: 'DORMITORIOS' },
