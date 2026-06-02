@@ -59,6 +59,7 @@ export default async function Page({ params }: PageProps) {
       brochurePages: raw.brochure_imagenes || [],
       gallery: raw.galeria_completa || [],
       amenitiesImage: raw.amenities_image || '',
+      precio: raw.precio || '',
     },
     agent: {
       name: raw.agente_nombre || '',
