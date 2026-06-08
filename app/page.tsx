@@ -450,7 +450,7 @@ function PageContent() {
                 <span className={styles.memoriaMetaLabel}>descarga inmediata</span>
               </div>
             </div>
-            <a href="/brochure-san-bernardino.pdf" download className={styles.memoriaBtn}>
+            <a href="https://larumstudio.com/wp-content/uploads/2026/06/Brochure-Editorial-Premium-Propiedad_compressed.pdf" download className={styles.memoriaBtn}>
               <IconDownload />Descargar Memoria
             </a>
           </div>
@@ -459,17 +459,11 @@ function PageContent() {
           <div className={styles.memoriaRight}>
             <div className={styles.memoriaDuoWrap}>
               <div className={styles.memoriaDuoPage}>
-                <img
-                  src="https://larumstudio.com/wp-content/uploads/2026/05/BROCHURE-PROPIEDAD-1.webp"
-                  alt="Brochure página 1"
-                />
+                <img src="https://larumstudio.com/wp-content/uploads/2026/06/portada-brochure.webp" alt="Brochure portada" />
                 <div className={styles.memoriaDuoOverlay} />
               </div>
               <div className={styles.memoriaDuoPage}>
-                <img
-                  src="https://larumstudio.com/wp-content/uploads/2026/05/BROCHURE-PROPIEDAD-2.webp"
-                  alt="Brochure página 2"
-                />
+                <img src="https://larumstudio.com/wp-content/uploads/2026/05/BROCHURE-PROPIEDAD-1.webp" alt="Brochure página 1" />
                 <div className={styles.memoriaDuoOverlay} />
               </div>
             </div>
