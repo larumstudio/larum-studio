@@ -18,6 +18,7 @@ const navLinks = [
   { href: '#residencia', label: 'Residencia' },
   { href: '#galeria', label: 'Galería' },
   { href: '#amenities', label: 'Amenities' },
+  { href: '#entorno', label: 'Entorno' },
   { href: '#ubicacion', label: 'Ubicación' },
   { href: '#contacto', label: 'Contacto' },
 ]
@@ -85,9 +86,71 @@ const featureIcons: React.ReactNode[] = [
 
 const defaultIcon = <svg width="36" height="36" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1}><circle cx="12" cy="12" r="9"/></svg>
 
+function BrochureForm({ agentEmail, compact }: { agentEmail: string, compact?: boolean }) {
+  const [submitted, setSubmitted] = React.useState(false)
+  const [nombre, setNombre] = React.useState('')
+  const [email, setEmail] = React.useState('')
+  const [whatsapp, setWhatsapp] = React.useState('')
+  const [loading, setLoading] = React.useState(false)
+
+  const canSubmit = whatsapp.trim() !== ''
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    if (!canSubmit) return
+    setLoading(true)
+    try {
+      const fd = new FormData()
+      fd.append('nombre', nombre || '—')
+      fd.append('email', email || '—')
+      fd.append('whatsapp', whatsapp)
+      fd.append('_subject', 'Solicitud Memoria — Villa San Bernardino')
+      fd.append('_captcha', 'false')
+      fd.append('_template', 'table')
+      await fetch(`https://formsubmit.co/${agentEmail}`, { method: 'POST', body: fd })
+    } catch (_) {}
+    setLoading(false)
+    setSubmitted(true)
+  }
+
+  if (submitted) {
+    return (
+      <div className={styles.memoriaSuccess}>
+        <p className={styles.memoriaSuccessTitle}>Solicitud recibida.</p>
+        <p className={styles.memoriaSuccessDesc}>Te contactamos en las próximas horas con la memoria completa.</p>
+      </div>
+    )
+  }
+
+  return (
+    <form className={compact ? styles.memoriaFormCompact : styles.memoriaFormWrap} onSubmit={handleSubmit}>
+      <div className={styles.formField}>
+        <input className={styles.formInput} type="text" placeholder="NOMBRE"
+          value={nombre} onChange={e => setNombre(e.target.value)} />
+      </div>
+      <div className={styles.formField}>
+        <input className={styles.formInput} type="email" placeholder="EMAIL"
+          value={email} onChange={e => setEmail(e.target.value)} />
+      </div>
+      <div className={styles.formField}>
+        <input className={styles.formInput} type="tel" placeholder="WHATSAPP *"
+          value={whatsapp} onChange={e => setWhatsapp(e.target.value)} />
+      </div>
+      <button type="submit" className={styles.memoriaBtn}
+        disabled={loading || !canSubmit}
+        style={{ opacity: canSubmit ? 1 : 0.45 }}>
+        {loading ? 'Enviando…' : <><IconDownload /> Recibir Memoria</>}
+      </button>
+    </form>
+  )
+}
+
 export default function PropertyPage({ data }: { data: any }) {
   const [menuOpen, setMenuOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
+  const [galleryOpen, setGalleryOpen] = useState(false)
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null)
+  const [previewIndex, setPreviewIndex] = useState<number | null>(null)
   const [form, setForm] = useState({ nombre: '', email: '', telefono: '', fecha: '' })
 
   useEffect(() => {
@@ -126,24 +189,41 @@ export default function PropertyPage({ data }: { data: any }) {
 
       {/* HERO */}
       <section id="residencia" className={styles.hero}>
-        {property.videoHero ? (
-          <video className={styles.heroBgVideo} autoPlay muted loop playsInline poster={property.posterHero}>
-            <source src={property.videoHero} type="video/mp4" />
-          </video>
-        ) : (
+        <video
+          className={styles.heroBgVideo}
+          autoPlay
+          muted
+          loop
+          playsInline
+          poster={property.posterHero}
+          preload="auto"
+        >
+          <source src="https://larumstudio.com/wp-content/uploads/2026/05/Transicion-dia-a-noche-cinematica-Optimizada-Web.mp4" type="video/mp4" />
           <img src={property.posterHero} alt={property.name} className={styles.heroBgVideo} />
-        )}
+        </video>
+        <div className={styles.heroGradientLR} />
+        <div className={styles.heroGradientTB} />
+        <div className={styles.heroSoundHint}>
+          <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 010 14.14M15.54 8.46a5 5 0 010 7.07"/>
+          </svg>
+          Activa el sonido para descubrir la experiencia
+        </div>
         <div className={styles.heroGradientLR} />
         <div className={styles.heroGradientTB} />
         <div className={styles.heroInner}>
           <div className={styles.heroLeft}>
-            <p className={styles.heroEyebrow}>{property.location.city}, {property.location.country}</p>
-            <h1 className={styles.heroTitle}>{property.name}</h1>
+            <p className={styles.heroEyebrow}>{property.name} · {property.location.city}, {property.location.country}</p>
+            <h1 className={styles.heroTitle}>{property.heroHeadline || property.name}</h1>
             <p className={styles.heroDesc}>{property.tagline}</p>
             <a href="#video" className={styles.heroPlayBtn}>
               <span className={styles.heroPlayCircle}><IconPlay /></span>
               <span className={styles.heroPlayLabel}>Ver Presentación</span>
             </a>
+            <div className={styles.heroMobileStats}>
+              <span className={styles.heroMobilePrice}>{property.precio}</span>
+              <span className={styles.heroMobileMeta}>{property.stats.dormitorios} hab · {property.stats.banos} baños · {property.stats.construidos} · {property.stats.terreno} terreno</span>
+            </div>
           </div>
           <div className={styles.heroCard}>
             {[
@@ -171,6 +251,20 @@ export default function PropertyPage({ data }: { data: any }) {
         </div>
       </section>
 
+      {/* POSICIONAMIENTO / SIGNIFICADO */}
+      {property.positioning && (
+        <section className={styles.positioning}>
+          <div className={styles.positioningInner}>
+            <p className={styles.eyebrow}>{property.positioning.eyebrow}</p>
+            <div className={styles.positioningText}>
+              {property.positioning.paragraphs.map((p: string, i: number) => (
+                <p key={i} className={styles.positioningPara}>{p}</p>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
       {/* STORY */}
       <section className={styles.story} id="narrativa">
         <div className={styles.storyInner}>
@@ -186,16 +280,54 @@ export default function PropertyPage({ data }: { data: any }) {
             )}
           </div>
           <div className={styles.storyRight} id="video">
-            {property.videoPresentacion ? (
-              <video controls poster={property.posterHero} className={styles.storyVideo} preload="none">
-                <source src={property.videoPresentacion} type="video/mp4" />
-              </video>
-            ) : (
-              <img src={property.posterHero} alt={property.name} className={styles.storyVideo} />
-            )}
+            <div className={styles.storyImgWrap}>
+              <img
+                src="https://larumstudio.com/wp-content/uploads/2026/05/atardecer.webp"
+                alt="Atardecer en San Bernardino"
+                className={styles.storyImg}
+              />
+            </div>
           </div>
         </div>
       </section>
+
+      {/* VIDEO DESTACADO EDITORIAL */}
+      {property.videoPresentacion && (
+        <section className={styles.videoFeature} id="video-tour">
+          <div className={styles.videoFeatureInner}>
+            <div className={styles.videoFeatureHeader}>
+              <p className={styles.eyebrow}>Recorrido</p>
+              <h2 className={styles.videoFeatureTitle}>Adéntrate en el viaje</h2>
+            </div>
+            <div className={styles.videoFeatureFrame}>
+              <div className={styles.videoCornerTL} /><div className={styles.videoCornerTR} />
+              <div className={styles.videoCornerBL} /><div className={styles.videoCornerBR} />
+              <video
+                className={styles.videoFeatureEl}
+                controls
+                poster={property.posterHero}
+                preload="none"
+              >
+                <source src={property.videoPresentacion} type="video/mp4" />
+              </video>
+              <div className={styles.videoFeatureMeta}>
+                <span className={styles.videoFeatureLabel}>Recorrido completo · 4K</span>
+                <span className={styles.videoFeatureDur}>{property.videoDuration || '1:19'} min</span>
+              </div>
+            </div>
+            {property.videoMarkers && property.videoMarkers.length > 0 && (
+              <div className={styles.videoMarkers}>
+                {property.videoMarkers.map((m: any, i: number) => (
+                  <div key={i} className={styles.videoMarker}>
+                    <span className={styles.videoMarkerTime}>{m.time}</span>
+                    <span className={styles.videoMarkerLabel}>{m.label}</span>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        </section>
+      )}
 
       {/* FEATURES — Diseñada sin Compromisos */}
       {property.featuresGrid && (
@@ -215,41 +347,145 @@ export default function PropertyPage({ data }: { data: any }) {
         </section>
       )}
 
-      {/* GALLERY PREVIEW */}
+      {/* GALLERY PREVIEW + SIDE PANEL */}
       <section className={styles.gallerySection} id="galeria">
         <div className={styles.galleryInner}>
           <div className={styles.galleryHeader}>
             <div>
               <p className={styles.eyebrow}>Galería</p>
-              <h2 className={styles.galleryTitle}>Recorre cada espacio.</h2>
+              <h2 className={styles.galleryTitle}>30 momentos para enamorarte</h2>
+              <p className={styles.gallerySubtitle}>Una secuencia visual que sigue el recorrido natural de la propiedad: impacto, atmósfera y detalles.</p>
             </div>
-            <a href="#galeria-completa" className={styles.galleryMoreBtn}>Ver toda la galería <IconArrow /></a>
           </div>
-          {property.galleryPreview && (
-            <div className={styles.galRow1}>
-              <div className={styles.galBig}>
-                <img src={property.galleryPreview.main.url} alt={property.galleryPreview.main.caption} />
-                <div className={styles.galCaption}>{property.galleryPreview.main.caption}</div>
+          {property.gallery && property.gallery.length > 0 && (
+            <div className={styles.galleryPreviewLayout}>
+              <div className={styles.galleryHeroImg}>
+                {property.gallery[0].isVideo ? (
+                  <video src={property.gallery[0].url} autoPlay muted loop playsInline />
+                ) : (
+                  <img src={property.gallery[0].url} alt={property.gallery[0].caption} />
+                )}
+                <div className={styles.galCaption}>{property.gallery[0].caption}</div>
               </div>
-              <div className={styles.galStack}>
-                {property.galleryPreview.secondary.map((img: any, i: number) => (
-                  <div key={i} className={styles.galSmall}>
-                    <img src={img.url} alt={img.caption} style={{ objectPosition: img.objectPosition || 'center center' }} />
-                    <div className={styles.galCaption}>{img.caption}</div>
+              <div className={styles.galleryThumbRow}>
+                {property.gallery.slice(1, 5).map((img: any, i: number) => (
+                  <div key={i} className={styles.galleryThumb} onClick={() => setPreviewIndex(i)}>
+                    {img.isVideo ? (
+                      <video src={img.url} autoPlay muted loop playsInline />
+                    ) : (
+                      <img src={img.url} alt={img.caption} />
+                    )}
                   </div>
                 ))}
+              </div>
+              <div className={styles.galleryCta}>
+                <button
+                  className={styles.galleryMoreBtn}
+                  onClick={() => setGalleryOpen(true)}
+                >
+                  Ver galería completa <IconArrow />
+                </button>
               </div>
             </div>
           )}
         </div>
       </section>
 
-      {/* GALERÍA COMPLETA */}
-      {property.gallery && property.gallery.length > 0 && (
-        <div id="galeria-completa" className={styles.galeriaCompletaWrap}>
-          <Gallery images={property.gallery} heroVideo={property.videoPresentacion} />
+      {/* SIDE PANEL GALERÍA */}
+      {galleryOpen && (
+        <div className={styles.galleryPanel} onClick={() => setGalleryOpen(false)}>
+          <div className={styles.galleryPanelInner} onClick={e => e.stopPropagation()}>
+            <div className={styles.galleryPanelHeader}>
+              <p className={styles.galleryPanelTitle}>Galería completa · {property.gallery.length} imágenes</p>
+              <button className={styles.galleryPanelClose} onClick={() => setGalleryOpen(false)}>
+                <IconClose />
+              </button>
+            </div>
+            <div className={styles.galleryPanelGrid}>
+              {property.gallery.map((img: any, i: number) => (
+                <div key={i} className={styles.galleryPanelItem}
+                  onClick={() => setLightboxIndex(i)}>
+                  <div className={styles.galleryPanelImgWrap}>
+                    {img.isVideo ? (
+                      <video src={img.url} autoPlay muted loop playsInline />
+                    ) : (
+                      <img src={img.url} alt={img.caption} />
+                    )}
+                  </div>
+                  {img.caption && (
+                    <p className={styles.galleryPanelCaption}>{img.caption}</p>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       )}
+
+      {/* LIGHTBOX */}
+      {lightboxIndex !== null && (
+        <div className={styles.lightbox} onClick={() => setLightboxIndex(null)}>
+          <button className={styles.lightboxClose} onClick={() => setLightboxIndex(null)}><IconClose /></button>
+          <button className={styles.lightboxPrev}
+            onClick={e => { e.stopPropagation(); setLightboxIndex((lightboxIndex - 1 + property.gallery.length) % property.gallery.length) }}>
+            ←
+          </button>
+          <div className={styles.lightboxImgWrap} onClick={e => e.stopPropagation()}>
+            <img src={property.gallery[lightboxIndex].url} alt={property.gallery[lightboxIndex].caption} />
+            {property.gallery[lightboxIndex].caption && (
+              <p className={styles.lightboxCaption}>{property.gallery[lightboxIndex].caption}</p>
+            )}
+          </div>
+          <button className={styles.lightboxNext}
+            onClick={e => { e.stopPropagation(); setLightboxIndex((lightboxIndex + 1) % property.gallery.length) }}>
+            →
+          </button>
+        </div>
+      )}
+
+      {/* LIGHTBOX PREVIEW (4 miniaturas → en la 5ª, CTA) */}
+      {previewIndex !== null && (() => {
+        const previewImgs = property.gallery.slice(1, 5)
+        const isCtaSlide = previewIndex >= previewImgs.length
+        return (
+          <div className={styles.lightbox} onClick={() => setPreviewIndex(null)}>
+            <button className={styles.lightboxClose} onClick={() => setPreviewIndex(null)}><IconClose /></button>
+            {previewIndex > 0 && (
+              <button className={styles.lightboxPrev}
+                onClick={e => { e.stopPropagation(); setPreviewIndex(previewIndex - 1) }}>
+                ←
+              </button>
+            )}
+            {isCtaSlide ? (
+              <div className={styles.lightboxCtaSlide} onClick={e => e.stopPropagation()}>
+                <p className={styles.lightboxCtaEyebrow}>Hay mucho más por descubrir</p>
+                <h3 className={styles.lightboxCtaTitle}>{property.gallery.length} momentos en total</h3>
+                <button className={styles.lightboxCtaBtn}
+                  onClick={() => { setPreviewIndex(null); setGalleryOpen(true) }}>
+                  Ver galería completa <IconArrow />
+                </button>
+              </div>
+            ) : (
+              <div className={styles.lightboxImgWrap} onClick={e => e.stopPropagation()}>
+                {previewImgs[previewIndex].isVideo ? (
+                  <video src={previewImgs[previewIndex].url} autoPlay muted loop playsInline controls />
+                ) : (
+                  <img src={previewImgs[previewIndex].url} alt={previewImgs[previewIndex].caption} />
+                )}
+                {previewImgs[previewIndex].caption && (
+                  <p className={styles.lightboxCaption}>{previewImgs[previewIndex].caption}</p>
+                )}
+              </div>
+            )}
+            {!isCtaSlide && (
+              <button className={styles.lightboxNext}
+                onClick={e => { e.stopPropagation(); setPreviewIndex(previewIndex + 1) }}>
+                →
+              </button>
+            )}
+          </div>
+        )
+      })()}
 
       {/* AMENITIES */}
       {property.amenities && (
@@ -303,6 +539,38 @@ export default function PropertyPage({ data }: { data: any }) {
         </section>
       )}
 
+      {/* LIFESTYLE / EL ENTORNO */}
+      {property.lifestyle && (
+        <section className={styles.lifestyle} id="entorno">
+          <div className={styles.lifestyleInner}>
+            <div className={styles.lifestyleTop}>
+              <div className={styles.lifestyleHeader}>
+                <p className={styles.eyebrow}>{property.lifestyle.eyebrow}</p>
+                <h2 className={styles.lifestyleTitle}>{property.lifestyle.title}</h2>
+                {(property.lifestyle.introParagraphs || [property.lifestyle.intro]).map((para: string, i: number) => (
+                  <p key={i} className={styles.lifestyleIntro} style={i > 0 ? { marginTop: '1.25rem' } : {}}>{para}</p>
+                ))}
+              </div>
+              <div className={styles.lifestyleHeroImg}>
+                <img
+                  src="https://larumstudio.com/wp-content/uploads/2026/06/lago-san-bernardino-ypacarai-posicionamiento-premium-viviendas-de-lujo.webp"
+                  alt="Lago Ypacaraí, San Bernardino"
+                />
+              </div>
+            </div>
+            <div className={styles.lifestyleGrid}>
+              {property.lifestyle.items.map((it: any, i: number) => (
+                <div key={i} className={styles.lifestyleCard}>
+                  <span className={styles.lifestyleNum}>{String(i + 1).padStart(2, '0')}</span>
+                  <h3 className={styles.lifestyleCardTitle}>{it.title}</h3>
+                  <p className={styles.lifestyleCardDesc}>{it.desc}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
       {/* UBICACIÓN */}
       <section className={styles.location} id="ubicacion">
         <div className={styles.locationInner}>
@@ -317,27 +585,36 @@ export default function PropertyPage({ data }: { data: any }) {
             )}
           </div>
           <div className={styles.locationMap}>
-            <svg className={styles.mapGrid} preserveAspectRatio="none">
-              <defs><pattern id="gridP" width="30" height="30" patternUnits="userSpaceOnUse"><path d="M 30 0 L 0 0 0 30" fill="none" stroke="#ffffff" strokeWidth="0.4" /></pattern></defs>
-              <rect width="100%" height="100%" fill="url(#gridP)" />
-            </svg>
-            <svg className={styles.mapStreets} preserveAspectRatio="none">
-              <line x1="0" y1="45%" x2="100%" y2="45%" stroke="#c9a96e" strokeWidth="1.5" opacity="0.2" />
-              <line x1="0" y1="65%" x2="100%" y2="65%" stroke="#ffffff" strokeWidth="0.8" opacity="0.12" />
-              <line x1="35%" y1="0" x2="35%" y2="100%" stroke="#c9a96e" strokeWidth="1.5" opacity="0.2" />
-              <line x1="65%" y1="0" x2="65%" y2="100%" stroke="#ffffff" strokeWidth="0.8" opacity="0.12" />
-            </svg>
-            {property.location.landmarks && property.location.landmarks.map((lm: any, i: number) => (
-              <div key={i} className={styles.landmark} style={{ top: lm.top, left: lm.left }}>
-                <div className={styles.landmarkDotWrap}>
-                  {lm.isMain
-                    ? <div className={styles.landmarkMain}><div className={styles.landmarkPulse} /></div>
-                    : <div className={styles.landmarkDot} />
-                  }
-                </div>
-                <div className={`${styles.landmarkLabel} ${lm.isMain ? styles.landmarkLabelMain : ''}`}>{lm.label}</div>
-              </div>
-            ))}
+            {property.location.mapImage ? (
+              <>
+                <img src={property.location.mapImage} alt={property.location.city} className={styles.mapPhoto} />
+                <div className={styles.mapPhotoOverlay} />
+              </>
+            ) : (
+              <>
+                <svg className={styles.mapGrid} preserveAspectRatio="none">
+                  <defs><pattern id="gridP" width="30" height="30" patternUnits="userSpaceOnUse"><path d="M 30 0 L 0 0 0 30" fill="none" stroke="#ffffff" strokeWidth="0.4" /></pattern></defs>
+                  <rect width="100%" height="100%" fill="url(#gridP)" />
+                </svg>
+                <svg className={styles.mapStreets} preserveAspectRatio="none">
+                  <line x1="0" y1="45%" x2="100%" y2="45%" stroke="#c9a96e" strokeWidth="1.5" opacity="0.2" />
+                  <line x1="0" y1="65%" x2="100%" y2="65%" stroke="#ffffff" strokeWidth="0.8" opacity="0.12" />
+                  <line x1="35%" y1="0" x2="35%" y2="100%" stroke="#c9a96e" strokeWidth="1.5" opacity="0.2" />
+                  <line x1="65%" y1="0" x2="65%" y2="100%" stroke="#ffffff" strokeWidth="0.8" opacity="0.12" />
+                </svg>
+                {property.location.landmarks && property.location.landmarks.map((lm: any, i: number) => (
+                  <div key={i} className={styles.landmark} style={{ top: lm.top, left: lm.left }}>
+                    <div className={styles.landmarkDotWrap}>
+                      {lm.isMain
+                        ? <div className={styles.landmarkMain}><div className={styles.landmarkPulse} /></div>
+                        : <div className={styles.landmarkDot} />
+                      }
+                    </div>
+                    <div className={`${styles.landmarkLabel} ${lm.isMain ? styles.landmarkLabelMain : ''}`}>{lm.label}</div>
+                  </div>
+                ))}
+              </>
+            )}
           </div>
         </div>
       </section>
@@ -347,8 +624,15 @@ export default function PropertyPage({ data }: { data: any }) {
         <section className={styles.plano} id="plano">
           <div className={styles.planoInner}>
             <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
-              <p className={styles.eyebrow}>Distribución</p>
-              <h2 className={styles.sectionTitle}>La distribución ideal</h2>
+              <p className={styles.eyebrow}>{property.floorPlan.copy?.eyebrow || 'Distribución'}</p>
+              <h2 className={styles.planoTitleCompact}>
+                {property.floorPlan.copy?.title || 'La distribución ideal'}
+              </h2>
+              {property.floorPlan.copy?.subtitle && (
+                <p className={styles.storyDesc} style={{ maxWidth: '580px', margin: '1rem auto 0', opacity: 0.5, fontSize: '0.8rem' }}>
+                  {property.floorPlan.copy.subtitle}
+                </p>
+              )}
             </div>
             <div className={styles.planoLayout}>
               {property.floorPlan.image && (
@@ -358,13 +642,16 @@ export default function PropertyPage({ data }: { data: any }) {
               )}
               <div className={styles.planoTable}>
                 <table className={styles.areaTable}>
-                  <thead><tr><th>Ambiente</th><th>Superficie</th></tr></thead>
+                  <thead><tr><th>Ambiente</th><th>Superficie aprox.</th></tr></thead>
                   <tbody>
                     {property.floorPlan.areas.map((a: any, i: number) => (
                       <tr key={i}><td>{a.ambiente}</td><td>{a.superficie}</td></tr>
                     ))}
                   </tbody>
                 </table>
+                {property.floorPlan.note && (
+                  <p className={styles.planoNote}>{property.floorPlan.note}</p>
+                )}
               </div>
             </div>
           </div>
@@ -391,44 +678,32 @@ export default function PropertyPage({ data }: { data: any }) {
         </section>
       )}
 
-      {/* MEMORIA */}
-      {property.brochure && (
-        <section className={styles.memoria}>
-          <div className={styles.memoriaInner}>
-            <div className={styles.memoriaLeft}>
+      {/* BROCHURE / LEAD MAGNET */}
+      <section className={styles.memoria} id="memoria">
+        <div className={styles.memoriaInner3}>
+          <div className={styles.memoriaTopRow}>
+            <div className={styles.memoriaTopLeft}>
               <p className={styles.eyebrow}>Documentación</p>
               <h2 className={styles.memoriaTitle}>Memoria de<br />la Residencia.</h2>
-              <p className={styles.memoriaDesc}>Un documento de presentación diseñado para quienes desean conocer esta propiedad en profundidad. Arquitectura, espacios, acabados y experiencia reunidos en un solo lugar.</p>
-              <div className={styles.memoriaMetaRow}>
-                <div className={styles.memoriaMetaItem}>
-                  <span className={styles.memoriaMetaNum}>16</span>
-                  <span className={styles.memoriaMetaLabel}>páginas</span>
-                </div>
-                <div className={styles.memoriaMetaDivider} />
-                <div className={styles.memoriaMetaItem}>
-                  <span className={styles.memoriaMetaNum}>PDF</span>
-                  <span className={styles.memoriaMetaLabel}>descarga inmediata</span>
-                </div>
-              </div>
-              <a href={property.brochure} download className={styles.memoriaBtn}>
-                <IconDownload />Descargar Memoria
-              </a>
+              <p className={styles.memoriaDesc}>Un documento de presentación diseñado para quienes desean conocer esta propiedad en profundidad. Arquitectura, espacios, acabados y experiencia reunidos en una presentación privada de 16 páginas.</p>
+              <p className={styles.memoriaMetaInline}>16 páginas PDF · descarga inmediata</p>
             </div>
-            {property.brochurePages && Array.isArray(property.brochurePages) && (
-              <div className={styles.memoriaRight}>
-                <div className={styles.memoriaDuoWrap}>
-                  {property.brochurePages.map((url: string, i: number) => (
-                    <div key={i} className={styles.memoriaDuoPage}>
-                      <img src={url} alt={`Brochure página ${i + 1}`} />
-                      <div className={styles.memoriaDuoOverlay} />
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
+            <div className={styles.memoriaTopRight}>
+              <img
+                src="https://larumstudio.com/wp-content/uploads/2026/06/presentacion-premium-propiedad-de-lujo.webp"
+                alt="Memoria de la Residencia"
+                className={styles.memoriaTopImg}
+              />
+            </div>
           </div>
-        </section>
-      )}
+          <div className={styles.memoriaBottomForm}>
+            <div className={styles.memoriaFormCard}>
+              <p className={styles.memoriaFormCardTitle}>Solicitar memoria privada</p>
+              <BrochureForm agentEmail={property.agentEmail} compact={true} />
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* CONTACTO */}
       <section className={styles.contact} id="contacto">
@@ -448,11 +723,17 @@ export default function PropertyPage({ data }: { data: any }) {
                 <div className={styles.agentContact}><IconMail />{agent.email}</div>
                 <div className={styles.agentContact}><IconInstagram />@larum.studio</div>
               </div>
+              {agent.authority && agent.authority.split('\n\n').map((para: string, i: number) => (
+                <p key={i} className={styles.agentAuthority} style={i > 0 ? { marginTop: '0.75rem', borderTop: 'none', paddingTop: 0 } : {}}>{para}</p>
+              ))}
             </div>
           </div>
           <div className={styles.contactCta}>
-            <h2 className={styles.contactTitle}>Agenda una visita privada<br />y descubre esta propiedad.</h2>
-            <p className={styles.contactDesc}>Experiencias exclusivas para compradores que buscan excelencia.</p>
+            <p className={styles.contactEyebrow}>{property.cta?.eyebrow || 'La visita'}</p>
+            <h2 className={styles.contactTitle}>{property.cta?.title || 'Agenda una visita privada y descubre esta propiedad.'}</h2>
+            {(property.cta?.desc || 'Experiencias exclusivas para compradores que buscan excelencia.').split('\n\n').map((para: string, i: number) => (
+              <p key={i} className={styles.contactDesc} style={i > 0 ? { marginTop: '1rem' } : {}}>{para}</p>
+            ))}
           </div>
           <div className={styles.contactForm}>
             {[
@@ -476,10 +757,23 @@ export default function PropertyPage({ data }: { data: any }) {
       {/* FOOTER */}
       <footer className={styles.footer}>
         <div className={styles.footerInner}>
-          <div className={styles.footerLogo}>LARUM<span>STUDIO</span></div>
-          <nav className={styles.footerNav}>
+          <div className={styles.footerCol}>
+            <div className={styles.footerLogo}>LARUM<span>STUDIO</span></div>
+            <p className={styles.footerTagline}>Micrositios inmobiliarios de alto impacto para propiedades exclusivas.</p>
+          </div>
+          <nav className={styles.footerNavGrid}>
             {navLinks.map(l => <a key={l.href} href={l.href} className={styles.footerLink}>{l.label}</a>)}
           </nav>
+          <div className={styles.footerVisita}>
+            <p className={styles.footerVisitaTitle}>La visita</p>
+            <ul className={styles.footerVisitaList}>
+              <li>Las visitas se coordinan de forma privada.</li>
+              <li>Propiedad no disponible en acceso abierto.</li>
+              <li>Cada visita requiere cita previa en horario reservado.</li>
+              <li>Acompañamiento personalizado durante todo el proceso.</li>
+              <li>Solo compradores cualificados acceden a la información completa.</li>
+            </ul>
+          </div>
         </div>
         <div className={styles.footerBottom}>
           <span>© 2026 Larum Studio. Todos los derechos reservados.</span>
