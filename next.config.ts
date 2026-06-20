@@ -9,6 +9,12 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  async rewrites() {
+    return [
+      { source: '/landing', destination: 'https://landing-two-theta-43.vercel.app/landing' },
+      { source: '/landing/:path*', destination: 'https://landing-two-theta-43.vercel.app/landing/:path*' },
+    ];
+  },
 };
 
 export default nextConfig;
