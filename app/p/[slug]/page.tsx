@@ -5,7 +5,6 @@ interface PageProps {
   params: Promise<{ slug: string }>;
 }
 
-// Convierte un campo que puede venir como string JSON, objeto, o vacío
 function parseJSON(value: any, fallback: any) {
   if (value === null || value === undefined || value === '') return fallback;
   if (typeof value === 'object') return value;
@@ -48,12 +47,15 @@ export default async function Page({ params }: PageProps) {
     property: {
       name: raw.nombre,
       heroHeadline: raw.hero_headline,
+      heroSubtitle: raw.hero_subtitle,
       tagline: raw.tagline,
       precio: raw.precio || '',
       positioning: positioning && (positioning.paragraphs?.length || positioning.eyebrow) ? positioning : null,
+      positioningDesc: raw.positioning_desc || '',
       story: {
         title: raw.historia_titulo,
         paragraphs: Array.isArray(raw.historia_parrafos) ? raw.historia_parrafos : [],
+        image: raw.historia_imagen || '',
       },
       location: {
         city: raw.ciudad,
@@ -75,6 +77,7 @@ export default async function Page({ params }: PageProps) {
       videoMarkers: Array.isArray(videoMarkers) ? videoMarkers : [],
       posterHero: raw.poster_url,
       lifestyle: lifestyle && (lifestyle.items?.length || lifestyle.title || lifestyle.eyebrow) ? lifestyle : null,
+      lifestyleImage: raw.lifestyle_imagen || '',
       featuresGrid: featuresGrid && featuresGrid.items?.length ? featuresGrid : null,
       features: (raw.features && typeof raw.features === 'object') ? raw.features : null,
       amenities: Array.isArray(raw.amenities) ? raw.amenities : [],
