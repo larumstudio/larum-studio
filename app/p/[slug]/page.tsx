@@ -94,6 +94,8 @@ export default async function Page({ params }: PageProps) {
       galleryPreview: galeriaPreview || {},
       amenitiesImage: raw.amenities_image || '',
       agentEmail: raw.agente_email || '',
+      footerTitulo: raw.footer_titulo || '',
+      footerDesc: raw.footer_desc || '',
     },
     agent: {
       name: raw.agente_nombre || '',
