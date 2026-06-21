@@ -1,5 +1,4 @@
 import type { NextConfig } from "next";
-
 const nextConfig: NextConfig = {
   images: {
     remotePatterns: [
@@ -13,6 +12,8 @@ const nextConfig: NextConfig = {
     return [
       { source: '/landing', destination: 'https://landing-two-theta-43.vercel.app/landing' },
       { source: '/landing/:path*', destination: 'https://landing-two-theta-43.vercel.app/landing/:path*' },
+      { source: '/panel', destination: 'https://landing-two-theta-43.vercel.app/landing' },
+      { source: '/panel/:path*', destination: 'https://landing-two-theta-43.vercel.app/landing/:path*' },
     ];
   },
 };

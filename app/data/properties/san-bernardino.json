@@ -17,7 +17,6 @@
       "address": "San Bernardino, Paraguay",
       "description": "A orillas del lago Ypacaraí, en la ciudad más exclusiva del Paraguay. Un entorno residencial con conectividad, naturaleza y privacidad en perfecta armonía.",
       "mapsUrl": "https://www.google.com/maps/place/San+Bernardino/@-25.3277542,-57.2992066,13z",
-      "mapImage": "https://larumstudio.com/wp-content/uploads/2026/06/mapa-san-bernardino.jpg",
       "landmarks": [
         {
           "label": "Lago\nYpacaraí",
@@ -60,7 +59,7 @@
     "videoHero": "https://larumstudio.com/wp-content/uploads/2026/05/Transicion-dia-a-noche-cinematica-Optimizada-Web.mp4",
     "videoPresentacion": "https://larumstudio.com/wp-content/uploads/2026/05/dron-aereo-Optimizada-Web.mp4",
     "posterHero": "https://larumstudio.com/wp-content/uploads/2026/05/atardecer.webp",
-    "amenitiesImage": "https://larumstudio.com/wp-content/uploads/2026/06/lago-san-bernardino-ypacarai-posicionamiento-premium-viviendas-de-lujo.webp",
+    "amenitiesImage": "https://larumstudio.com/wp-content/uploads/2026/04/unnamed-22.webp",
     "galleryPreview": {
       "main": {
         "url": "https://larumstudio.com/wp-content/uploads/2026/05/atardecer.webp",
@@ -197,19 +196,14 @@
         }
       ]
     },
-    "brochure": "https://larumstudio.com/wp-content/uploads/2026/05/BROCHURE-PROPIEDAD-1.webp",
+    "brochure": "/brochure-san-bernardino.pdf",
     "brochurePages": [
       "https://larumstudio.com/wp-content/uploads/2026/05/BROCHURE-PROPIEDAD-1.webp",
       "https://larumstudio.com/wp-content/uploads/2026/05/BROCHURE-PROPIEDAD-2.webp"
     ],
     "gallery": [
       {
-        "url": "https://larumstudio.com/wp-content/uploads/2026/05/Transicion-dia-a-noche-cinematica-Optimizada-Web.mp4",
-        "caption": "Transición día y noche",
-        "isVideo": true
-      },
-      {
-        "url": "https://larumstudio.com/wp-content/uploads/2026/05/atardecer.webp",
+        "url": "https://larumstudio.com/wp-content/uploads/2026/04/unnamed.webp",
         "caption": "Fachada Principal y Alberca Infinity"
       },
       {
@@ -225,7 +219,7 @@
         "caption": "Vista nocturna"
       },
       {
-        "url": "https://larumstudio.com/wp-content/uploads/2026/06/lago-san-bernardino-ypacarai-posicionamiento-premium-viviendas-de-lujo.webp",
+        "url": "https://larumstudio.com/wp-content/uploads/2026/04/unnamed-22.webp",
         "caption": "Jardín y piscina"
       },
       {

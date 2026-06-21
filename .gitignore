@@ -42,3 +42,11 @@ next-env.d.ts
 
 .vercel
 .env*
+
+# Backups locales
+*.BACKUP.*
+*BACKUP*
+
+# Backups locales
+*.BACKUP.*
+*BACKUP*
