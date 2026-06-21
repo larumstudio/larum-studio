@@ -545,17 +545,20 @@
 
 .amenitiesIcons {
   display: grid;
-  grid-template-columns: repeat(3, auto);
-  gap: 2rem 2.5rem;
-  justify-content: start;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2.5rem 1.5rem;
+  width: 100%;
+  max-width: 420px;
 }
 
 .amenityItem {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: flex-start;
   gap: 0.875rem;
   cursor: default;
+  min-height: 90px;
 }
 
 .amenityIcon {
