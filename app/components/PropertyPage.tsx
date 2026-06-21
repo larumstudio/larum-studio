@@ -1,6 +1,5 @@
 'use client'
 import React, { useState, useEffect } from 'react'
-import Gallery from './gallery'
 import styles from '../page.module.css'
 
 const IconPlay = () => <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z" /></svg>
@@ -74,17 +73,16 @@ const amenityIcons: Record<string, React.ReactNode> = {
   'CANCHA DE VOLEIBOL': <svg width="36" height="36" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1}><rect x="2" y="4" width="20" height="16" rx="1"/><path d="M12 4v16M2 12h20"/><circle cx="12" cy="8" r="2"/></svg>,
   'SALA DE REUNIONES': <svg width="36" height="36" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1}><rect x="2" y="6" width="20" height="14" rx="1"/><path d="M8 6V4h8v2"/><path d="M6 11h12M6 14h8"/></svg>,
 }
+const defaultIcon = <svg width="36" height="36" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1}><circle cx="12" cy="12" r="9"/></svg>
 
 const featureIcons: React.ReactNode[] = [
-  <svg width="28" height="28" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1}><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>,
-  <svg width="28" height="28" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1}><rect x="2" y="2" width="9" height="9" rx="1"/><rect x="13" y="2" width="9" height="9" rx="1"/><rect x="2" y="13" width="9" height="9" rx="1"/><rect x="13" y="13" width="9" height="9" rx="1"/></svg>,
-  <svg width="28" height="28" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1}><path d="M3 12h18M12 3v18"/></svg>,
-  <svg width="28" height="28" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1}><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M2 12h2M20 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>,
-  <svg width="28" height="28" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1}><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/><path d="M9 22V12h6v10"/></svg>,
-  <svg width="28" height="28" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1}><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>,
+  <svg key="0" width="28" height="28" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1}><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>,
+  <svg key="1" width="28" height="28" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1}><rect x="2" y="2" width="9" height="9" rx="1"/><rect x="13" y="2" width="9" height="9" rx="1"/><rect x="2" y="13" width="9" height="9" rx="1"/><rect x="13" y="13" width="9" height="9" rx="1"/></svg>,
+  <svg key="2" width="28" height="28" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1}><path d="M3 12h18M12 3v18"/></svg>,
+  <svg key="3" width="28" height="28" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1}><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M2 12h2M20 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>,
+  <svg key="4" width="28" height="28" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1}><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/><path d="M9 22V12h6v10"/></svg>,
+  <svg key="5" width="28" height="28" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1}><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>,
 ]
-
-const defaultIcon = <svg width="36" height="36" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1}><circle cx="12" cy="12" r="9"/></svg>
 
 function BrochureForm({ agentEmail, compact }: { agentEmail: string, compact?: boolean }) {
   const [submitted, setSubmitted] = React.useState(false)
@@ -92,7 +90,6 @@ function BrochureForm({ agentEmail, compact }: { agentEmail: string, compact?: b
   const [email, setEmail] = React.useState('')
   const [whatsapp, setWhatsapp] = React.useState('')
   const [loading, setLoading] = React.useState(false)
-
   const canSubmit = whatsapp.trim() !== ''
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -104,7 +101,7 @@ function BrochureForm({ agentEmail, compact }: { agentEmail: string, compact?: b
       fd.append('nombre', nombre || '—')
       fd.append('email', email || '—')
       fd.append('whatsapp', whatsapp)
-      fd.append('_subject', 'Solicitud Memoria — Villa San Bernardino')
+      fd.append('_subject', 'Solicitud Memoria')
       fd.append('_captcha', 'false')
       fd.append('_template', 'table')
       await fetch(`https://formsubmit.co/${agentEmail}`, { method: 'POST', body: fd })
@@ -125,20 +122,15 @@ function BrochureForm({ agentEmail, compact }: { agentEmail: string, compact?: b
   return (
     <form className={compact ? styles.memoriaFormCompact : styles.memoriaFormWrap} onSubmit={handleSubmit}>
       <div className={styles.formField}>
-        <input className={styles.formInput} type="text" placeholder="NOMBRE"
-          value={nombre} onChange={e => setNombre(e.target.value)} />
+        <input className={styles.formInput} type="text" placeholder="NOMBRE" value={nombre} onChange={e => setNombre(e.target.value)} />
       </div>
       <div className={styles.formField}>
-        <input className={styles.formInput} type="email" placeholder="EMAIL"
-          value={email} onChange={e => setEmail(e.target.value)} />
+        <input className={styles.formInput} type="email" placeholder="EMAIL" value={email} onChange={e => setEmail(e.target.value)} />
       </div>
       <div className={styles.formField}>
-        <input className={styles.formInput} type="tel" placeholder="WHATSAPP *"
-          value={whatsapp} onChange={e => setWhatsapp(e.target.value)} />
+        <input className={styles.formInput} type="tel" placeholder="WHATSAPP *" value={whatsapp} onChange={e => setWhatsapp(e.target.value)} />
       </div>
-      <button type="submit" className={styles.memoriaBtn}
-        disabled={loading || !canSubmit}
-        style={{ opacity: canSubmit ? 1 : 0.45 }}>
+      <button type="submit" className={styles.memoriaBtn} disabled={loading || !canSubmit} style={{ opacity: canSubmit ? 1 : 0.45 }}>
         {loading ? 'Enviando…' : <><IconDownload /> Recibir Memoria</>}
       </button>
     </form>
@@ -160,7 +152,8 @@ export default function PropertyPage({ data }: { data: any }) {
   }, [])
 
   const { property, agent } = data
-  const whatsappUrl = `https://wa.me/${agent.whatsapp}?text=Hola, me interesa ${property.name}. ¿Podemos hablar?`
+  const waMensaje = encodeURIComponent(`Hola, vi la propiedad ${property.name} y quiero más información`)
+  const whatsappUrl = agent.whatsapp ? `https://wa.me/${agent.whatsapp}?text=${waMensaje}` : '#'
 
   return (
     <div className={styles.page}>
@@ -189,34 +182,21 @@ export default function PropertyPage({ data }: { data: any }) {
 
       {/* HERO */}
       <section id="residencia" className={styles.hero}>
-        <video
-          className={styles.heroBgVideo}
-          autoPlay
-          muted
-          loop
-          playsInline
-          poster={property.posterHero}
-          preload="auto"
-        >
-          <source src="https://larumstudio.com/wp-content/uploads/2026/05/Transicion-dia-a-noche-cinematica-Optimizada-Web.mp4" type="video/mp4" />
+        {property.videoHero ? (
+          <video className={styles.heroBgVideo} autoPlay muted loop playsInline poster={property.posterHero} preload="auto" key={property.videoHero}>
+            <source src={property.videoHero} type="video/mp4" />
+          </video>
+        ) : (
           <img src={property.posterHero} alt={property.name} className={styles.heroBgVideo} />
-        </video>
-        <div className={styles.heroGradientLR} />
-        <div className={styles.heroGradientTB} />
-        <div className={styles.heroSoundHint}>
-          <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
-            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 010 14.14M15.54 8.46a5 5 0 010 7.07"/>
-          </svg>
-          Activa el sonido para descubrir la experiencia
-        </div>
+        )}
         <div className={styles.heroGradientLR} />
         <div className={styles.heroGradientTB} />
         <div className={styles.heroInner}>
           <div className={styles.heroLeft}>
             <p className={styles.heroEyebrow}>{property.name} · {property.location.city}, {property.location.country}</p>
             <h1 className={styles.heroTitle}>{property.heroHeadline || property.name}</h1>
-            <p className={styles.heroDesc}>{property.tagline}</p>
-            <a href="#video" className={styles.heroPlayBtn}>
+            <p className={styles.heroDesc}>{property.heroSubtitle || property.tagline}</p>
+            <a href="#video-tour" className={styles.heroPlayBtn}>
               <span className={styles.heroPlayCircle}><IconPlay /></span>
               <span className={styles.heroPlayLabel}>Ver Presentación</span>
             </a>
@@ -232,11 +212,11 @@ export default function PropertyPage({ data }: { data: any }) {
               { value: property.stats.construidos, label: 'CONSTRUIDOS' },
               { value: property.stats.dormitorios, label: 'DORMITORIOS' },
               { value: property.stats.banos, label: 'BAÑOS' },
-            ].map((s, i, arr) => (
+            ].map((st, i, arr) => (
               <div key={i} className={`${styles.heroStat} ${i < arr.length - 1 ? styles.heroStatBorder : ''}`}>
                 <div>
-                  <div className={styles.heroStatValue}>{s.value}</div>
-                  <div className={styles.heroStatLabel}>{s.label}</div>
+                  <div className={styles.heroStatValue}>{st.value}</div>
+                  <div className={styles.heroStatLabel}>{st.label}</div>
                 </div>
               </div>
             ))}
@@ -256,6 +236,9 @@ export default function PropertyPage({ data }: { data: any }) {
         <section className={styles.positioning}>
           <div className={styles.positioningInner}>
             <p className={styles.eyebrow}>{property.positioning.eyebrow}</p>
+            {property.positioningDesc && (
+              <p className={styles.positioningPara} style={{ opacity: 0.85, marginBottom: '2rem' }}>{property.positioningDesc}</p>
+            )}
             <div className={styles.positioningText}>
               {property.positioning.paragraphs.map((p: string, i: number) => (
                 <p key={i} className={styles.positioningPara}>{p}</p>
@@ -271,7 +254,7 @@ export default function PropertyPage({ data }: { data: any }) {
           <div className={styles.storyLeft}>
             <p className={styles.eyebrow}>La Historia</p>
             <h2 className={styles.storyTitle}>{property.story?.title || property.name}</h2>
-            {property.story?.paragraphs ? (
+            {property.story?.paragraphs && property.story.paragraphs.length > 0 ? (
               property.story.paragraphs.map((p: string, i: number) => (
                 <p key={i} className={styles.storyDesc} style={i > 0 ? { marginTop: '1.25rem' } : {}}>{p}</p>
               ))
@@ -279,19 +262,15 @@ export default function PropertyPage({ data }: { data: any }) {
               <p className={styles.storyDesc}>{property.tagline}</p>
             )}
           </div>
-          <div className={styles.storyRight} id="video">
+          <div className={styles.storyRight}>
             <div className={styles.storyImgWrap}>
-              <img
-                src="https://larumstudio.com/wp-content/uploads/2026/05/atardecer.webp"
-                alt="Atardecer en San Bernardino"
-                className={styles.storyImg}
-              />
+              <img src={property.story?.image || property.posterHero} alt={property.story?.title || property.name} className={styles.storyImg} />
             </div>
           </div>
         </div>
       </section>
 
-      {/* VIDEO DESTACADO EDITORIAL */}
+      {/* VIDEO DESTACADO */}
       {property.videoPresentacion && (
         <section className={styles.videoFeature} id="video-tour">
           <div className={styles.videoFeatureInner}>
@@ -302,12 +281,7 @@ export default function PropertyPage({ data }: { data: any }) {
             <div className={styles.videoFeatureFrame}>
               <div className={styles.videoCornerTL} /><div className={styles.videoCornerTR} />
               <div className={styles.videoCornerBL} /><div className={styles.videoCornerBR} />
-              <video
-                className={styles.videoFeatureEl}
-                controls
-                poster={property.posterHero}
-                preload="none"
-              >
+              <video className={styles.videoFeatureEl} controls poster={property.posterHero} preload="none" key={property.videoPresentacion}>
                 <source src={property.videoPresentacion} type="video/mp4" />
               </video>
               <div className={styles.videoFeatureMeta}>
@@ -329,7 +303,7 @@ export default function PropertyPage({ data }: { data: any }) {
         </section>
       )}
 
-      {/* FEATURES — Diseñada sin Compromisos */}
+      {/* FEATURES */}
       {property.featuresGrid && (
         <section className={styles.features}>
           <div className={styles.featuresInner}>
@@ -347,13 +321,13 @@ export default function PropertyPage({ data }: { data: any }) {
         </section>
       )}
 
-      {/* GALLERY PREVIEW + SIDE PANEL */}
+      {/* GALLERY PREVIEW */}
       <section className={styles.gallerySection} id="galeria">
         <div className={styles.galleryInner}>
           <div className={styles.galleryHeader}>
             <div>
               <p className={styles.eyebrow}>Galería</p>
-              <h2 className={styles.galleryTitle}>30 momentos para enamorarte</h2>
+              <h2 className={styles.galleryTitle}>Momentos para enamorarte</h2>
               <p className={styles.gallerySubtitle}>Una secuencia visual que sigue el recorrido natural de la propiedad: impacto, atmósfera y detalles.</p>
             </div>
           </div>
@@ -379,10 +353,7 @@ export default function PropertyPage({ data }: { data: any }) {
                 ))}
               </div>
               <div className={styles.galleryCta}>
-                <button
-                  className={styles.galleryMoreBtn}
-                  onClick={() => setGalleryOpen(true)}
-                >
+                <button className={styles.galleryMoreBtn} onClick={() => setGalleryOpen(true)}>
                   Ver galería completa <IconArrow />
                 </button>
               </div>
@@ -397,14 +368,11 @@ export default function PropertyPage({ data }: { data: any }) {
           <div className={styles.galleryPanelInner} onClick={e => e.stopPropagation()}>
             <div className={styles.galleryPanelHeader}>
               <p className={styles.galleryPanelTitle}>Galería completa · {property.gallery.length} imágenes</p>
-              <button className={styles.galleryPanelClose} onClick={() => setGalleryOpen(false)}>
-                <IconClose />
-              </button>
+              <button className={styles.galleryPanelClose} onClick={() => setGalleryOpen(false)}><IconClose /></button>
             </div>
             <div className={styles.galleryPanelGrid}>
               {property.gallery.map((img: any, i: number) => (
-                <div key={i} className={styles.galleryPanelItem}
-                  onClick={() => setLightboxIndex(i)}>
+                <div key={i} className={styles.galleryPanelItem} onClick={() => setLightboxIndex(i)}>
                   <div className={styles.galleryPanelImgWrap}>
                     {img.isVideo ? (
                       <video src={img.url} autoPlay muted loop playsInline />
@@ -412,9 +380,7 @@ export default function PropertyPage({ data }: { data: any }) {
                       <img src={img.url} alt={img.caption} />
                     )}
                   </div>
-                  {img.caption && (
-                    <p className={styles.galleryPanelCaption}>{img.caption}</p>
-                  )}
+                  {img.caption && <p className={styles.galleryPanelCaption}>{img.caption}</p>}
                 </div>
               ))}
             </div>
@@ -426,42 +392,28 @@ export default function PropertyPage({ data }: { data: any }) {
       {lightboxIndex !== null && (
         <div className={styles.lightbox} onClick={() => setLightboxIndex(null)}>
           <button className={styles.lightboxClose} onClick={() => setLightboxIndex(null)}><IconClose /></button>
-          <button className={styles.lightboxPrev}
-            onClick={e => { e.stopPropagation(); setLightboxIndex((lightboxIndex - 1 + property.gallery.length) % property.gallery.length) }}>
-            ←
-          </button>
+          <button className={styles.lightboxPrev} onClick={e => { e.stopPropagation(); setLightboxIndex((lightboxIndex - 1 + property.gallery.length) % property.gallery.length) }}>←</button>
           <div className={styles.lightboxImgWrap} onClick={e => e.stopPropagation()}>
             <img src={property.gallery[lightboxIndex].url} alt={property.gallery[lightboxIndex].caption} />
-            {property.gallery[lightboxIndex].caption && (
-              <p className={styles.lightboxCaption}>{property.gallery[lightboxIndex].caption}</p>
-            )}
+            {property.gallery[lightboxIndex].caption && <p className={styles.lightboxCaption}>{property.gallery[lightboxIndex].caption}</p>}
           </div>
-          <button className={styles.lightboxNext}
-            onClick={e => { e.stopPropagation(); setLightboxIndex((lightboxIndex + 1) % property.gallery.length) }}>
-            →
-          </button>
+          <button className={styles.lightboxNext} onClick={e => { e.stopPropagation(); setLightboxIndex((lightboxIndex + 1) % property.gallery.length) }}>→</button>
         </div>
       )}
 
-      {/* LIGHTBOX PREVIEW (4 miniaturas → en la 5ª, CTA) */}
+      {/* LIGHTBOX PREVIEW */}
       {previewIndex !== null && (() => {
         const previewImgs = property.gallery.slice(1, 5)
         const isCtaSlide = previewIndex >= previewImgs.length
         return (
           <div className={styles.lightbox} onClick={() => setPreviewIndex(null)}>
             <button className={styles.lightboxClose} onClick={() => setPreviewIndex(null)}><IconClose /></button>
-            {previewIndex > 0 && (
-              <button className={styles.lightboxPrev}
-                onClick={e => { e.stopPropagation(); setPreviewIndex(previewIndex - 1) }}>
-                ←
-              </button>
-            )}
+            {previewIndex > 0 && <button className={styles.lightboxPrev} onClick={e => { e.stopPropagation(); setPreviewIndex(previewIndex - 1) }}>←</button>}
             {isCtaSlide ? (
               <div className={styles.lightboxCtaSlide} onClick={e => e.stopPropagation()}>
                 <p className={styles.lightboxCtaEyebrow}>Hay mucho más por descubrir</p>
                 <h3 className={styles.lightboxCtaTitle}>{property.gallery.length} momentos en total</h3>
-                <button className={styles.lightboxCtaBtn}
-                  onClick={() => { setPreviewIndex(null); setGalleryOpen(true) }}>
+                <button className={styles.lightboxCtaBtn} onClick={() => { setPreviewIndex(null); setGalleryOpen(true) }}>
                   Ver galería completa <IconArrow />
                 </button>
               </div>
@@ -472,23 +424,16 @@ export default function PropertyPage({ data }: { data: any }) {
                 ) : (
                   <img src={previewImgs[previewIndex].url} alt={previewImgs[previewIndex].caption} />
                 )}
-                {previewImgs[previewIndex].caption && (
-                  <p className={styles.lightboxCaption}>{previewImgs[previewIndex].caption}</p>
-                )}
+                {previewImgs[previewIndex].caption && <p className={styles.lightboxCaption}>{previewImgs[previewIndex].caption}</p>}
               </div>
             )}
-            {!isCtaSlide && (
-              <button className={styles.lightboxNext}
-                onClick={e => { e.stopPropagation(); setPreviewIndex(previewIndex + 1) }}>
-                →
-              </button>
-            )}
+            {!isCtaSlide && <button className={styles.lightboxNext} onClick={e => { e.stopPropagation(); setPreviewIndex(previewIndex + 1) }}>→</button>}
           </div>
         )
       })()}
 
       {/* AMENITIES */}
-      {property.amenities && (
+      {property.amenities && property.amenities.length > 0 && (
         <section className={styles.amenities} id="amenities">
           <div className={styles.amenitiesLeft}>
             <p className={styles.eyebrow}>Amenities</p>
@@ -504,7 +449,7 @@ export default function PropertyPage({ data }: { data: any }) {
             </div>
           </div>
           <div className={styles.amenitiesRight}>
-            <img src={property.amenitiesImage || property.galleryPreview?.secondary[0]?.url || property.posterHero} alt="Amenities" />
+            <img src={property.amenitiesImage || property.posterHero} alt="Amenities" />
             <div className={styles.amenitiesImgOverlay} />
           </div>
         </section>
@@ -539,7 +484,7 @@ export default function PropertyPage({ data }: { data: any }) {
         </section>
       )}
 
-      {/* LIFESTYLE / EL ENTORNO */}
+      {/* LIFESTYLE / ENTORNO */}
       {property.lifestyle && (
         <section className={styles.lifestyle} id="entorno">
           <div className={styles.lifestyleInner}>
@@ -547,15 +492,12 @@ export default function PropertyPage({ data }: { data: any }) {
               <div className={styles.lifestyleHeader}>
                 <p className={styles.eyebrow}>{property.lifestyle.eyebrow}</p>
                 <h2 className={styles.lifestyleTitle}>{property.lifestyle.title}</h2>
-                {(property.lifestyle.introParagraphs || [property.lifestyle.intro]).map((para: string, i: number) => (
+                {(property.lifestyle.introParagraphs || [property.lifestyle.intro]).filter(Boolean).map((para: string, i: number) => (
                   <p key={i} className={styles.lifestyleIntro} style={i > 0 ? { marginTop: '1.25rem' } : {}}>{para}</p>
                 ))}
               </div>
               <div className={styles.lifestyleHeroImg}>
-                <img
-                  src="https://larumstudio.com/wp-content/uploads/2026/06/lago-san-bernardino-ypacarai-posicionamiento-premium-viviendas-de-lujo.webp"
-                  alt="Lago Ypacaraí, San Bernardino"
-                />
+                <img src={property.lifestyleImage || property.posterHero} alt={property.lifestyle.title} />
               </div>
             </div>
             <div className={styles.lifestyleGrid}>
@@ -577,11 +519,9 @@ export default function PropertyPage({ data }: { data: any }) {
           <div className={styles.locationLeft}>
             <p className={styles.eyebrow}>Ubicación</p>
             <h2 className={styles.locationTitle}>{property.location.city}</h2>
-            <p className={styles.locationDesc}>{property.location.description || property.location.address}</p>
+            <p className={styles.locationDesc}>{property.location.description}</p>
             {property.location.mapsUrl && (
-              <a href={property.location.mapsUrl} target="_blank" rel="noopener" className={styles.locationBtn}>
-                Ver Ubicación en Mapa
-              </a>
+              <a href={property.location.mapsUrl} target="_blank" rel="noopener" className={styles.locationBtn}>Ver Ubicación en Mapa</a>
             )}
           </div>
           <div className={styles.locationMap}>
@@ -596,19 +536,10 @@ export default function PropertyPage({ data }: { data: any }) {
                   <defs><pattern id="gridP" width="30" height="30" patternUnits="userSpaceOnUse"><path d="M 30 0 L 0 0 0 30" fill="none" stroke="#ffffff" strokeWidth="0.4" /></pattern></defs>
                   <rect width="100%" height="100%" fill="url(#gridP)" />
                 </svg>
-                <svg className={styles.mapStreets} preserveAspectRatio="none">
-                  <line x1="0" y1="45%" x2="100%" y2="45%" stroke="#c9a96e" strokeWidth="1.5" opacity="0.2" />
-                  <line x1="0" y1="65%" x2="100%" y2="65%" stroke="#ffffff" strokeWidth="0.8" opacity="0.12" />
-                  <line x1="35%" y1="0" x2="35%" y2="100%" stroke="#c9a96e" strokeWidth="1.5" opacity="0.2" />
-                  <line x1="65%" y1="0" x2="65%" y2="100%" stroke="#ffffff" strokeWidth="0.8" opacity="0.12" />
-                </svg>
                 {property.location.landmarks && property.location.landmarks.map((lm: any, i: number) => (
                   <div key={i} className={styles.landmark} style={{ top: lm.top, left: lm.left }}>
                     <div className={styles.landmarkDotWrap}>
-                      {lm.isMain
-                        ? <div className={styles.landmarkMain}><div className={styles.landmarkPulse} /></div>
-                        : <div className={styles.landmarkDot} />
-                      }
+                      {lm.isMain ? <div className={styles.landmarkMain}><div className={styles.landmarkPulse} /></div> : <div className={styles.landmarkDot} />}
                     </div>
                     <div className={`${styles.landmarkLabel} ${lm.isMain ? styles.landmarkLabelMain : ''}`}>{lm.label}</div>
                   </div>
@@ -625,20 +556,14 @@ export default function PropertyPage({ data }: { data: any }) {
           <div className={styles.planoInner}>
             <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
               <p className={styles.eyebrow}>{property.floorPlan.copy?.eyebrow || 'Distribución'}</p>
-              <h2 className={styles.planoTitleCompact}>
-                {property.floorPlan.copy?.title || 'La distribución ideal'}
-              </h2>
+              <h2 className={styles.planoTitleCompact}>{property.floorPlan.copy?.title || 'La distribución ideal'}</h2>
               {property.floorPlan.copy?.subtitle && (
-                <p className={styles.storyDesc} style={{ maxWidth: '580px', margin: '1rem auto 0', opacity: 0.5, fontSize: '0.8rem' }}>
-                  {property.floorPlan.copy.subtitle}
-                </p>
+                <p className={styles.storyDesc} style={{ maxWidth: '580px', margin: '1rem auto 0', opacity: 0.5, fontSize: '0.8rem' }}>{property.floorPlan.copy.subtitle}</p>
               )}
             </div>
             <div className={styles.planoLayout}>
               {property.floorPlan.image && (
-                <div className={styles.planoImg}>
-                  <img src={property.floorPlan.image} alt="Plano" />
-                </div>
+                <div className={styles.planoImg}><img src={property.floorPlan.image} alt="Plano" /></div>
               )}
               <div className={styles.planoTable}>
                 <table className={styles.areaTable}>
@@ -649,9 +574,6 @@ export default function PropertyPage({ data }: { data: any }) {
                     ))}
                   </tbody>
                 </table>
-                {property.floorPlan.note && (
-                  <p className={styles.planoNote}>{property.floorPlan.note}</p>
-                )}
               </div>
             </div>
           </div>
@@ -659,7 +581,7 @@ export default function PropertyPage({ data }: { data: any }) {
       )}
 
       {/* GARANTÍA */}
-      {property.trust && (
+      {property.trust && property.trust.length > 0 && (
         <section className={styles.garantia}>
           <div className={styles.garantiaInner}>
             <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
@@ -678,22 +600,15 @@ export default function PropertyPage({ data }: { data: any }) {
         </section>
       )}
 
-      {/* BROCHURE / LEAD MAGNET */}
+      {/* BROCHURE */}
       <section className={styles.memoria} id="memoria">
         <div className={styles.memoriaInner3}>
           <div className={styles.memoriaTopRow}>
             <div className={styles.memoriaTopLeft}>
               <p className={styles.eyebrow}>Documentación</p>
               <h2 className={styles.memoriaTitle}>Memoria de<br />la Residencia.</h2>
-              <p className={styles.memoriaDesc}>Un documento de presentación diseñado para quienes desean conocer esta propiedad en profundidad. Arquitectura, espacios, acabados y experiencia reunidos en una presentación privada de 16 páginas.</p>
+              <p className={styles.memoriaDesc}>Un documento de presentación diseñado para quienes desean conocer esta propiedad en profundidad.</p>
               <p className={styles.memoriaMetaInline}>16 páginas PDF · descarga inmediata</p>
-            </div>
-            <div className={styles.memoriaTopRight}>
-              <img
-                src="https://larumstudio.com/wp-content/uploads/2026/06/presentacion-premium-propiedad-de-lujo.webp"
-                alt="Memoria de la Residencia"
-                className={styles.memoriaTopImg}
-              />
             </div>
           </div>
           <div className={styles.memoriaBottomForm}>
@@ -721,7 +636,7 @@ export default function PropertyPage({ data }: { data: any }) {
               <div className={styles.agentContacts}>
                 <div className={styles.agentContact}><IconPhone />{agent.phone}</div>
                 <div className={styles.agentContact}><IconMail />{agent.email}</div>
-                <div className={styles.agentContact}><IconInstagram />@larum.studio</div>
+                {agent.instagram && <div className={styles.agentContact}><IconInstagram />{agent.instagram}</div>}
               </div>
               {agent.authority && agent.authority.split('\n\n').map((para: string, i: number) => (
                 <p key={i} className={styles.agentAuthority} style={i > 0 ? { marginTop: '0.75rem', borderTop: 'none', paddingTop: 0 } : {}}>{para}</p>
@@ -734,6 +649,9 @@ export default function PropertyPage({ data }: { data: any }) {
             {(property.cta?.desc || 'Experiencias exclusivas para compradores que buscan excelencia.').split('\n\n').map((para: string, i: number) => (
               <p key={i} className={styles.contactDesc} style={i > 0 ? { marginTop: '1rem' } : {}}>{para}</p>
             ))}
+            <a href={whatsappUrl} target="_blank" rel="noopener" className={styles.locationBtn} style={{ marginTop: '2rem', display: 'inline-flex', alignItems: 'center', gap: '0.5rem' }}>
+              <IconWhatsapp /> Agendar Visita por WhatsApp
+            </a>
           </div>
           <div className={styles.contactForm}>
             {[
@@ -749,7 +667,7 @@ export default function PropertyPage({ data }: { data: any }) {
                   className={styles.formInput} />
               </div>
             ))}
-            <button className={styles.formBtn}>Agendar Visita Privada</button>
+            <a href={whatsappUrl} target="_blank" rel="noopener" className={styles.formBtn} style={{ textAlign: 'center', textDecoration: 'none', display: 'block' }}>Agendar Visita Privada</a>
           </div>
         </div>
       </section>
@@ -771,7 +689,6 @@ export default function PropertyPage({ data }: { data: any }) {
               <li>Propiedad no disponible en acceso abierto.</li>
               <li>Cada visita requiere cita previa en horario reservado.</li>
               <li>Acompañamiento personalizado durante todo el proceso.</li>
-              <li>Solo compradores cualificados acceden a la información completa.</li>
             </ul>
           </div>
         </div>
@@ -780,9 +697,11 @@ export default function PropertyPage({ data }: { data: any }) {
         </div>
       </footer>
 
-      <a href={whatsappUrl} className={styles.waFloat} target="_blank" rel="noopener" aria-label="WhatsApp">
-        <IconWhatsapp />
-      </a>
+      {agent.whatsapp && (
+        <a href={whatsappUrl} className={styles.waFloat} target="_blank" rel="noopener" aria-label="WhatsApp">
+          <IconWhatsapp />
+        </a>
+      )}
     </div>
   )
 }
