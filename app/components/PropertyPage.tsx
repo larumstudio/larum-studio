@@ -177,7 +177,7 @@ export default function PropertyPage({ data }: { data: any }) {
       {/* NAVBAR */}
       <nav className={`${styles.navbar} ${scrolled ? styles.navbarScrolled : ''}`}>
         <div className={styles.navInner}>
-          <a href="#residencia" className={styles.navLogo}>LARUM<span>STUDIO</span></a>
+          <a href="#residencia" className={styles.navLogo}>{property.footerTitulo || 'LARUM STUDIO'}</a>
           <div className={styles.navLinks}>
             {navLinks.map(l => <a key={l.href} href={l.href} className={styles.navLink}>{l.label}</a>)}
           </div>
@@ -252,14 +252,14 @@ export default function PropertyPage({ data }: { data: any }) {
         <section className={styles.positioning}>
           <div className={styles.positioningInner}>
             <p className={styles.eyebrow}>{property.positioning.eyebrow}</p>
-            {property.positioningDesc && (
-              <p style={{ fontFamily: 'Outfit, sans-serif', fontSize: '0.95rem', fontWeight: 300, lineHeight: 1.9, color: 'rgba(245,241,234,0.7)', maxWidth: '640px', margin: '0 auto 2.5rem' }}>{property.positioningDesc}</p>
-            )}
             <div className={styles.positioningText}>
               {property.positioning.paragraphs.map((p: string, i: number) => (
                 <p key={i} className={styles.positioningPara}>{p}</p>
               ))}
             </div>
+            {property.positioningDesc && (
+              <p style={{ fontFamily: 'Outfit, sans-serif', fontSize: '0.95rem', fontWeight: 300, lineHeight: 1.9, color: 'rgba(245,241,234,0.7)', maxWidth: '640px', margin: '2.5rem auto 0' }}>{property.positioningDesc}</p>
+            )}
           </div>
         </section>
       )}
