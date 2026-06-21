@@ -14,8 +14,8 @@
     "tagline": "No es una casa para todos. Es para quien entiende que el verdadero lujo es espacio, silencio y tiempo recuperado.",
     "badge": "Villa de Lujo · San Bernardino",
     "precio": "USD 3.500.000",
-    "posterHero": "https://larumstudio.com/wp-content/uploads/2026/04/unnamed.webp",
-    "videoHero": null,
+    "posterHero": "https://larumstudio.com/wp-content/uploads/2026/05/atardecer.webp",
+    "videoHero": "https://larumstudio.com/wp-content/uploads/2026/05/Transicion-dia-a-noche-cinematica-Optimizada-Web.mp4",
     "videoPresentacion": "https://larumstudio.com/wp-content/uploads/2026/06/san-bernardino-storytelling.mp4",
     "stats": {
       "terreno": "3.900 m²",
@@ -35,7 +35,7 @@
       "paragraphs": [
         "Hay un momento exacto, justo después de cruzar el portón, en que el ruido del mundo desaparece. El camino se abre, los árboles se cierran detrás, y queda solo el reflejo del lago entre los troncos. Esa sensación —la de haber llegado a un lugar que pocos conocen— es lo primero que ofrece esta casa, antes incluso de entrar.",
         "Adentro, la arquitectura no busca impresionar: busca acompañar. Espacios que respiran, luz que cambia con las horas y una piscina infinity que disuelve el límite entre la terraza y el agua. Todo está dispuesto para que la vida ocurra sin esfuerzo: una cena que se alarga, una mañana sin agenda, una tarde en la que no hace falta ir a ningún sitio.",
-        "Son 800 m² que no se sienten como una casa grande, sino como un territorio propio. Seis habitaciones, gimnasio y un jardín de casi 4.000 m²: espacio para que cada miembro de la familia tenga el suyo y para recibir sin que nadie se sienta de paso. Construida para durar, mantenida para entregarse hoy mismo."
+        "Son 800 m² que no se sienten como una casa grande, sino como un territorio propio. Seis habitaciones, gimnasio y un jardín de casi 4.000 m²: espacio para que cada miembro de la familia tenga el suyo y para recibir sin que se sienta de paso. Construida para durar, mantenida para entregarse hoy mismo."
       ]
     },
     "featuresGrid": {
@@ -69,7 +69,7 @@
     },
     "galleryPreview": {
       "main": {
-        "url": "https://larumstudio.com/wp-content/uploads/2026/04/unnamed.webp",
+        "url": "https://larumstudio.com/wp-content/uploads/2026/05/atardecer.webp",
         "caption": "Fachada Principal y Piscina Infinity"
       },
       "secondary": [
@@ -95,7 +95,7 @@
       "SEGURIDAD 24H",
       "VISTA PANORÁMICA"
     ],
-    "amenitiesImage": "https://larumstudio.com/wp-content/uploads/2026/04/unnamed-22.webp",
+    "amenitiesImage": "https://larumstudio.com/wp-content/uploads/2026/06/lago-san-bernardino-ypacarai-posicionamiento-premium-viviendas-de-lujo.webp",
     "lifestyle": {
       "eyebrow": "El entorno",
       "title": "Vivir en San Bernardino",
@@ -181,7 +181,7 @@
           "isMain": false
         }
       ],
-      "mapImage": "https://larumstudio.com/wp-content/uploads/2026/05/noche.webp"
+      "mapImage": "https://larumstudio.com/wp-content/uploads/2026/06/mapa-san-bernardino.jpg"
     },
     "floorPlan": {
       "image": "https://larumstudio.com/wp-content/uploads/2026/05/plano-3d-san-bernardino.webp",
@@ -238,8 +238,12 @@
       "Lista para escriturar de inmediato",
       "Proceso de compra acompañado y transparente"
     ],
-    "brochure": null,
-    "brochurePages": [],
+    "brochure": "https://larumstudio.com/wp-content/uploads/2026/05/BROCHURE-PROPIEDAD-1.webp",
+    "brochurePages": [
+      {
+        "url": "https://larumstudio.com/wp-content/uploads/2026/05/BROCHURE-PROPIEDAD-1.webp"
+      }
+    ],
     "cta": {
       "eyebrow": "La visita",
       "title": "Las visitas se coordinan de forma privada.",
