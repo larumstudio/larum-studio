@@ -515,9 +515,8 @@
 }
 
 .amenitiesLeft {
-  padding: 5rem 5rem 5rem 2.5rem;
-  max-width: 700px;
-  margin-left: auto;
+  padding: 5rem 4rem;
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
