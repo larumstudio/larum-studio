@@ -84,6 +84,22 @@ const featureIcons: React.ReactNode[] = [
   <svg key="5" width="28" height="28" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1}><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>,
 ]
 
+const featureIconByName: Record<string, React.ReactNode> = {
+  'Reloj': <svg width="28" height="28" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1}><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>,
+  'Cuadricula': <svg width="28" height="28" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1}><rect x="2" y="2" width="9" height="9" rx="1"/><rect x="13" y="2" width="9" height="9" rx="1"/><rect x="2" y="13" width="9" height="9" rx="1"/><rect x="13" y="13" width="9" height="9" rx="1"/></svg>,
+  'Cruz': <svg width="28" height="28" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1}><path d="M3 12h18M12 3v18"/></svg>,
+  'Sol': <svg width="28" height="28" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1}><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M2 12h2M20 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>,
+  'Casa': <svg width="28" height="28" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1}><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/><path d="M9 22V12h6v10"/></svg>,
+  'Escudo': <svg width="28" height="28" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1}><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>,
+  'Estrella': <svg width="28" height="28" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1}><path d="M12 2l3 6.5 7 .8-5 4.8 1.3 7L12 17.5 5.7 21l1.3-7-5-4.8 7-.8z"/></svg>,
+  'Ubicacion': <svg width="28" height="28" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1}><path d="M12 22s8-7 8-12a8 8 0 10-16 0c0 5 8 12 8 12z"/><circle cx="12" cy="10" r="3"/></svg>,
+  'Hoja': <svg width="28" height="28" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1}><path d="M11 20A7 7 0 019.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z"/><path d="M2 21c0-3 1.85-5.36 5.08-6"/></svg>,
+  'Diamante': <svg width="28" height="28" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1}><path d="M6 3h12l4 6-10 12L2 9z"/><path d="M2 9h20M12 3L8 9l4 12 4-12z"/></svg>,
+  'Llave': <svg width="28" height="28" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1}><circle cx="8" cy="8" r="5"/><path d="M11.5 11.5L21 21M16 16l3-3M19 19l2-2"/></svg>,
+  'Corazon': <svg width="28" height="28" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1}><path d="M12 21s-8-5-8-11a4.5 4.5 0 018-3 4.5 4.5 0 018 3c0 6-8 11-8 11z"/></svg>,
+}
+
+
 function BrochureForm({ agentEmail, compact }: { agentEmail: string, compact?: boolean }) {
   const [submitted, setSubmitted] = React.useState(false)
   const [nombre, setNombre] = React.useState('')
@@ -237,7 +253,7 @@ export default function PropertyPage({ data }: { data: any }) {
           <div className={styles.positioningInner}>
             <p className={styles.eyebrow}>{property.positioning.eyebrow}</p>
             {property.positioningDesc && (
-              <p className={styles.positioningPara} style={{ opacity: 0.85, marginBottom: '2rem' }}>{property.positioningDesc}</p>
+              <p style={{ fontFamily: 'Outfit, sans-serif', fontSize: '0.95rem', fontWeight: 300, lineHeight: 1.9, color: 'rgba(245,241,234,0.7)', maxWidth: '640px', margin: '0 auto 2.5rem' }}>{property.positioningDesc}</p>
             )}
             <div className={styles.positioningText}>
               {property.positioning.paragraphs.map((p: string, i: number) => (
@@ -311,7 +327,7 @@ export default function PropertyPage({ data }: { data: any }) {
             <div className={styles.featuresGrid}>
               {property.featuresGrid.items.map((f: any, i: number) => (
                 <div key={i} className={styles.featureItem}>
-                  <div className={styles.featureIcon}>{featureIcons[i] || featureIcons[0]}</div>
+                  <div className={styles.featureIcon}>{(f.icono && featureIconByName[f.icono]) || featureIcons[i] || featureIcons[0]}</div>
                   <h3 className={styles.featureTitle}>{f.title}</h3>
                   <p className={styles.featureDesc}>{f.desc}</p>
                 </div>
@@ -610,6 +626,11 @@ export default function PropertyPage({ data }: { data: any }) {
               <p className={styles.memoriaDesc}>Un documento de presentación diseñado para quienes desean conocer esta propiedad en profundidad.</p>
               <p className={styles.memoriaMetaInline}>16 páginas PDF · descarga inmediata</p>
             </div>
+            {property.brochurePages && property.brochurePages.length > 0 && (
+              <div className={styles.memoriaTopRight}>
+                <img src={property.brochurePages[0]} alt="Memoria de la Residencia" className={styles.memoriaTopImg} onError={(e)=>(e.currentTarget.style.display='none')} />
+              </div>
+            )}
           </div>
           <div className={styles.memoriaBottomForm}>
             <div className={styles.memoriaFormCard}>
@@ -676,8 +697,8 @@ export default function PropertyPage({ data }: { data: any }) {
       <footer className={styles.footer}>
         <div className={styles.footerInner}>
           <div className={styles.footerCol}>
-            <div className={styles.footerLogo}>LARUM<span>STUDIO</span></div>
-            <p className={styles.footerTagline}>Micrositios inmobiliarios de alto impacto para propiedades exclusivas.</p>
+            <div className={styles.footerLogo}>{property.footerTitulo || 'LARUM STUDIO'}</div>
+            <p className={styles.footerTagline}>{property.footerDesc || 'Micrositios inmobiliarios de alto impacto para propiedades exclusivas.'}</p>
           </div>
           <nav className={styles.footerNavGrid}>
             {navLinks.map(l => <a key={l.href} href={l.href} className={styles.footerLink}>{l.label}</a>)}
@@ -693,7 +714,8 @@ export default function PropertyPage({ data }: { data: any }) {
           </div>
         </div>
         <div className={styles.footerBottom}>
-          <span>© 2026 Larum Studio. Todos los derechos reservados.</span>
+          <span>© 2026 {property.footerTitulo || 'Larum Studio'}. Todos los derechos reservados.</span>
+          <span style={{ opacity: 0.5, fontSize: '0.7rem', letterSpacing: '0.15em' }}>Presentación creada por <strong style={{ fontWeight: 400, color: '#c9a96e' }}>Larum Studio</strong></span>
         </div>
       </footer>
 
