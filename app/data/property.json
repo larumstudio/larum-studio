@@ -159,32 +159,7 @@
       "description": "Frente al lago Ypacaraí, en el corredor residencial más consolidado de San Bernardino. Camino asfaltado hasta el acceso, conexión directa a la autopista a Asunción y el agua a pocos minutos.",
       "mapsUrl": "https://www.google.com/maps/place/San+Bernardino/@-25.3277542,-57.2992066,13z",
       "googleMapsEmbed": null,
-      "landmarks": [
-        {
-          "label": "Villa San Bernardino",
-          "top": "45%",
-          "left": "50%",
-          "isMain": true
-        },
-        {
-          "label": "Lago Ypacaraí",
-          "top": "25%",
-          "left": "20%",
-          "isMain": false
-        },
-        {
-          "label": "Centro",
-          "top": "60%",
-          "left": "70%",
-          "isMain": false
-        },
-        {
-          "label": "Autopista",
-          "top": "75%",
-          "left": "55%",
-          "isMain": false
-        }
-      ],
+      "landmarks":[{"nombre":"Aeropuerto (ASU)","icono":"aeropuerto","detalle":"35 km","minutos":40},{"nombre":"Asunción Golf Club","icono":"golf","detalle":"55 km","minutos":55},{"nombre":"Club Centenario","icono":"club","detalle":"48 km","minutos":50},{"nombre":"Club Náutico San Bernardino","icono":"nautico","detalle":"1.5 km","minutos":3},{"nombre":"Shopping del Sol","icono":"shopping","detalle":"45 km","minutos":50},{"nombre":"Centro Financiero de Asunción","icono":"financiero","detalle":"48 km","minutos":55},{"nombre":"Basílica de Caacupé","icono":"basilica","detalle":"23 km","minutos":25},{"nombre":"Centro Médico Bautista","icono":"medico","detalle":"48 km","minutos":55}],
       "mapImage": "https://larumstudio.com/wp-content/uploads/2026/06/mapa-san-bernardino.jpg"
     },
     "floorPlan": {

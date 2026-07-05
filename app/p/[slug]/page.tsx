@@ -1,5 +1,6 @@
 import { notFound } from 'next/navigation';
-import PropertyPage from '@/app/components/PropertyPage';
+import type { Metadata } from 'next';
+import PropertyPage from '../../components/PropertyPage';
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -19,19 +20,43 @@ function parseJSON(value: any, fallback: any) {
   return fallback;
 }
 
-export default async function Page({ params }: PageProps) {
-  const { slug } = await params;
+async function fetchProperty(slug: string) {
   const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';
-  let raw;
   try {
     const res = await fetch(`${apiUrl}/propiedades/${slug}`, {
       next: { revalidate: 0 },
     });
-    if (!res.ok) return notFound();
-    raw = await res.json();
+    if (!res.ok) return null;
+    return await res.json();
   } catch {
-    return notFound();
+    return null;
   }
+}
+
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { slug } = await params;
+  const raw = await fetchProperty(slug);
+  if (!raw) return { title: 'Propiedad no encontrada' };
+
+  const title = raw.seo_title || raw.nombre || 'Propiedad';
+  const description = raw.seo_description || raw.tagline || '';
+  const ogImage = raw.seo_og_image || raw.poster_url || '';
+
+  return {
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      ...(ogImage ? { images: [{ url: ogImage }] } : {}),
+    },
+  };
+}
+
+export default async function Page({ params }: PageProps) {
+  const { slug } = await params;
+  const raw = await fetchProperty(slug);
+  if (!raw) return notFound();
 
   const positioning = parseJSON(raw.positioning, null);
   const lifestyle = parseJSON(raw.lifestyle, null);
@@ -40,6 +65,10 @@ export default async function Page({ params }: PageProps) {
   const planoCopy = parseJSON(raw.plano_copy, null);
   const videoMarkers = parseJSON(raw.video_markers, []);
   const galeriaPreview = parseJSON(raw.galeria_preview, {});
+  const descargables = parseJSON(raw.descargables, []);
+  const gastos = parseJSON(raw.gastos, []);
+  const credenciales = parseJSON(raw.agente_credenciales, []);
+  const entornoData = parseJSON(raw.entorno_data, null);
 
   const data = {
     slug: raw.slug,
@@ -70,6 +99,9 @@ export default async function Page({ params }: PageProps) {
         construidos: raw.stat_construidos,
         dormitorios: raw.stat_dormitorios,
         banos: raw.stat_banos,
+        cocheras: raw.stat_cocheras || '',
+        plantas: raw.stat_plantas || '',
+        ano: raw.stat_ano || '',
       },
       videoHero: raw.video_hero,
       videoPresentacion: raw.video_presentacion,
@@ -96,6 +128,15 @@ export default async function Page({ params }: PageProps) {
       agentEmail: raw.agente_email || '',
       footerTitulo: raw.footer_titulo || '',
       footerDesc: raw.footer_desc || '',
+      // Fase 2
+      descargables: Array.isArray(descargables) ? descargables : [],
+      gastos: Array.isArray(gastos) ? gastos : [],
+      qrUrl: raw.qr_url || '',
+      privacidadTexto: raw.privacidad_texto || '',
+      privacidadUrl: raw.privacidad_url || '',
+      ga4Id: raw.ga4_id || '',
+      metaPixelId: raw.meta_pixel_id || '',
+      entornoData: entornoData,
     },
     agent: {
       name: raw.agente_nombre || '',
@@ -106,6 +147,11 @@ export default async function Page({ params }: PageProps) {
       instagram: raw.agente_instagram || '',
       photo: raw.agente_foto || '',
       authority: raw.agente_authority || '',
+      // Fase 2
+      bio: raw.agente_bio || '',
+      credenciales: Array.isArray(credenciales) ? credenciales : [],
+      linkedin: raw.agente_linkedin || '',
+      scheduleUrl: raw.agente_schedule_url || '',
     },
   };
 
