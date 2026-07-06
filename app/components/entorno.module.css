@@ -90,11 +90,11 @@
 }
 
 .heroSubtitle {
-  margin: 24px auto 0;
-  font-size: clamp(15px, 1.4vw, 20px);
-  line-height: 1.6;
-  color: rgba(255, 255, 255, 0.88);
-  max-width: 680px;
+  margin: 28px auto 0;
+  font-size: clamp(18px, 1.65vw, 24px);
+  line-height: 1.55;
+  color: rgba(255, 255, 255, 0.9);
+  max-width: 760px;
 }
 
 /* SECCIONES */
@@ -608,11 +608,11 @@
   }
 
   .heroSubtitle {
-    max-width: 320px;
-    margin: 22px auto 0;
-    font-size: 14px;
-    line-height: 1.55;
-  }
+  max-width: 360px;
+  margin: 24px auto 0;
+  font-size: 16px;
+  line-height: 1.55;
+}
 
   .heroNav {
     left: 20px;
@@ -698,10 +698,10 @@
   }
 
   .heroSubtitle {
-    max-width: 300px;
-    font-size: 13.5px;
-    line-height: 1.55;
-  }
+  max-width: 320px;
+  font-size: 15px;
+  line-height: 1.55;
+}
 
   .sectionTitle {
     font-size: clamp(36px, 12vw, 52px);
