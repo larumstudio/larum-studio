@@ -510,7 +510,8 @@ export default function PropertyPage({ data }: { data: any }) {
             <div className={styles.videoFeatureFrame}>
               <div className={styles.videoCornerTL} /><div className={styles.videoCornerTR} />
               <div className={styles.videoCornerBL} /><div className={styles.videoCornerBR} />
-              <video className={styles.videoFeatureEl} controls poster={property.posterVideo || property.posterHero} preload="none" key={property.videoPresentacion}>
+              {/* Cambio 1: Video poster URL fija */}
+              <video className={styles.videoFeatureEl} controls poster="https://larumstudio.com/wp-content/uploads/2026/04/unnamed-1.webp" preload="none" key={property.videoPresentacion}>
                 <source src={property.videoPresentacion} type="video/mp4" />
               </video>
               <div className={styles.videoFeatureMeta}>
@@ -569,10 +570,21 @@ export default function PropertyPage({ data }: { data: any }) {
           {property.gallery && property.gallery.length > 0 && (
             <div className={styles.galleryPreviewLayout}>
               <div className={styles.galleryHeroImg}>
+                {/* Cambio 6: Forzar carga de primera imagen con URL directa si falla */}
                 {property.gallery[0].isVideo ? (
                   <video src={property.gallery[0].url} autoPlay muted loop playsInline />
                 ) : (
-                  <img loading="lazy" src={property.gallery[0].url} alt={property.gallery[0].caption} />
+                  <img 
+                    loading="lazy" 
+                    src={property.gallery[0].url || 'https://larumstudio.com/wp-content/uploads/2026/04/unnamed-1.webp'} 
+                    alt={property.gallery[0].caption}
+                    onError={(e) => {
+                      const target = e.currentTarget;
+                      if (target.src !== 'https://larumstudio.com/wp-content/uploads/2026/04/unnamed-1.webp') {
+                        target.src = 'https://larumstudio.com/wp-content/uploads/2026/04/unnamed-1.webp';
+                      }
+                    }}
+                  />
                 )}
                 <div className={styles.galCaption}>{property.gallery[0].caption}</div>
               </div>
@@ -720,8 +732,8 @@ export default function PropertyPage({ data }: { data: any }) {
         </RevealSection>
       )}
 
-      {/* FULL BLEED BREAK 1 */}
-      <FullBleedBreak src="https://larumstudio.com/wp-content/uploads/2026/04/unnamed-10.webp" caption="Residencia San Bernardino" />
+      {/* FULL BLEED BREAK 1 - Cambio 8: imagen de mayor resolución */}
+      <FullBleedBreak src="https://larumstudio.com/wp-content/uploads/2026/07/Piscina-2560px-upscaled.webp" caption="Residencia San Bernardino" />
 
       {/* UBICACIÓN */}
       <RevealSection className={styles.location} id="ubicacion">
@@ -729,7 +741,7 @@ export default function PropertyPage({ data }: { data: any }) {
           <div className={styles.locationLeft}>
             <p className={styles.eyebrow}>Ubicación</p>
             <h2 className={styles.locationTitle}>{property.location.city}</h2>
-            <p className={styles.locationDesc}>{property.location.description}</p>
+            {/* Cambio 2: Eliminada la descripción de ubicación */}
             {property.location.landmarks && property.location.landmarks.length > 0 && (
               <div className={styles.landmarksList}>
                 <p className={styles.landmarksNearby}>PUNTOS DE INTERÉS</p>
@@ -791,13 +803,13 @@ export default function PropertyPage({ data }: { data: any }) {
         </div>
       </RevealSection>
 
-      {/* PLANO */}
+      {/* PLANO - Cambio 3: textos aspiracionales */}
       {property.floorPlan && property.floorPlan.areas && property.floorPlan.areas.length > 0 && (
         <RevealSection className={styles.plano} id="plano">
           <div className={styles.planoInner}>
             <div className={styles.planoHeader}>
-              <p className={styles.eyebrow}>{property.floorPlan.copy?.eyebrow || 'Distribución'}</p>
-              <h2 className={styles.planoTitleTop}>El arte de habitar con intención.</h2>
+              <p className={styles.eyebrow}>Un recorrido con sentido</p>
+              <h2 className={styles.planoTitleTop}>Donde cada espacio encuentra su razón de ser.</h2>
             </div>
             <div className={styles.planoTwoCol}>
               {property.floorPlan.image && (
@@ -872,7 +884,7 @@ export default function PropertyPage({ data }: { data: any }) {
                 ))}
               </div>
             </div>
-          {/* COL 2: DESCARGABLES */}
+          {/* COL 2: DESCARGABLES - Cambio 4: URLs reales */}
           <div className={styles.trustDocsCol}>
             <h3 className={styles.trustDocsColTitle}>Documentación</h3>
             <div className={styles.descargablesStackV}>
@@ -889,21 +901,21 @@ export default function PropertyPage({ data }: { data: any }) {
                 ))
               ) : (
                 <>
-                  <div className={styles.descargableRow}>
+                  <a href="https://larumstudio.com/wp-content/uploads/2026/07/planos-villa-san-bernardino_compressed.pdf" target="_blank" rel="noopener" className={styles.descargableRow}>
                     <span className={styles.descargableRowNum}>01</span>
                     <div className={styles.descargableRowInfo}><span className={styles.descargableRowTitle}>Planos de distribución</span></div>
                     <span className={styles.descargableRowIcon}><IconDownload /></span>
-                  </div>
-                  <div className={styles.descargableRow}>
+                  </a>
+                  <a href="https://larumstudio.com/wp-content/uploads/2026/07/Certificado_Eficiencia_Energetica_Villa_San_Bernardino_compressed.pdf" target="_blank" rel="noopener" className={styles.descargableRow}>
                     <span className={styles.descargableRowNum}>02</span>
                     <div className={styles.descargableRowInfo}><span className={styles.descargableRowTitle}>Certificación energética</span></div>
                     <span className={styles.descargableRowIcon}><IconDownload /></span>
-                  </div>
-                  <div className={styles.descargableRow}>
+                  </a>
+                  <a href="https://larumstudio.com/wp-content/uploads/2026/07/Ficha_Tecnica_Villa_San_Bernardino_compressed.pdf" target="_blank" rel="noopener" className={styles.descargableRow}>
                     <span className={styles.descargableRowNum}>03</span>
                     <div className={styles.descargableRowInfo}><span className={styles.descargableRowTitle}>Ficha técnica</span></div>
                     <span className={styles.descargableRowIcon}><IconDownload /></span>
-                  </div>
+                  </a>
                 </>
               )}
             </div>
@@ -931,7 +943,7 @@ export default function PropertyPage({ data }: { data: any }) {
         </div>
       </RevealSection>
 
-      {/* BROCHURE */}
+      {/* BROCHURE - Cambio 7: QR actualizado */}
       <RevealSection className={styles.memoria} id="memoria">
         <div className={styles.memoriaBalanced}>
           <div className={styles.memoriaBalancedLeft}>
@@ -952,21 +964,25 @@ export default function PropertyPage({ data }: { data: any }) {
         </div>
       </RevealSection>
 
-      {/* AGENTE EXPANDIDO */}
+      {/* AGENTE EXPANDIDO - Cambios 5, 9, 10, 11 */}
       {(agent.bio || agent.authority) && (
         <RevealSection className={styles.agentExpanded}>
           <div className={styles.agentExpandedInner}>
-            {agent.photo && (
-              <div className={styles.agentExpandedPhoto}>
-                <img loading="lazy" src={agent.photo} alt={agent.name} />
-              </div>
-            )}
+            <div className={styles.agentExpandedPhoto}>
+              {/* Cambio 9: nueva foto del agente */}
+              <img loading="lazy" src="https://larumstudio.com/wp-content/uploads/2026/07/William-Rowe-scaled.webp" alt="William Rowe" />
+            </div>
             <div className={styles.agentExpandedInfo}>
-              <p className={styles.agentExpandedCargo}>{agent.title}</p>
-              <h2 className={styles.agentExpandedName}>{agent.name}</h2>
+              <p className={styles.agentExpandedCargo}>Senior Advisor · Luxury Properties</p>
+              {/* Cambio 10: nombre actualizado */}
+              <h2 className={styles.agentExpandedName}>William Rowe</h2>
               <p className={styles.agentExpandedBio}>No trabaja con volumen. Trabaja con criterio.</p>
               <p className={styles.agentExpandedBio}>Representa solo un número selecto de residencias al año —aquellas que poseen carácter, ubicación privilegiada y una historia que merece ser contada con precisión. Cada una es tratada como una obra singular: estudiada, narrada y posicionada para encontrar al comprador que realmente la entiende.</p>
               <p className={styles.agentExpandedBio}>Su enfoque combina conocimiento profundo del mercado de alto nivel, discreción absoluta y una capacidad única para transmitir el valor emocional de cada propiedad.</p>
+              {/* Cambio 11: sección de idiomas */}
+              <p className={styles.agentExpandedBio} style={{ marginTop: '1.25rem', color: '#fff' }}>
+  Idiomas: Inglés, Español, Alemán
+</p>
               {agent.credenciales && agent.credenciales.length > 0 && (
                 <div className={styles.agentExpandedCredenciales}>
                   <p className={styles.agentCredencialesTitle}>Premios y Reconocimientos</p>
@@ -975,6 +991,7 @@ export default function PropertyPage({ data }: { data: any }) {
                   ))}
                 </div>
               )}
+              {/* Cambio 10: logros actualizados */}
               <div className={styles.agentStatsRow}>
                 <div className={styles.agentStatItem}><div className={styles.agentStatVal}>25</div><div className={styles.agentStatLabel}>propiedades de lujo</div></div>
                 <div className={styles.agentStatItem}><div className={styles.agentStatVal}>US$7.5M</div><div className={styles.agentStatLabel}>ventas concretadas</div></div>
@@ -984,8 +1001,10 @@ export default function PropertyPage({ data }: { data: any }) {
               <div className={styles.agentExpandedBtns}>
                 <a href={whatsappUrl || '#'} target="_blank" rel="noopener" className={styles.agentExpandedBtn}><IconWhatsapp /> WHATSAPP</a>
                 <a href={agent.email ? `mailto:${agent.email}` : '#'} className={styles.agentExpandedBtn}><IconMail /> EMAIL</a>
-                <a href={agent.linkedin || '#'} target="_blank" rel="noopener" className={styles.agentExpandedBtn}><IconLinkedin /> LINKEDIN</a>
-                <a href={agent.instagram || '#'} target="_blank" rel="noopener" className={styles.agentExpandedBtn}><IconInstagram /> INSTAGRAM</a>
+                {/* Cambio 5: LinkedIn actualizado */}
+                <a href="https://www.linkedin.com/company/larumstudiohq/" target="_blank" rel="noopener" className={styles.agentExpandedBtn}><IconLinkedin /> LINKEDIN</a>
+                {/* Cambio 5: Instagram actualizado */}
+                <a href="https://www.instagram.com/larumstudio/" target="_blank" rel="noopener" className={styles.agentExpandedBtn}><IconInstagram /> INSTAGRAM</a>
                 {agent.scheduleUrl && (
                   <a href={agent.scheduleUrl} target="_blank" rel="noopener" className={styles.agentExpandedBtn}><IconCalendar /> AGENDAR</a>
                 )}
@@ -996,11 +1015,9 @@ export default function PropertyPage({ data }: { data: any }) {
       )}
 
       {/* FULL BLEED BREAK 2 */}
-      {property.gallery && property.gallery.length > 2 && !property.gallery[2].isVideo && (
-        <FullBleedBreak src={property.gallery[2].url} />
-      )}
+      <FullBleedBreak src="https://larumstudio.com/wp-content/uploads/2026/07/Salon-2560px-upscaled.webp" />
 
-      {/* CONTACTO */}
+      {/* CONTACTO - Cambio 7: QR actualizado */}
       <RevealSection className={styles.contact} id="contacto">
         <div className={styles.contactClean}>
           <div className={styles.contactCleanLeft}>
@@ -1013,7 +1030,7 @@ export default function PropertyPage({ data }: { data: any }) {
           </div>
           <div className={styles.contactQrCenter}>
             <img
-              src={`https://api.qrserver.com/v1/create-qr-code/?size=140x140&data=${encodeURIComponent(property.qrUrl || 'https://larum.studio')}&color=C8A45D&bgcolor=0a0a0a`}
+              src="https://larumstudio.com/wp-content/uploads/2026/07/qr-code.png"
               alt="QR"
               className={styles.contactQrImg}
             />
@@ -1048,7 +1065,7 @@ export default function PropertyPage({ data }: { data: any }) {
         </div>
       </RevealSection>
 
-      {/* FOOTER */}
+      {/* FOOTER - Cambio 7: QR del footer actualizado */}
       <footer className={styles.footer}>
         <div className={styles.footerInner}>
           <div className={styles.footerCol}>
@@ -1069,7 +1086,7 @@ export default function PropertyPage({ data }: { data: any }) {
           </div>
           {property.qrUrl && (
             <div className={styles.footerQr}>
-              <img loading="lazy" src={`https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(property.qrUrl)}`} alt="QR" />
+              <img loading="lazy" src="https://larumstudio.com/wp-content/uploads/2026/07/qr-code.png" alt="QR" />
             </div>
           )}
         </div>
