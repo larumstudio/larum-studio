@@ -716,7 +716,9 @@ export default function PropertyPage({ data }: { data: any }) {
                 {(property.lifestyle.introParagraphs || [property.lifestyle.intro]).filter(Boolean).map((para: string, i: number) => (
                   <p key={i} className={styles.lifestyleIntro} style={i > 0 ? { marginTop: '1.25rem' } : {}}>{para}</p>
                 ))}
-                <a href={`/p/${data.slug}/entorno`} className={styles.locationBtnSecondary} style={{ marginTop: '2rem', display: 'inline-flex' }}>Descubrir entorno →</a>
+               <a href="/entorno" className={styles.locationBtnSecondary}>
+  Descubre San Bernardino →
+</a>
               </div>
             </div>
             <div className={styles.lifestyleGrid}>

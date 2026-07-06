@@ -1,0 +1,218 @@
+{
+  "name": "San Bernardino",
+  "country": "Paraguay",
+
+  "hero": {
+    "title": "San Bernardino",
+    "subtitle": "Naturaleza, privacidad y vida junto al lago, a menos de una hora de Asunción.",
+    "image": "https://larumstudio.com/wp-content/uploads/2026/07/san-bernardino-hero.jpg.webp"
+  },
+
+  "intro": {
+    "eyebrow": "Un entorno único",
+    "title": "Un lugar para vivir de otra manera",
+    "text": "San Bernardino combina la tranquilidad del Lago Ypacaraí con un entorno verde, residencial y de fuerte identidad. Su cercanía con Asunción lo convierte en un refugio ideal para quienes buscan privacidad, naturaleza y una vida social más pausada sin alejarse de la ciudad.",
+    "image": "https://larumstudio.com/wp-content/uploads/2026/07/san-bernardino-calle-arbolada.jpg.webp"
+  },
+
+  "lifestyle": [
+    {
+      "icon": "lake",
+      "label": "Vida junto al lago"
+    },
+    {
+      "icon": "club",
+      "label": "Clubes privados"
+    },
+    {
+      "icon": "restaurant",
+      "label": "Gastronomía"
+    },
+    {
+      "icon": "sport",
+      "label": "Deporte y náutica"
+    },
+    {
+      "icon": "nature",
+      "label": "Naturaleza"
+    },
+    {
+      "icon": "family",
+      "label": "Ambiente familiar"
+    },
+    {
+      "icon": "privacy",
+      "label": "Privacidad"
+    }
+  ],
+
+  "experiences": {
+    "eyebrow": "Experiencias",
+    "title": "La vida cotidiana elevada por el entorno",
+    "items": [
+      {
+        "title": "Atardeceres frente al lago",
+        "description": "El Lago Ypacaraí transforma el final del día en uno de los momentos más especiales de San Bernardino. La luz, el agua y la amplitud del paisaje crean una atmósfera serena y profundamente residencial.",
+        "image": "https://larumstudio.com/wp-content/uploads/2026/07/san-bernardino-atardecer-lago.jpg.webp"
+      },
+      {
+        "title": "Clubes, náutica y vida social",
+        "description": "La tradición de clubes y actividades náuticas aporta una dimensión social y deportiva muy valorada por familias, propietarios de segunda vivienda y quienes buscan una vida activa en contacto con el agua.",
+        "image": "https://larumstudio.com/wp-content/uploads/2026/07/san-bernardino-club-nautico.jpg.webp"
+      },
+      {
+        "title": "Gastronomía con identidad",
+        "description": "Restaurantes, cafés y confiterías históricas forman parte de la experiencia local. San Bernardino combina herencia europea, sabores paraguayos y propuestas contemporáneas en una escala cercana y relajada.",
+        "image": "https://larumstudio.com/wp-content/uploads/2026/07/san-bernardino-gastronomia.jpg.webp"
+      }
+    ]
+  },
+
+  "distances": {
+    "eyebrow": "Conectividad",
+    "title": "Todo cerca, cuando lo necesitas",
+    "image": "https://larumstudio.com/wp-content/uploads/2026/07/san-bernardino-muelle1.jpg.webp",
+    "items": [
+      {
+        "place": "Asunción",
+        "time": "60 min",
+        "distance": "45–50 km"
+      },
+      {
+        "place": "Aeropuerto Silvio Pettirossi",
+        "time": "50 min",
+        "distance": "40–45 km"
+      },
+      {
+        "place": "Caacupé",
+        "time": "25 min",
+        "distance": "18–20 km"
+      },
+      {
+        "place": "Club Náutico",
+        "time": "5 min",
+        "distance": "2–3 km"
+      }
+    ]
+  },
+
+  "living": {
+  "eyebrow": "Antes de vivir aquí",
+  "title": "Todo lo que deseas saber antes de vivir en San Bernardino",
+  "items": [
+    {
+      "title": "Playas y lago",
+      "text": "El Lago Ypacaraí es el gran protagonista del paisaje. Sus orillas concentran paseos, clubes, playas urbanas y espacios para disfrutar del aire libre durante todo el año.",
+      "image": "https://larumstudio.com/wp-content/uploads/2026/07/san-bernardino-playa-lago.jpg.webp"
+    },
+    {
+      "title": "Shopping y servicios",
+      "text": "San Bernardino cuenta con supermercados, farmacias, centros de salud, tiendas de conveniencia y conexión rápida con centros comerciales de San Lorenzo y Asunción.",
+      "image": "https://larumstudio.com/wp-content/uploads/2026/07/san-bernardino-servicios.jpg.webp"
+    },
+    {
+      "title": "Festivales y vida social",
+      "text": "Durante el verano, la ciudad concentra conciertos, eventos culturales, ferias y festivales en espacios como el Anfiteatro José Asunción Flores y Casa Hassler.",
+      "image": "https://larumstudio.com/wp-content/uploads/2026/07/san-bernardino-eventos.jpg.webp"
+    },
+    {
+      "title": "Dónde comer",
+      "text": "La oferta gastronómica combina restaurantes tradicionales, cafés, confiterías de herencia alemana y propuestas contemporáneas que acompañan la vida social de temporada.",
+      "image": "https://larumstudio.com/wp-content/uploads/2026/07/san-bernardino-donde-comer.jpg.webp"
+    }
+  ]
+},
+
+  "gastronomy": {
+    "eyebrow": "Dónde comer",
+    "title": "Gastronomía con carácter propio",
+    "items": [
+      {
+        "name": "Bistró Del Val",
+        "category": "Internacional",
+        "price": "$$–$$$",
+        "description": "Una propuesta cuidada y de ambiente íntimo, ideal para cenas tranquilas y encuentros especiales."
+      },
+      {
+        "name": "Café Francés",
+        "category": "Francesa / internacional",
+        "price": "$$–$$$",
+        "description": "Un clásico local de inspiración europea, valorado por su cocina y atmósfera relajada."
+      },
+      {
+        "name": "La Alemana",
+        "category": "Confitería / alemana",
+        "price": "$$",
+        "description": "Una referencia tradicional de San Bernardino, reconocida por su repostería y vínculo con la herencia alemana."
+      }
+    ]
+  },
+
+  "quickFacts": {
+    "title": "Datos rápidos",
+    "items": [
+      {
+        "label": "Población",
+        "value": "12.216 habitantes"
+      },
+      {
+        "label": "Idioma",
+        "value": "Español y guaraní"
+      },
+      {
+        "label": "Moneda",
+        "value": "Guaraní paraguayo"
+      },
+      {
+        "label": "Temperatura media",
+        "value": "22–24 °C"
+      }
+    ]
+  },
+
+  "gallery": {
+  "eyebrow": "Galería del entorno",
+  "items": [
+      {
+        "image": "https://larumstudio.com/wp-content/uploads/2026/07/san-bernardino-galeria-01.jpg.webp",
+        "alt": "Vista del Lago Ypacaraí"
+      },
+      {
+        "image": "https://larumstudio.com/wp-content/uploads/2026/07/san-bernardino-galeria-02.jpg.webp",
+        "alt": "Atardecer sobre el lago"
+      },
+      {
+        "image": "https://larumstudio.com/wp-content/uploads/2026/07/san-bernardino-galeria-03.jpg.webp",
+        "alt": "Calle arbolada residencial"
+      },
+      {
+        "image": "https://larumstudio.com/wp-content/uploads/2026/07/san-bernardino-galeria-04.jpg.webp",
+        "alt": "Jardín residencial en San Bernardino"
+      },
+      {
+        "image": "https://larumstudio.com/wp-content/uploads/2026/07/san-bernardino-galeria-05.jpg.webp",
+        "alt": "Vida náutica en el Lago Ypacaraí"
+      }
+    ]
+  },
+
+  "market": {
+    "eyebrow": "Valor residencial",
+    "title": "Un mercado con valor y proyección",
+    "text": "San Bernardino ha evolucionado de destino tradicional de verano a enclave residencial de alto interés. Su cercanía con Asunción, el atractivo permanente del lago y la disponibilidad limitada en zonas premium refuerzan su valor para quienes buscan vivir, descansar o invertir con visión patrimonial.",
+    "highlights": [
+      "Alta demanda residencial",
+      "Oferta limitada en zonas premium",
+      "Excelente potencial patrimonial",
+      "Crecimiento sostenido",
+      "Ideal para vivienda principal o segunda residencia"
+    ]
+  },
+
+  "cta": {
+    "title": "Aquí comienza una forma distinta de vivir",
+    "text": "Descubre una propiedad diseñada para disfrutar la calma del lago, la privacidad del entorno y todo lo que San Bernardino tiene para ofrecer.",
+    "buttonLabel": "Volver a la propiedad",
+    "image": "https://larumstudio.com/wp-content/uploads/2026/07/san-bernardino-cta.jpg.webp"
+  }
+}
