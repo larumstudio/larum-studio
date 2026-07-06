@@ -1017,7 +1017,7 @@ export default function PropertyPage({ data }: { data: any }) {
       {/* FULL BLEED BREAK 2 */}
       <FullBleedBreak src="https://larumstudio.com/wp-content/uploads/2026/07/Salon-2560px-upscaled.webp" />
 
-      {/* CONTACTO - Cambio 7: QR actualizado */}
+            {/* CONTACTO */}
       <RevealSection className={styles.contact} id="contacto">
         <div className={styles.contactClean}>
           <div className={styles.contactCleanLeft}>
@@ -1032,9 +1032,9 @@ export default function PropertyPage({ data }: { data: any }) {
             <img
               src="https://larumstudio.com/wp-content/uploads/2026/07/qr-code.png"
               alt="QR"
-              className={styles.contactQrImg}
+              style={{ width: '280px', height: '280px', maxWidth: '100%', objectFit: 'contain', display: 'block', margin: '0 auto' }}
             />
-            <span className={styles.contactQrLabel}>Escanea para acceder</span>
+            <span className={styles.contactQrLabel} style={{ marginTop: '1.5rem', display: 'block' }}>Escanea para acceder</span>
           </div>
           <div className={styles.contactForm}>
             {[
@@ -1064,7 +1064,6 @@ export default function PropertyPage({ data }: { data: any }) {
           </div>
         </div>
       </RevealSection>
-
       {/* FOOTER - Cambio 7: QR del footer actualizado */}
       <footer className={styles.footer}>
         <div className={styles.footerInner}>
@@ -1085,10 +1084,26 @@ export default function PropertyPage({ data }: { data: any }) {
             </ul>
           </div>
           {property.qrUrl && (
-            <div className={styles.footerQr}>
-              <img loading="lazy" src="https://larumstudio.com/wp-content/uploads/2026/07/qr-code.png" alt="QR" />
-            </div>
-          )}
+  <div className={styles.footerQr} style={{ width: 'auto', maxWidth: 'none', height: 'auto' }}>
+    <a href="https://larumstudio.com/wp-content/uploads/2026/07/qr-code.png" target="_blank" rel="noopener" style={{ display: 'block' }}>
+      <img 
+        src="https://larumstudio.com/wp-content/uploads/2026/07/qr-code.png" 
+        alt="QR Villa San Bernardino"
+        style={{ 
+          width: '200px', 
+          height: '200px', 
+          minWidth: '200px',
+          minHeight: '200px',
+          objectFit: 'contain', 
+          display: 'block',
+          background: '#ffffff',
+          padding: '12px',
+          borderRadius: '6px'
+        }}
+      />
+    </a>
+  </div>
+)}
         </div>
         <div className={styles.footerBottom}>
           <span>© 2026 {property.footerTitulo || 'Larum Studio'}. Todos los derechos reservados.</span>
