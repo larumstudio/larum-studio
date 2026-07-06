@@ -20,7 +20,9 @@
   right: 0;
   z-index: 999;
   padding: 1.25rem 0;
-  background: transparent;
+  background: rgba(10, 10, 10, 0.95);           /* ✅ FIX: siempre con fondo negro */
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
   transition: background 0.4s ease, backdrop-filter 0.4s ease;
 }
 .navbarScrolled {
@@ -29,9 +31,9 @@
   border-bottom: 1px solid rgba(255,255,255,0.06);
 }
 .navInner {
-  max-width: 1400px;
+  max-width: 1600px;
   margin: 0 auto;
-  padding: 0 2.5rem;
+  padding: 0 clamp(1.5rem, 4vw, 3rem);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -2017,7 +2019,7 @@
 }
 
 /* ══════════════════════════════════════════════════
-   RESPONSIVE
+   RESPONSIVE BASE
 ══════════════════════════════════════════════════ */
 @media (max-width: 1024px) {
   .navLinks { display: none; }
@@ -2060,9 +2062,6 @@
   .garantiaGrid { grid-template-columns: 1fr; }
   .videoFeature { padding: 4rem 0; }
   .videoFeatureInner { padding: 0 1.5rem; }
-  .videoMarkers { flex-direction: column; }
-  .videoMarker { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.07); }
-  .videoMarker:last-child { border-bottom: none; }
   .galleryThumbRow { grid-template-columns: repeat(2, 1fr); }
   .galleryHeroImg { aspect-ratio: 4/3; }
   .contactAgent { grid-template-columns: 1fr; }
@@ -2499,9 +2498,6 @@
   .agentExpanded { padding: 5rem 0; }
   .agentExpandedInner { padding: 0 1.5rem; }
   .agentExpandedPhoto { aspect-ratio: 1/1; max-height: 400px; }
-  .agentExpandedBtns { flex-direction: column; }
-  .agentExpandedBtn { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.12); }
-  .agentExpandedBtn:last-child { border-bottom: none; }
   .gastosGrid { flex-direction: column; }
   .gastoItem { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.07); }
   .gastoItem:last-child { border-bottom: none; }
@@ -2984,16 +2980,6 @@
   color: rgba(232,228,220,0.72);
   margin-bottom: 1.5rem;
 }
-.posIntroPara:first-child::first-letter {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 3.5rem;
-  float: left;
-  line-height: 0.8;
-  margin-right: 0.3rem;
-  margin-top: 0.15rem;
-  color: rgba(232,228,220,0.9);
-  font-weight: 300;
-}
 
 /* ══════════════════════════════════════════════════
    STATS ROW — HORIZONTAL
@@ -3048,14 +3034,11 @@
   .heroCenteredTitle { font-size: clamp(2.2rem, 10vw, 3.5rem); }
   .heroCenteredBtns { flex-direction: column; width: 100%; max-width: 320px; }
   .heroCenteredBtnPrimary, .heroCenteredBtnSecondary { text-align: center; }
-  .statsRowInner { flex-wrap: wrap; gap: 2.5rem; }
-  .statsRowItem { flex: 0 0 45%; }
   .posIntro { padding: 0 1.5rem; }
-  .posIntroPara:first-child::first-letter { font-size: 2.8rem; }
 }
 
 /* ══════════════════════════════════════════════════
-   FIX — HERO GRADIENT CENTER (readability)
+   FIX — HERO GRADIENT CENTER
 ══════════════════════════════════════════════════ */
 .heroGradientCenter {
   position: absolute;
@@ -3066,7 +3049,7 @@
 }
 
 /* ══════════════════════════════════════════════════
-   FIX — CONTACT CLEAN (no agent, just visit + form)
+   FIX — CONTACT CLEAN
 ══════════════════════════════════════════════════ */
 .contactClean {
   max-width: 1400px;
@@ -3266,7 +3249,6 @@
 .positioning .posIntroLine { background: #8a6d30 !important; opacity: 0.3; }
 .positioning .posIntroTitle { color: #1a1714 !important; }
 .positioning .posIntroPara { color: rgba(30,25,15,0.6) !important; }
-.positioning .posIntroPara:first-child::first-letter { color: #1a1714 !important; }
 
 .statsRow {
   background: #f0ece4 !important;
@@ -3992,32 +3974,6 @@
   margin-bottom: 1.75rem;
   letter-spacing: 0.01em;
 }
-.trustDocsSection .garantiaGrid {
-  gap: 0.75rem;
-}
-.trustDocsSection .garantiaItem {
-  background: rgba(30,25,15,0.03);
-  border: 1px solid rgba(30,25,15,0.06);
-  padding: 0.85rem 1rem;
-}
-.trustDocsSection .garantiaText {
-  color: rgba(30,25,15,0.65);
-  font-size: 0.82rem;
-}
-.trustDocsSection .descargableCard {
-  background: rgba(30,25,15,0.03);
-  border: 1px solid rgba(30,25,15,0.08);
-}
-.trustDocsSection .descargableTitulo {
-  color: #1a1714;
-}
-.trustDocsSection .descargableDetalle {
-  color: rgba(30,25,15,0.55);
-}
-.trustDocsSection .descargableBtn {
-  color: #8a6d30;
-  border-color: rgba(138,109,48,0.3);
-}
 .calcGrid {
   display: flex;
   flex-direction: column;
@@ -4382,56 +4338,56 @@
 }
 
 /* ══════════════════════════════════════════════════
-   ★★★ AJUSTES FINALES — 16 PUNTOS DE CORRECCIÓN ★★★
-   (Este bloque va al final para tener prioridad)
+   ★★★ AJUSTES FINALES v2 — DESKTOP ★★★
 ══════════════════════════════════════════════════ */
 
-/* 1. Hero desktop: Ampliar contenedor navbar */
+/* ✅ 1. NAVBAR: fondo negro siempre (fix hero navbar transparente) */
+.navbar {
+  background: rgba(10, 10, 10, 0.95) !important;
+  backdrop-filter: blur(16px) !important;
+  border-bottom: 1px solid rgba(255,255,255,0.06) !important;
+}
 .navInner {
   max-width: 1600px !important;
   padding: 0 clamp(1.5rem, 4vw, 3rem) !important;
 }
 
-/* 4. Capitular: Drop cap "N" real (2 líneas exactas) */
-.posIntroPara:first-of-type::first-letter {
+/* ✅ 2. DROP CAP "N": mucho más grande y elegante */
+.posIntroPara:first-of-type::first-letter,
+.posIntroPara:first-child::first-letter {
   font-family: 'Cormorant Garamond', serif !important;
-  font-size: 3.4em !important;
+  font-size: 5.5em !important;
   float: left !important;
-  line-height: 0.75 !important;
-  margin-right: 0.08em !important;
-  margin-top: 0.05em !important;
+  line-height: 0.85 !important;
+  margin-right: 0.1em !important;
+  margin-top: 0.02em !important;
+  margin-bottom: -0.1em !important;
   color: #1a1714 !important;
   font-weight: 400 !important;
+  padding-top: 0 !important;
 }
 
-/* 5. Cita: Aumentar tamaño y forzar salto de línea */
+/* ✅ 3. VIDEO MARKERS: 4 columnas en desktop (una fila) */
+.videoMarkers {
+  display: grid !important;
+  grid-template-columns: repeat(4, 1fr) !important;
+  gap: 0 !important;
+}
+.videoMarker {
+  border-right: 1px solid rgba(255,255,255,0.07) !important;
+  border-bottom: none !important;
+  min-width: unset !important;
+}
+.videoMarker:last-child { border-right: none !important; }
+
+/* ✅ Cita: aumentar tamaño h3 en el positioning */
 .posQuoteBlock p {
   font-size: clamp(1.5rem, 2.8vw, 2rem) !important;
   line-height: 1.4 !important;
   max-width: 600px !important;
 }
 
-/* 9. Video markers: Grid 2 cols x 2 filas centradas */
-.videoMarkers {
-  display: grid !important;
-  grid-template-columns: repeat(2, 1fr) !important;
-}
-.videoMarker {
-  border-right: 1px solid rgba(255,255,255,0.07) !important;
-  border-bottom: 1px solid rgba(255,255,255,0.07) !important;
-}
-.videoMarker:nth-child(2n) { border-right: none !important; }
-.videoMarker:nth-last-child(-n+2) { border-bottom: none !important; }
-
-/* 12. Ubicación desktop: Landmarks simétricos y Mapa alineado */
-.landmarkRowName {
-  max-width: 240px !important;
-  display: -webkit-box !important;
-  -webkit-line-clamp: 2 !important;
-  -webkit-box-orient: vertical !important;
-  overflow: hidden !important;
-  white-space: normal !important;
-}
+/* ✅ Ubicación desktop: mapa alineado con lista */
 .locationRight {
   display: flex !important;
   flex-direction: column !important;
@@ -4442,8 +4398,16 @@
   margin-top: 0 !important;
   min-height: 450px !important;
 }
+.landmarkRowName {
+  max-width: 240px !important;
+  display: -webkit-box !important;
+  -webkit-line-clamp: 2 !important;
+  -webkit-box-orient: vertical !important;
+  overflow: hidden !important;
+  white-space: normal !important;
+}
 
-/* 14. Distribución: Aumentar eyebrow y título */
+/* ✅ Distribución: eyebrow y título más grandes */
 .planoHeader .eyebrow {
   font-size: 0.75rem !important;
   letter-spacing: 0.3em !important;
@@ -4454,44 +4418,144 @@
 }
 
 /* ══════════════════════════════════════════════════
-   AJUSTES FINALES — RESPONSIVE MÓVIL (Puntos 2,3,6,7,8,10,11,13,15,16)
+   ★★★ AJUSTES FINALES v2 — MÓVIL ★★★
 ══════════════════════════════════════════════════ */
 @media (max-width: 768px) {
 
-  /* 2. Hero móvil: Navbar padding */
-  .navInner { padding: 0 1.25rem !important; }
-  .mobileMenu { padding: 1.5rem 1.25rem !important; }
+  /* ✅ NAVBAR MÓVIL: englobar todo, logo dorado, sin CTA, hamburguesa dorada grande */
+  .navbar {
+    padding: 0.75rem 0 !important;
+    background: rgba(10, 10, 10, 0.98) !important;
+  }
+  .navInner {
+    padding: 0 1.25rem !important;
+    align-items: center !important;
+  }
 
-  /* 3. Stats móvil: 2 cols x 3 filas centradas */
+  /* Logo dorado y ajustado */
+  .navLogo {
+    font-size: 1rem !important;
+    color: #C8A45D !important;
+    letter-spacing: 0.08em !important;
+  }
+  .navLogo span {
+    color: rgba(200, 164, 93, 0.5) !important;
+  }
+
+  /* Ocultar CTA en móvil */
+  .navCta {
+    display: none !important;
+  }
+  .navRight {
+    gap: 0 !important;
+  }
+
+  /* Hamburguesa dorada grande con líneas negras */
+  .menuBtn {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    background: #C8A45D !important;
+    border: none !important;
+    color: #0a0a0a !important;
+    padding: 0.55rem !important;
+    width: 40px !important;
+    height: 40px !important;
+    border-radius: 2px !important;
+  }
+  .menuBtn svg {
+    width: 22px !important;
+    height: 22px !important;
+    stroke-width: 2.2 !important;
+    color: #0a0a0a !important;
+  }
+
+  /* Menú móvil desplegado */
+  .mobileMenu {
+    padding: 1.5rem 1.25rem !important;
+    top: 56px !important;
+  }
+
+  /* ✅ STATS MÓVIL: 3 filas x 2 columnas exactas */
   .statsRowInner {
     display: grid !important;
     grid-template-columns: repeat(2, 1fr) !important;
-    gap: 2rem !important;
+    gap: 2rem 1rem !important;
+    justify-items: center !important;
   }
   .statsRowItem {
     flex: unset !important;
+    width: 100% !important;
     text-align: center !important;
+    white-space: normal !important;
+  }
+  .statsRowValue {
+    font-size: 1.6rem !important;
+    white-space: normal !important;
+  }
+  .statsRowLabel {
+    white-space: normal !important;
+    font-size: 0.55rem !important;
   }
 
-  /* 6. Cita móvil: mantener proporción */
+  /* ✅ CITA MÓVIL: tamaño H3 aumentado */
   .posQuoteBlock p {
-    font-size: 1.4rem !important;
+    font-size: 1.45rem !important;
+    line-height: 1.4 !important;
     max-width: 100% !important;
   }
 
-  /* 7. "Lo que se siente" móvil: imagen más grande, menos padding */
+  /* ✅ HISTORIA (STORY) MÓVIL: imagen del atardecer más grande */
   .story { padding-bottom: 3rem !important; }
-  .storyRight { margin-top: 2rem; }
+  .storyRight { margin-top: 2rem !important; }
   .storyImgWrap {
-    min-height: 320px !important;
-    height: 65vw !important;
+    min-height: 420px !important;
+    height: 75vw !important;
+    max-height: 550px !important;
+  }
+  .storyImg {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
   }
 
-  /* 8. Recorrido móvil: video más ancho, menos padding */
+  /* Recorrido móvil: 2 cols x 2 filas */
   .videoFeature { padding: 4rem 0 3rem !important; }
   .videoFeatureInner { padding: 0 1rem !important; }
+  .videoMarkers {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+  .videoMarker {
+    border-right: 1px solid rgba(255,255,255,0.07) !important;
+    border-bottom: 1px solid rgba(255,255,255,0.07) !important;
+    padding: 1.25rem 1rem !important;
+    text-align: center !important;
+  }
+  .videoMarker:nth-child(2n) { border-right: none !important; }
+  .videoMarker:nth-last-child(-n+2) { border-bottom: none !important; }
 
-  /* 10. Feature cards móvil: apilado limpio 1 col */
+  /* ✅ AGENTE MÓVIL: botones 2x2 (WhatsApp|Email / LinkedIn|Instagram) */
+  .agentExpandedBtns {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    grid-template-rows: 1fr 1fr !important;
+    gap: 0 !important;
+    border: 1px solid rgba(255,255,255,0.12) !important;
+    flex-direction: unset !important;
+  }
+  .agentExpandedBtn {
+    border-right: 1px solid rgba(255,255,255,0.12) !important;
+    border-bottom: 1px solid rgba(255,255,255,0.12) !important;
+    padding: 1rem 0.75rem !important;
+    font-size: 0.58rem !important;
+    letter-spacing: 0.2em !important;
+  }
+  .agentExpandedBtn:nth-child(2n) { border-right: none !important; }
+  .agentExpandedBtn:nth-last-child(-n+2) { border-bottom: none !important; }
+  .agentExpandedBtn:last-child { border-bottom: none !important; }
+
+  /* Features cards móvil */
   .featuresGrid {
     flex-direction: column !important;
   }
@@ -4503,14 +4567,14 @@
   }
   .featureItem:last-child { border-bottom: none !important; }
 
-  /* 11. Entorno móvil: imagen menos estrecha */
+  /* Entorno móvil */
   .lifestyleHeroImg { aspect-ratio: 4/3 !important; }
 
-  /* 13. Ubicación móvil: menos espacio entre landmark y mapa */
+  /* Ubicación móvil */
   .landmarksList { margin-bottom: 2rem !important; }
   .locationMap { margin-top: 0 !important; min-height: 300px !important; }
 
-  /* 15. Distribución móvil: menos padding, tabla ancha */
+  /* Distribución móvil */
   .plano { padding: 4rem 0 !important; }
   .planoInner { padding: 0 1rem !important; }
   .areaTable { width: 100% !important; }
@@ -4519,7 +4583,7 @@
     overflow-x: auto;
   }
 
-  /* 16. CTA móvil: reducir padding superior */
+  /* CTA móvil */
   .contact { padding-top: 3rem !important; }
   .contactClean { padding-top: 0 !important; margin-top: -1rem; }
 }
