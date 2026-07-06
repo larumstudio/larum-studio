@@ -4352,16 +4352,16 @@
   padding: 0 clamp(1.5rem, 4vw, 3rem) !important;
 }
 
-/* ✅ 2. DROP CAP "N": mucho más grande y elegante */
+/* ✅ 2. DROP CAP "N": ocupa 3 líneas completas */
 .posIntroPara:first-of-type::first-letter,
 .posIntroPara:first-child::first-letter {
   font-family: 'Cormorant Garamond', serif !important;
-  font-size: 5.5em !important;
+  font-size: 5.8em !important;         /* ↑ más grande para cubrir 3 líneas */
   float: left !important;
-  line-height: 0.85 !important;
-  margin-right: 0.1em !important;
-  margin-top: 0.02em !important;
-  margin-bottom: -0.1em !important;
+  line-height: 0.82 !important;         /* ↓ ajusta altura exacta a 3 renglones */
+  margin-right: 0.12em !important;
+  margin-top: 0.08em !important;        /* ↑ baja un poco para alinear con la 1ª línea */
+  margin-bottom: 0 !important;
   color: #1a1714 !important;
   font-weight: 400 !important;
   padding-top: 0 !important;
@@ -4432,13 +4432,14 @@
     align-items: center !important;
   }
 
-  /* Logo dorado y ajustado */
+   /* Logo dorado y ajustado — +50% de tamaño */
   .navLogo {
-    font-size: 1rem !important;
+    font-size: 1.5rem !important;       /* ↑ de 1rem → 1.5rem (+50%) */
     color: #C8A45D !important;
     letter-spacing: 0.08em !important;
   }
   .navLogo span {
+    font-size: 0.6rem !important;       /* proporcional al nuevo tamaño */
     color: rgba(200, 164, 93, 0.5) !important;
   }
 
