@@ -94,7 +94,7 @@
   font-size: clamp(18px, 1.65vw, 24px);
   line-height: 1.55;
   color: rgba(255, 255, 255, 0.9);
-  max-width: 760px;
+  max-width: 960px;
 }
 
 /* SECCIONES */
@@ -610,7 +610,7 @@
   .heroSubtitle {
   max-width: 360px;
   margin: 24px auto 0;
-  font-size: 16px;
+  font-size: 24px;
   line-height: 1.55;
 }
 
@@ -699,7 +699,7 @@
 
   .heroSubtitle {
   max-width: 320px;
-  font-size: 15px;
+  font-size: 22px;
   line-height: 1.55;
 }
 
