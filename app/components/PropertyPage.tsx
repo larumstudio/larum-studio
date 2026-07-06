@@ -911,9 +911,14 @@ export default function PropertyPage({ data }: { data: any }) {
                     <div className={styles.descargableRowInfo}><span className={styles.descargableRowTitle}>Certificación energética</span></div>
                     <span className={styles.descargableRowIcon}><IconDownload /></span>
                   </a>
-                  <a href="https://larumstudio.com/wp-content/uploads/2026/07/Ficha_Tecnica_Villa_San_Bernardino_compressed.pdf" target="_blank" rel="noopener" className={styles.descargableRow}>
+                                    <a href="https://larumstudio.com/wp-content/uploads/2026/07/Ficha_Tecnica_Villa_San_Bernardino_compressed.pdf" target="_blank" rel="noopener" className={styles.descargableRow}>
                     <span className={styles.descargableRowNum}>03</span>
                     <div className={styles.descargableRowInfo}><span className={styles.descargableRowTitle}>Ficha técnica</span></div>
+                    <span className={styles.descargableRowIcon}><IconDownload /></span>
+                  </a>
+                  <a href="https://larumstudio.com/wp-content/uploads/2026/07/qr-code.png" target="_blank" rel="noopener" download className={styles.descargableRow}>
+                    <span className={styles.descargableRowNum}>04</span>
+                    <div className={styles.descargableRowInfo}><span className={styles.descargableRowTitle}>Código QR para compartir</span></div>
                     <span className={styles.descargableRowIcon}><IconDownload /></span>
                   </a>
                 </>
@@ -935,7 +940,7 @@ export default function PropertyPage({ data }: { data: any }) {
                 <div className={styles.calcIconWrap}>
                   <svg width="28" height="28" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1}><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/><path d="M9 22V12h6v10"/></svg>
                 </div>
-                <span className={styles.calcLabel}>Calcula el coste de vida</span>
+                <span className={styles.calcLabel}>Calcula el coste de compra</span>
                 <span className={styles.calcArrow}>→</span>
               </a>
             </div>
