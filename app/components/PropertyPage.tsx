@@ -1,7 +1,7 @@
 'use client'
 import React, { useState, useEffect, useRef } from 'react'
 import styles from '../page.module.css'
-
+import CalculatorModal, { type CalculatorType } from './calculators/CalculatorModal'
 function useReveal() {
   const ref = useRef<HTMLElement>(null);
   const [visible, setVisible] = useState(false);
@@ -355,7 +355,6 @@ function BrochureForm({ agentEmail, compact, privacidadTexto, privacidadUrl }: {
     </form>
   )
 }
-
 export default function PropertyPage({ data }: { data: any }) {
   const [menuOpen, setMenuOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
@@ -363,6 +362,7 @@ export default function PropertyPage({ data }: { data: any }) {
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null)
   const [previewIndex, setPreviewIndex] = useState<number | null>(null)
   const [form, setForm] = useState({ nombre: '', email: '', telefono: '', fecha: '' })
+  const [calculatorOpen, setCalculatorOpen] = useState<CalculatorType | null>(null)
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 60)
@@ -376,6 +376,14 @@ export default function PropertyPage({ data }: { data: any }) {
 
   return (
     <div className={styles.page}>
+      {calculatorOpen && (
+  <CalculatorModal
+    type={calculatorOpen}
+    onClose={() => setCalculatorOpen(null)}
+    defaultPrice={property?.price}
+  />
+)}
+
       <PageLoader />
 
       {/* NAVBAR */}
@@ -931,20 +939,28 @@ export default function PropertyPage({ data }: { data: any }) {
           <div className={styles.trustDocsCol}>
             <h3 className={styles.trustDocsColTitle}>Calculadoras</h3>
             <div className={styles.calcGrid}>
-              <a href="#" className={styles.calcCard}>
+             <button
+  type="button"
+  className={styles.calcCard}
+  onClick={() => setCalculatorOpen('mortgage')}
+>
                 <div className={styles.calcIconWrap}>
                   <svg width="28" height="28" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1}><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M8 6h8M8 10h2M14 10h2M8 14h2M14 14h2M8 18h2M14 18h2"/></svg>
                 </div>
                 <span className={styles.calcLabel}>Calcula tu hipoteca</span>
                 <span className={styles.calcArrow}>→</span>
-              </a>
-              <a href="#" className={styles.calcCard}>
+              </button>
+              <button
+  type="button"
+  className={styles.calcCard}
+  onClick={() => setCalculatorOpen('purchase')}
+>
                 <div className={styles.calcIconWrap}>
                   <svg width="28" height="28" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1}><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/><path d="M9 22V12h6v10"/></svg>
                 </div>
                 <span className={styles.calcLabel}>Calcula el coste de compra</span>
                 <span className={styles.calcArrow}>→</span>
-              </a>
+              </button>
             </div>
           </div>
         </div>
