@@ -395,17 +395,17 @@
     ],
     "gallery": [
       {
-        "url": "https://larumstudio.com/wp-content/uploads/2026/05/Transicion-dia-a-noche-cinematica-Optimizada-Web.mp4",
-        "caption": "Transición día y noche - la misma toma en 12 horas",
-        "isVideo": true
-      },
-      {
         "url": "https://larumstudio.com/wp-content/uploads/2026/05/amanecer.webp",
         "caption": "Amanecer en la propiedad - 06:42 AM"
       },
       {
         "url": "https://larumstudio.com/wp-content/uploads/2026/04/unnamed-5.webp",
         "caption": "Terraza exterior con vista al lago"
+      },
+      {
+        "url": "https://larumstudio.com/wp-content/uploads/2026/05/Transicion-dia-a-noche-cinematica-Optimizada-Web.mp4",
+        "caption": "Transición día y noche - la misma toma en 12 horas",
+        "isVideo": true
       },
       {
         "url": "https://larumstudio.com/wp-content/uploads/2026/04/unnamed-3.webp",

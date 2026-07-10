@@ -990,9 +990,9 @@ export default function PropertyPage({ data }: { data: any }) {
             <div className={styles.memoriaInlineForm}><BrochureForm agentEmail={property.agentEmail} compact={true} privacidadTexto={property.privacidadTexto} privacidadUrl={property.privacidadUrl} /></div>
           </div>
           {property.brochurePages && property.brochurePages.length > 0 && (
-            <div className={styles.memoriaBalancedRight} style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '12px', padding: '2rem', background: '#f5f3ef', borderRadius: '6px', minHeight: '480px', alignContent: 'center' }}>
+            <div className={styles.memoriaBalancedRight} style={property.brochurePages.length === 1 ? { display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '1.5rem', background: '#f5f3ef', borderRadius: '6px' } : { display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '12px', padding: '2rem', background: '#f5f3ef', borderRadius: '6px', alignContent: 'center' }}>
               {property.brochurePages.map((page: string, i: number) => (
-                <img key={i} loading="lazy" src={page} alt={`Memoria página ${i + 1}`} style={{ width: '100%', height: 'auto', objectFit: 'contain', borderRadius: '3px', boxShadow: '0 4px 16px rgba(0,0,0,0.12)' }} />
+                <img key={i} loading="lazy" src={page} alt={`Memoria página ${i + 1}`} style={property.brochurePages.length === 1 ? { width: '100%', maxWidth: '420px', height: 'auto', objectFit: 'contain', borderRadius: '4px', boxShadow: '0 8px 32px rgba(0,0,0,0.15)' } : { width: '100%', height: 'auto', objectFit: 'contain', borderRadius: '3px', boxShadow: '0 4px 16px rgba(0,0,0,0.12)' }} />
               ))}
             </div>
           )}
