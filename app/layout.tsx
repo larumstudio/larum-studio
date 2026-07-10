@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import './globals.css'
+import './components/improvements-global.css'
 
 export const metadata: Metadata = {
   title: 'Larum Studio — Propiedades Premium',

@@ -3527,6 +3527,7 @@
 .lifestyle .locationBtnSecondary {
   border-color: rgba(138,109,48,0.4) !important;
   color: #8a6d30 !important;
+  margin-top: 2rem !important;
 }
 .lifestyle .locationBtnSecondary:hover {
   background: rgba(138,109,48,0.08) !important;

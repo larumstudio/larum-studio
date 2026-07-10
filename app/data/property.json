@@ -1,12 +1,46 @@
 {
   "agent": {
-    "name": "Marcelo Vargas",
-    "title": "Asesor Inmobiliario Senior",
+    "name": "William Rowe",
+    "title": "Senior Advisor · Luxury Properties",
+    "cargo": "Senior Advisor · Luxury Properties",
     "phone": "+595 972 186 472",
     "whatsapp": "595972186472",
-    "email": "agente@inmobiliaria.com",
-    "photo": "https://larumstudio.com/wp-content/uploads/2026/06/agente-real-estate-captacion-de-exclusivas-scaled.webp",
-    "authority": "Trabajo con un número reducido de propiedades al año. Las que represento no compiten en portales: se posicionan para atraer al comprador adecuado desde la primera impresión.\n\nCada activo se trabaja con un enfoque de exclusividad, selección y narrativa de valor."
+    "email": "contacto@larumstudio.com",
+    "photo": "https://larumstudio.com/wp-content/uploads/2026/07/William-Rowe-scaled.webp",
+    "authority": "No trabaja con volumen. Trabaja con criterio. Representa solo un número selecto de residencias al año.",
+    "bio": "No trabaja con volumen. Trabaja con criterio. Representa solo un número selecto de residencias al año —aquellas que poseen carácter, ubicación privilegiada y una historia que merece ser contada con precisión. Cada una es tratada como una obra singular: estudiada, narrada y posicionada para encontrar al comprador que realmente la entiende.",
+    "bioExtendida": "Su enfoque combina conocimiento profundo del mercado de alto nivel, discreción absoluta y una capacidad única para transmitir el valor emocional de cada propiedad. Ha asesorado a familias, empresarios y compradores internacionales que buscan algo más que metros cuadrados: buscan pertenencia.",
+    "idiomas": [
+      "Inglés",
+      "Español",
+      "Alemán"
+    ],
+    "credenciales": [
+      "Top 1% Luxury Agents Paraguay 2024",
+      "Certified Luxury Home Marketing Specialist",
+      "Miembro International Luxury Alliance"
+    ],
+    "scheduleUrl": "",
+    "linkedin": "https://www.linkedin.com/company/larumstudiohq/",
+    "instagram": "https://www.instagram.com/larumstudio/",
+    "statsLogros": [
+      {
+        "valor": "25",
+        "label": "propiedades de lujo"
+      },
+      {
+        "valor": "US$7.5M",
+        "label": "ventas concretadas"
+      },
+      {
+        "valor": "10 años",
+        "label": "asesorando élite"
+      },
+      {
+        "valor": "42 días",
+        "label": "tiempo de venta promedio"
+      }
+    ]
   },
   "property": {
     "name": "Villa San Bernardino",
@@ -14,15 +48,39 @@
     "tagline": "No es una casa para todos. Es para quien entiende que el verdadero lujo es espacio, silencio y tiempo recuperado.",
     "badge": "Villa de Lujo · San Bernardino",
     "precio": "USD 3.500.000",
-    "posterHero": null,
+    "price": 3500000,
+    "footerTitulo": "LARUM STUDIO",
+    "footerDesc": "Micrositios inmobiliarios de alto impacto para propiedades exclusivas. Presentaciones privadas, no portales.",
+    "posterHero": "https://larumstudio.com/wp-content/uploads/2026/05/noche.webp",
     "posterVideo": "https://larumstudio.com/wp-content/uploads/2026/05/noche.webp",
     "videoHero": "https://larumstudio.com/wp-content/uploads/2026/05/Transicion-dia-a-noche-cinematica-Optimizada-Web.mp4",
     "videoPresentacion": "https://larumstudio.com/wp-content/uploads/2026/06/san-bernardino-storytelling.mp4",
+    "videoDuration": "1:19",
+    "videoMarkers": [
+      {
+        "time": "0:00",
+        "label": "Llegada"
+      },
+      {
+        "time": "0:27",
+        "label": "Vida social"
+      },
+      {
+        "time": "0:35",
+        "label": "Bienestar"
+      },
+      {
+        "time": "0:43",
+        "label": "Suites"
+      }
+    ],
     "stats": {
       "terreno": "3.900 m²",
       "construidos": "800 m²",
       "dormitorios": "6",
-      "banos": "5"
+      "banos": "5",
+      "cocheras": "4",
+      "ano": "2018"
     },
     "positioning": {
       "eyebrow": "El significado",
@@ -69,25 +127,7 @@
         }
       ]
     },
-    "galleryPreview": {
-      "main": {
-        "url": "https://larumstudio.com/wp-content/uploads/2026/04/unnamed.webp",
-        "caption": "Fachada Principal y Piscina Infinity"
-      },
-      "secondary": [
-        {
-          "url": "https://larumstudio.com/wp-content/uploads/2026/04/unnamed-5.webp",
-          "caption": "Terraza exterior",
-          "objectPosition": "center center"
-        },
-        {
-          "url": "https://larumstudio.com/wp-content/uploads/2026/04/unnamed-10.webp",
-          "caption": "Vista nocturna",
-          "objectPosition": "center 65%"
-        }
-      ]
-    },
-      "amenities": [
+    "amenities": [
       "PISCINA INFINITY",
       "GIMNASIO PRIVADO",
       "JARDÍN EXTERIOR",
@@ -99,11 +139,33 @@
       "VISTA PANORÁMICA"
     ],
     "amenitiesImage": "https://larumstudio.com/wp-content/uploads/2026/04/unnamed-22.webp",
+    "amenitiesCategorias": {
+      "bienestar": [
+        "PISCINA INFINITY",
+        "GIMNASIO PRIVADO",
+        "JACUZZI INTERIOR"
+      ],
+      "exterior": [
+        "JARDÍN EXTERIOR",
+        "TERRAZA PRIVADA",
+        "VISTA PANORÁMICA"
+      ],
+      "servicios": [
+        "COCINA GOURMET",
+        "ESTACIONAMIENTO",
+        "SEGURIDAD 24H"
+      ]
+    },
     "lifestyle": {
       "eyebrow": "El entorno",
       "title": "Vivir en San Bernardino",
       "image": "https://larumstudio.com/wp-content/uploads/2026/06/lago-san-bernardino-ypacarai-posicionamiento-premium-viviendas-de-lujo.webp",
-      "intro": "A 48 kilómetros de Asunción, San Bernardino dejó de ser un destino de verano hace tiempo. Hoy es donde un grupo reducido de familias eligió quedarse todo el año: cerca de la ciudad cuando hace falta, lejos de ella cuando importa.",
+      "intro": "A 48 kilómetros de Asunción, San Bernardino dejó de ser un destino de verano hace tiempo. Hoy es donde un grupo reducido de familias eligió quedarse todo el año.",
+      "introParagraphs": [
+        "A 48 kilómetros de Asunción, San Bernardino dejó de ser un destino de verano hace tiempo. Hoy es donde un grupo reducido de familias eligió quedarse todo el año: cerca de la ciudad cuando hace falta, lejos de ella cuando importa.",
+        "El entorno combina privacidad, naturaleza y acceso cómodo a los puntos clave de San Bernardino. Un enclave residencial donde el ritmo cambia, pensado para quienes valoran la tranquilidad sin desconectarse de la vida social y el movimiento del lago.",
+        "La ubicación permite vivir la experiencia del Ypacaraí desde una perspectiva más íntima, con espacios que priorizan el descanso, la luz y la conexión con el exterior."
+      ],
       "items": [
         {
           "title": "El lago, a cinco minutos",
@@ -121,35 +183,6 @@
           "title": "Una comunidad, no una urbanización",
           "desc": "Colegios internacionales, clubes náuticos y una gastronomía que creció con la zona. Todo a minutos, nada masificado."
         }
-      ],
-      "introParagraphs": [
-        "A 48 kilómetros de Asunción, San Bernardino dejó de ser un destino de verano hace tiempo. Hoy es donde un grupo reducido de familias eligió quedarse todo el año: cerca de la ciudad cuando hace falta, lejos de ella cuando importa.",
-        "El entorno combina privacidad, naturaleza y acceso cómodo a los puntos clave de San Bernardino. Un enclave residencial donde el ritmo cambia, pensado para quienes valoran la tranquilidad sin desconectarse de la vida social y el movimiento del lago.",
-        "La ubicación permite vivir la experiencia del Ypacaraí desde una perspectiva más íntima, con espacios que priorizan el descanso, la luz y la conexión con el exterior."
-      ]
-    },
-    "features": {
-      "espacios": [
-        "6 habitaciones amplias",
-        "5 baños completos",
-        "Living-comedor de grandes dimensiones",
-        "Cocina equipada",
-        "Gimnasio privado",
-        "Jardín de grandes dimensiones"
-      ],
-      "equipamiento": [
-        "Aire acondicionado centralizado",
-        "Piscina exterior infinity",
-        "Sistema de alarma",
-        "Amoblado premium",
-        "Transporte público cercano"
-      ],
-      "extras": [
-        "Camino asfaltado",
-        "Cercanía a autopista",
-        "Estacionamiento privado",
-        "Vista panorámica",
-        "Construcción año 2000"
       ]
     },
     "location": {
@@ -158,9 +191,97 @@
       "address": "San Bernardino, Departamento de Cordillera, Paraguay",
       "description": "Frente al lago Ypacaraí, en el corredor residencial más consolidado de San Bernardino. Camino asfaltado hasta el acceso, conexión directa a la autopista a Asunción y el agua a pocos minutos.",
       "mapsUrl": "https://www.google.com/maps/place/San+Bernardino/@-25.3277542,-57.2992066,13z",
-      "googleMapsEmbed": null,
-      "landmarks":[{"nombre":"Aeropuerto (ASU)","icono":"aeropuerto","detalle":"35 km","minutos":40},{"nombre":"Asunción Golf Club","icono":"golf","detalle":"55 km","minutos":55},{"nombre":"Club Centenario","icono":"club","detalle":"48 km","minutos":50},{"nombre":"Club Náutico San Bernardino","icono":"nautico","detalle":"1.5 km","minutos":3},{"nombre":"Shopping del Sol","icono":"shopping","detalle":"45 km","minutos":50},{"nombre":"Centro Financiero de Asunción","icono":"financiero","detalle":"48 km","minutos":55},{"nombre":"Basílica de Caacupé","icono":"basilica","detalle":"23 km","minutos":25},{"nombre":"Centro Médico Bautista","icono":"medico","detalle":"48 km","minutos":55}],
-      "mapImage": "https://larumstudio.com/wp-content/uploads/2026/06/mapa-san-bernardino.jpg"
+      "googleMapsEmbed": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14406.5!2d-57.2992066!3d-25.3277542!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x945da9a7d1234567%3A0x1234567890abcdef!2sSan%20Bernardino!5e0!3m2!1ses!2spy!4v1234567890",
+      "mapImage": "https://larumstudio.com/wp-content/uploads/2026/06/mapa-san-bernardino.jpg",
+      "landmarks": [
+        {
+          "nombre": "Aeropuerto Silvio Pettirossi (ASU)",
+          "icono": "aeropuerto",
+          "detalle": "35 km",
+          "minutos": 40,
+          "tipo": "transporte"
+        },
+        {
+          "nombre": "Asunción Golf Club",
+          "icono": "golf",
+          "detalle": "55 km",
+          "minutos": 55,
+          "tipo": "club"
+        },
+        {
+          "nombre": "Club Centenario",
+          "icono": "club",
+          "detalle": "48 km",
+          "minutos": 50,
+          "tipo": "club"
+        },
+        {
+          "nombre": "Club Náutico San Bernardino",
+          "icono": "nautico",
+          "detalle": "1.5 km",
+          "minutos": 3,
+          "tipo": "nautico",
+          "destacado": true
+        },
+        {
+          "nombre": "Shopping del Sol",
+          "icono": "shopping",
+          "detalle": "45 km",
+          "minutos": 50,
+          "tipo": "shopping"
+        },
+        {
+          "nombre": "Centro Financiero de Asunción",
+          "icono": "financiero",
+          "detalle": "48 km",
+          "minutos": 55,
+          "tipo": "financiero"
+        },
+        {
+          "nombre": "Basílica de Caacupé",
+          "icono": "basilica",
+          "detalle": "23 km",
+          "minutos": 25,
+          "tipo": "cultura"
+        },
+        {
+          "nombre": "Centro Médico Bautista",
+          "icono": "medico",
+          "detalle": "48 km",
+          "minutos": 55,
+          "tipo": "salud"
+        }
+      ],
+      "pinsPersonalizados": [
+        {
+          "label": "La propiedad",
+          "lat": -25.31,
+          "lng": -57.29,
+          "icono": "casa",
+          "color": "#C8A45D"
+        },
+        {
+          "label": "Club Náutico",
+          "lat": -25.32,
+          "lng": -57.3,
+          "icono": "nautico",
+          "color": "#7a8a6a"
+        },
+        {
+          "label": "Aeropuerto ASU",
+          "lat": -25.24,
+          "lng": -57.52,
+          "icono": "aeropuerto",
+          "color": "#8a7a6a"
+        },
+        {
+          "label": "Gastronomía",
+          "lat": -25.31,
+          "lng": -57.29,
+          "icono": "restaurante",
+          "color": "#c9a96e"
+        }
+      ]
     },
     "floorPlan": {
       "image": "https://larumstudio.com/wp-content/uploads/2026/05/plano-3d-san-bernardino.webp",
@@ -202,12 +323,7 @@
           "ambiente": "Circulaciones",
           "superficie": "130 m²"
         }
-      ],
-      "copy": {
-        "eyebrow": "Distribución",
-        "title": "La vivienda ha sido diseñada para separar con precisión áreas sociales, privadas y de servicio, garantizando fluidez y privacidad en el uso diario.",
-        "subtitle": "Cada espacio responde a una lógica funcional clara, optimizando circulación, luz natural y experiencia habitacional."
-      }
+      ]
     },
     "trust": [
       "Documentación al día y verificada",
@@ -217,75 +333,127 @@
       "Lista para escriturar de inmediato",
       "Proceso de compra acompañado y transparente"
     ],
+    "gastos": [
+      {
+        "concepto": "Expensas / Comunidad",
+        "valor": "USD 450 / mes",
+        "icono": "edificio",
+        "detalle": "Mantenimiento barrio cerrado"
+      },
+      {
+        "concepto": "Seguridad 24h",
+        "valor": "Incluido",
+        "icono": "otro",
+        "detalle": "Guardia y CCTV"
+      },
+      {
+        "concepto": "Jardinería y piscina",
+        "valor": "USD 350 / mes",
+        "icono": "otro",
+        "detalle": "Mantenimiento completo"
+      },
+      {
+        "concepto": "Consumo eléctrico promedio",
+        "valor": "USD 180 / mes",
+        "icono": "otro",
+        "detalle": "Sin contar climatización intensiva"
+      }
+    ],
+    "descargables": [
+      {
+        "titulo": "Planos de distribución",
+        "detalle": "PDF · 2.4 MB · Plantas y cortes a escala",
+        "url": "https://larumstudio.com/wp-content/uploads/2026/07/planos-villa-san-bernardino_compressed.pdf",
+        "tipo": "plano",
+        "preview": "⌖"
+      },
+      {
+        "titulo": "Certificación energética",
+        "detalle": "PDF · 1.1 MB · Eficiencia clase C",
+        "url": "https://larumstudio.com/wp-content/uploads/2026/07/Certificado_Eficiencia_Energetica_Villa_San_Bernardino_compressed.pdf",
+        "tipo": "certificacion",
+        "preview": "◈"
+      },
+      {
+        "titulo": "Ficha técnica",
+        "detalle": "PDF · 0.9 MB · Materiales y terminaciones",
+        "url": "https://larumstudio.com/wp-content/uploads/2026/07/Ficha_Tecnica_Villa_San_Bernardino_compressed.pdf",
+        "tipo": "ficha",
+        "preview": "⬙"
+      },
+      {
+        "titulo": "Código QR para compartir",
+        "detalle": "PNG · Alta resolución · Para socios y familia",
+        "url": "https://larumstudio.com/wp-content/uploads/2026/07/qr-code.png",
+        "tipo": "qr",
+        "preview": "QR"
+      }
+    ],
+    "brochure": "https://larumstudio.com/wp-content/uploads/2026/06/presentacion-premium-propiedad-de-lujo.webp",
     "brochurePages": [
       "https://larumstudio.com/wp-content/uploads/2026/06/presentacion-premium-propiedad-de-lujo.webp"
     ],
-    "cta": {
-      "eyebrow": "La visita",
-      "title": "Las visitas se coordinan de forma privada.",
-      "desc": "Esta propiedad no se muestra en acceso abierto. Cada recorrido se agenda con cita previa, en horario reservado y con acompañamiento.\n\nEl acceso está limitado a perfiles previamente cualificados.\n\nSolo se comparte información completa tras validación del interés real.\n\nDéjenos sus datos y coordinamos."
-    },
     "gallery": [
       {
         "url": "https://larumstudio.com/wp-content/uploads/2026/05/Transicion-dia-a-noche-cinematica-Optimizada-Web.mp4",
-        "caption": "Transición día y noche",
+        "caption": "Transición día y noche - la misma toma en 12 horas",
         "isVideo": true
       },
       {
         "url": "https://larumstudio.com/wp-content/uploads/2026/05/amanecer.webp",
-        "caption": "Amanecer en la propiedad"
+        "caption": "Amanecer en la propiedad - 06:42 AM"
       },
       {
         "url": "https://larumstudio.com/wp-content/uploads/2026/04/unnamed-5.webp",
-        "caption": "Terraza exterior"
+        "caption": "Terraza exterior con vista al lago"
       },
       {
         "url": "https://larumstudio.com/wp-content/uploads/2026/04/unnamed-3.webp",
-        "caption": "Área social"
+        "caption": "Área social integrada"
       },
       {
         "url": "https://larumstudio.com/wp-content/uploads/2026/04/unnamed-10.webp",
-        "caption": "Vista nocturna"
+        "caption": "Vista nocturna - iluminación arquitectónica"
       },
       {
         "url": "https://larumstudio.com/wp-content/uploads/2026/04/unnamed-22.webp",
-        "caption": "Jardín y piscina"
+        "caption": "Jardín y piscina infinity - borde infinito"
       },
       {
         "url": "https://larumstudio.com/wp-content/uploads/2026/04/unnamed-11.webp",
-        "caption": "Living principal"
+        "caption": "Living principal - doble altura"
       },
       {
         "url": "https://larumstudio.com/wp-content/uploads/2026/04/unnamed-2.webp",
-        "caption": "Comedor"
+        "caption": "Comedor formal - 10 comensales"
       },
       {
         "url": "https://larumstudio.com/wp-content/uploads/2026/04/unnamed-8.webp",
-        "caption": "Cocina"
+        "caption": "Cocina gourmet - isla central"
       },
       {
         "url": "https://larumstudio.com/wp-content/uploads/2026/04/unnamed-9.webp",
-        "caption": "Suite principal"
+        "caption": "Suite principal - vestidor y baño en suite"
       },
       {
         "url": "https://larumstudio.com/wp-content/uploads/2026/04/unnamed-18.webp",
-        "caption": "Dormitorio 2"
+        "caption": "Dormitorio 2 - vista al jardín"
       },
       {
         "url": "https://larumstudio.com/wp-content/uploads/2026/04/unnamed-21.webp",
-        "caption": "Dormitorio 3"
+        "caption": "Dormitorio 3 - luz natural"
       },
       {
         "url": "https://larumstudio.com/wp-content/uploads/2026/04/unnamed-16.webp",
-        "caption": "Baño principal"
+        "caption": "Baño principal - mármol travertino"
       },
       {
         "url": "https://larumstudio.com/wp-content/uploads/2026/04/unnamed-6.webp",
-        "caption": "Baño suite"
+        "caption": "Baño suite - ducha rain"
       },
       {
         "url": "https://larumstudio.com/wp-content/uploads/2026/04/unnamed-15.webp",
-        "caption": "Gimnasio privado"
+        "caption": "Gimnasio privado - vista al exterior"
       },
       {
         "url": "https://larumstudio.com/wp-content/uploads/2026/04/unnamed-17.webp",
@@ -293,39 +461,39 @@
       },
       {
         "url": "https://larumstudio.com/wp-content/uploads/2026/04/unnamed-13.webp",
-        "caption": "Vista panorámica"
+        "caption": "Vista panorámica desde terraza"
       },
       {
         "url": "https://larumstudio.com/wp-content/uploads/2026/04/unnamed-27.webp",
-        "caption": "Detalle arquitectónico"
+        "caption": "Detalle arquitectónico - madera y piedra"
       },
       {
         "url": "https://larumstudio.com/wp-content/uploads/2026/04/unnamed-4.webp",
-        "caption": "Terraza cubierta"
+        "caption": "Terraza cubierta - quincho"
       },
       {
         "url": "https://larumstudio.com/wp-content/uploads/2026/04/unnamed-19.webp",
-        "caption": "Jardín lateral"
+        "caption": "Jardín lateral - acceso discreto"
       },
       {
         "url": "https://larumstudio.com/wp-content/uploads/2026/04/unnamed-20.webp",
-        "caption": "Acceso principal"
+        "caption": "Acceso principal - portón privado"
       },
       {
         "url": "https://larumstudio.com/wp-content/uploads/2026/04/unnamed-12.webp",
-        "caption": "Estudio"
+        "caption": "Estudio / Home office"
       },
       {
         "url": "https://larumstudio.com/wp-content/uploads/2026/04/unnamed-24.webp",
-        "caption": "Piscina exterior"
+        "caption": "Piscina exterior - atardecer"
       },
       {
         "url": "https://larumstudio.com/wp-content/uploads/2026/04/unnamed-23.webp",
-        "caption": "Atardecer desde la villa"
+        "caption": "Atardecer desde la villa - hora dorada"
       },
       {
         "url": "https://larumstudio.com/wp-content/uploads/2026/04/unnamed-1.webp",
-        "caption": "Hall de entrada"
+        "caption": "Hall de entrada - recepción"
       },
       {
         "url": "https://larumstudio.com/wp-content/uploads/2026/04/unnamed-7.webp",
@@ -337,44 +505,296 @@
       },
       {
         "url": "https://larumstudio.com/wp-content/uploads/2026/04/unnamed-28.webp",
-        "caption": "Vista aérea"
+        "caption": "Vista aérea - terreno completo"
       },
       {
         "url": "https://larumstudio.com/wp-content/uploads/2026/05/larum-process.webp",
-        "caption": "Entorno natural"
+        "caption": "Entorno natural - corredor verde"
       },
       {
         "url": "https://larumstudio.com/wp-content/uploads/2026/04/unnamed-25.webp",
-        "caption": "Patio trasero"
+        "caption": "Patio trasero - privacidad total"
       },
       {
         "url": "https://larumstudio.com/wp-content/uploads/2026/04/unnamed-29.webp",
-        "caption": "Vista nocturna exterior"
+        "caption": "Vista nocturna exterior - reflejos"
       },
       {
         "url": "https://larumstudio.com/wp-content/uploads/2026/05/noche.webp",
-        "caption": "Villa de noche"
+        "caption": "Villa de noche - firma lumínica"
       }
     ],
-    "videoMarkers": [
-      {
-        "time": "0:00",
-        "label": "Llegada"
-      },
-      {
-        "time": "0:27",
-        "label": "Vida social"
-      },
-      {
-        "time": "0:35",
-        "label": "Bienestar"
-      },
-      {
-        "time": "0:43",
-        "label": "Suites"
-      }
-    ],
+    "cta": {
+      "eyebrow": "La visita",
+      "title": "Las visitas se coordinan de forma privada.",
+      "desc": "Esta propiedad no se muestra en acceso abierto. Cada recorrido se agenda con cita previa, en horario reservado y con acompañamiento.\n\nEl acceso está limitado a perfiles previamente cualificados.\n\nSolo se comparte información completa tras validación del interés real."
+    },
     "agentEmail": "contacto@larumstudio.com",
-    "videoDuration": "1:19"
+    "privacidadTexto": "Acepto la política de privacidad",
+    "privacidadUrl": "/privacidad",
+    "qrUrl": "https://larumstudio.com/wp-content/uploads/2026/07/qr-code.png",
+    "ga4Id": "",
+    "metaPixelId": "",
+    "unDiaEnCasa": [
+      {
+        "hora": "07:00",
+        "titulo": "Despertar con luz del lago",
+        "desc": "La luz entra filtrada por los árboles. Café en la terraza, sin prisa, con el Ypacaraí enfrente. No hay bocinas, solo pájaros.",
+        "icono": "amanecer",
+        "imagen": "https://larumstudio.com/wp-content/uploads/2026/05/amanecer.webp"
+      },
+      {
+        "hora": "11:00",
+        "titulo": "Mañana de trabajo ligero",
+        "desc": "WiFi estable, estudio silencioso con vista al jardín. Reuniones virtuales con fondo de verde, no de pared blanca.",
+        "icono": "estudio",
+        "imagen": "https://larumstudio.com/wp-content/uploads/2026/04/unnamed-4.webp"
+      },
+      {
+        "hora": "14:00",
+        "titulo": "Almuerzo que se alarga",
+        "desc": "Parrilla encendida, piscina a 28 grados, sobremesa sin reloj. Aquí el tiempo no se mira, se habita.",
+        "icono": "quincho",
+        "imagen": "https://larumstudio.com/wp-content/uploads/2026/04/unnamed-3.webp"
+      },
+      {
+        "hora": "16:00",
+        "titulo": "Pausa activa con vistas",
+        "desc": "Gimnasio privado con luz natural y vista al jardín. El entrenamiento no interrumpe el día, lo completa. Sin colas, sin horarios, sin compartir.",
+        "icono": "gimnasio",
+        "imagen": "https://larumstudio.com/wp-content/uploads/2026/04/unnamed-22.webp"
+      },
+      {
+        "hora": "18:30",
+        "titulo": "Atardecer en el muelle",
+        "desc": "Caminata de 3 minutos al Club Náutico San Bernardino. El sol cae sobre el agua y el día se cierra sin ruido. Vela opcional.",
+        "icono": "nautico",
+        "imagen": "https://larumstudio.com/wp-content/uploads/2026/07/san-bernardino-atardecer-lago.jpg.webp"
+      },
+      {
+        "hora": "21:00",
+        "titulo": "Cena con amigos",
+        "desc": "Cocina gourmet abierta, living que se expande a la terraza. Espacio para 10 sin que nadie se sienta de paso. La casa recibe, no se llena.",
+        "icono": "cena",
+        "imagen": "https://larumstudio.com/wp-content/uploads/2026/04/unnamed-2.webp"
+      }
+    ],
+    "testimonioPropietario": {
+      "frase": "Los domingos nos sentamos aquí y el mundo desaparece. No es una casa, es un paréntesis. El lago hace el resto.",
+      "autor": "Familia propietaria · 6 años habitando la residencia",
+      "contexto": "Sobre el valor de vivir frente al lago todo el año, sin ser segunda residencia",
+      "avatar": "https://larumstudio.com/wp-content/uploads/2026/07/William-Rowe-scaled.webp"
+    },
+    "inversion": {
+      "eyebrow": "Inversión y legado",
+      "titulo": "Un refugio que sostiene su valor cuando el resto fluctúa",
+      "descripcion": "San Bernardino es de las pocas zonas del país que no se ha masificado ni perdido su carácter. La oferta frente al lago es finita, la demanda de privacidad crece cada año. Comprar aquí es apostar por un estilo de vida que perdura y por un activo que no se deprecia con modas.",
+      "datos": [
+        {
+          "label": "Precio m² San Ber frente lago",
+          "valor": "USD 950 - 1.200",
+          "tendencia": "+8.3% últimos 5 años",
+          "icono": "tendencia"
+        },
+        {
+          "label": "Precio m² Asunción premium",
+          "valor": "USD 1.800 - 2.400",
+          "tendencia": "+4.1% últimos 5 años",
+          "icono": "comparacion"
+        },
+        {
+          "label": "Ocupación anual premium lago",
+          "valor": "87%",
+          "tendencia": "vs 62% en 2019",
+          "icono": "ocupacion"
+        },
+        {
+          "label": "Terrenos disponibles frente lago",
+          "valor": "12",
+          "tendencia": "en radio de 2km, vs 47 en 2018",
+          "icono": "escasez"
+        }
+      ],
+      "plusvalia": "Proyección conservadora: 6-9% anual en USD en corredores premium del lago, basada en escasez de suelo y consolidación de servicios.",
+      "fuente": "Datos internos Larum Studio + relevamiento mercado premium Paraguay 2024 + informe Sucha Hecho",
+      "cta": "Solicitar informe de plusvalía completo"
+    },
+    "faq": [
+      {
+        "pregunta": "¿Se aceptan visitas internacionales?",
+        "respuesta": "Sí. Coordinamos visitas con video previo, traducción simultánea (EN/ES/DE) y acompañamiento completo desde el aeropuerto. Hemos recibido compradores de Argentina, Brasil, España, Alemania y EE.UU."
+      },
+      {
+        "pregunta": "¿Incluye el mobiliario?",
+        "respuesta": "Consulte. Parte del mobiliario premium de living, comedor y suites puede incluirse según negociación. La memoria técnica detalla exactamente qué está incluido y qué no. Cocina equipada sí incluida."
+      },
+      {
+        "pregunta": "¿Cuál es el proceso de compra?",
+        "respuesta": "1. Validación de perfil e interés real. 2. Visita privada con agente senior. 3. Reserva del 10% con contrato privado. 4. Due diligence legal y verificación de títulos. 5. Escritura pública. Acompañamiento integral legal y fiscal."
+      },
+      {
+        "pregunta": "¿Tiempo de entrega y estado actual?",
+        "respuesta": "Inmediata. La propiedad está habitada y mantenida, lista para habitar sin obras ni esperas. Se entrega con limpieza profunda y puesta a punto de jardín/piscina."
+      },
+      {
+        "pregunta": "¿Impuestos y gastos mensuales reales?",
+        "respuesta": "Expensas barrio cerrado USD 450/mes, jardinería y piscina USD 350/mes, consumo eléctrico promedio USD 180/mes sin climatización intensiva. Impuestos municipales al día. Use las calculadoras en Recursos para estimación de cierre."
+      },
+      {
+        "pregunta": "¿Se puede financiar?",
+        "respuesta": "El propietario evalúa financiación parcial a corto plazo para perfiles cualificados. Consulte condiciones. Tenemos calculadora de hipoteca integrada con banca local."
+      }
+    ],
+    "loQueNoSeVe": [
+      {
+        "categoria": "Seguridad y privacidad",
+        "icono": "escudo",
+        "items": [
+          "Circuito CCTV 12 cámaras Hikvision con acceso remoto",
+          "Barrera perimetral electrificada + portón automatizado",
+          "Barrio cerrado con guardia 24h y control de acceso",
+          "Distancia real a vecino más cercano: 45m arboleda mediante"
+        ]
+      },
+      {
+        "categoria": "Eficiencia y materiales",
+        "icono": "eficiencia",
+        "items": [
+          "Doble vidrio DVH en todos los ventanales principales",
+          "Pisos porcelanato 90x90 primera marca + madera natural en suites",
+          "Aberturas de aluminio anodizado línea Módena",
+          "Teja colonial con aislación térmica Isolan + losa alivianada"
+        ]
+      },
+      {
+        "categoria": "Climatización y autonomía",
+        "icono": "clima",
+        "items": [
+          "Aire centralizado 8 bocas Daikin Inverter + splits en dormitorios",
+          "Termotanque solar 300L + respaldo eléctrico automático",
+          "Pozo artesiano propio + tanque 5.000L + bomba presurizadora",
+          "Grupo electrógeno 15kVA con transferencia automática"
+        ]
+      },
+      {
+        "categoria": "Detalles que sostienen el valor",
+        "icono": "diamante",
+        "items": [
+          "Pileta infinity con sistema de filtrado automático y luces LED",
+          "Quincho con parrilla profesional + horno de barro + cava climatizada",
+          "Vestidores a medida en todas las suites + iluminación LED cálida",
+          "Jardín con riego automatizado + iluminación paisajística"
+        ]
+      }
+    ],
+    "diaNoche": {
+      "titulo": "Transición día y noche — la misma toma, 12 horas después",
+      "descripcion": "A las 06:42 y a las 20:15. Sin filtros, sin retoque. La luz hace todo el trabajo.",
+      "imagenDia": "https://larumstudio.com/wp-content/uploads/2026/05/amanecer.webp",
+      "imagenNoche": "https://larumstudio.com/wp-content/uploads/2026/05/noche.webp",
+      "videoTransicion": "https://larumstudio.com/wp-content/uploads/2026/05/Transicion-dia-a-noche-cinematica-Optimizada-Web.mp4"
+    },
+    "miniMapa": {
+      "embedUrl": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14406.5!2d-57.2992066!3d-25.3277542!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x945da9a7d1234567%3A0x1234567890abcdef!2sSan%20Bernardino!5e0!3m2!1ses!2spy!4v1234567890",
+      "pins": [
+        {
+          "id": "propiedad",
+          "label": "Villa San Bernardino",
+          "lat": -25.31,
+          "lng": -57.293,
+          "categoria": "residencia",
+          "icono": "casa",
+          "color": "#C8A45D",
+          "destacado": true,
+          "x": 52,
+          "y": 48
+        },
+        {
+          "id": "nautico",
+          "label": "Club Náutico San Ber",
+          "lat": -25.322,
+          "lng": -57.298,
+          "categoria": "club",
+          "distancia": "1.5 km - 3 min",
+          "x": 68,
+          "y": 62
+        },
+        {
+          "id": "aeropuerto",
+          "label": "Aeropuerto ASU",
+          "lat": -25.24,
+          "lng": -57.52,
+          "categoria": "transporte",
+          "distancia": "35 km - 40 min",
+          "x": 15,
+          "y": 22
+        },
+        {
+          "id": "centro",
+          "label": "Centro de San Ber",
+          "lat": -25.31,
+          "lng": -57.29,
+          "categoria": "centro",
+          "distancia": "2 km",
+          "x": 50,
+          "y": 50
+        },
+        {
+          "id": "gastronomia",
+          "label": "Gastronomía premium",
+          "lat": -25.308,
+          "lng": -57.291,
+          "categoria": "restaurante",
+          "distancia": "1.8 km",
+          "x": 58,
+          "y": 42
+        }
+      ]
+    },
+    "i18n": {
+      "en": {
+        "heroHeadline": "A house by Lake Ypacaraí, where hurry has no entry.",
+        "badge": "Luxury Villa · San Bernardino",
+        "precio": "USD 3,500,000",
+        "cta": "Request Private Viewing",
+        "ubicacion": "Location",
+        "amenities": "Amenities",
+        "galeria": "Gallery",
+        "testimonio": "The owner says",
+        "inversion": "Investment & Heritage"
+      }
+    },
+    "urgenciaSutil": {
+      "texto": "Esta residencia se presenta a un número selecto de familias este trimestre.",
+      "subtexto": "La agenda de visitas tiene disponibilidad limitada — coordinamos con 48h de anticipación.",
+      "variante": "elegante"
+    },
+    "videoHeroLoop": {
+      "url": "https://larumstudio.com/wp-content/uploads/2026/07/Piscina-2560px-upscaled.mp4",
+      "poster": "https://larumstudio.com/wp-content/uploads/2026/04/unnamed-22.webp",
+      "descripcion": "Piscina infinity con reflejos - loop 12s hero",
+      "duracion": "12s"
+    },
+    "amenitiesIconografia": {
+      "estilo": "linea fina editorial - stroke 1px - estilo Larum Studio",
+      "iconos": {
+        "PISCINA INFINITY": "infinity pool - borde desbordante + linea agua",
+        "GIMNASIO PRIVADO": "mancuerna minimalista",
+        "JARDÍN EXTERIOR": "hoja + tallo - 3 hojas",
+        "TERRAZA PRIVADA": "baranda + horizonte",
+        "JACUZZI INTERIOR": "elipse + burbujas",
+        "COCINA GOURMET": "gorro chef + isla",
+        "ESTACIONAMIENTO": "P + auto silueta",
+        "SEGURIDAD 24H": "escudo + check",
+        "VISTA PANORÁMICA": "ojo + panorámica 180"
+      }
+    },
+    "performance": {
+      "heroPriority": true,
+      "lazyGallery": true,
+      "videoPreload": "auto para hero, metadata para 4K tour",
+      "mobileFirst": true,
+      "poster4K": "https://larumstudio.com/wp-content/uploads/2026/04/unnamed-1.webp"
+    }
   }
 }
