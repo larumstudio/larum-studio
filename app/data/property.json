@@ -365,21 +365,24 @@
         "detalle": "PDF · 2.4 MB · Plantas y cortes a escala",
         "url": "https://larumstudio.com/wp-content/uploads/2026/07/planos-villa-san-bernardino_compressed.pdf",
         "tipo": "plano",
-        "preview": "⌖"
+        "preview": "⌖",
+        "thumbnailUrl": "https://larumstudio.com/wp-content/uploads/2026/05/plano-3d-san-bernardino.webp"
       },
       {
         "titulo": "Certificación energética",
         "detalle": "PDF · 1.1 MB · Eficiencia clase C",
         "url": "https://larumstudio.com/wp-content/uploads/2026/07/Certificado_Eficiencia_Energetica_Villa_San_Bernardino_compressed.pdf",
         "tipo": "certificacion",
-        "preview": "◈"
+        "preview": "◈",
+        "thumbnailUrl": ""
       },
       {
         "titulo": "Ficha técnica",
         "detalle": "PDF · 0.9 MB · Materiales y terminaciones",
         "url": "https://larumstudio.com/wp-content/uploads/2026/07/Ficha_Tecnica_Villa_San_Bernardino_compressed.pdf",
         "tipo": "ficha",
-        "preview": "⬙"
+        "preview": "⬙",
+        "thumbnailUrl": ""
       },
       {
         "titulo": "Código QR para compartir",
@@ -389,7 +392,7 @@
         "preview": "QR"
       }
     ],
-    "brochure": "https://larumstudio.com/wp-content/uploads/2026/06/presentacion-premium-propiedad-de-lujo.webp",
+    "brochure": "https://larumstudio.com/wp-content/uploads/2026/06/Brochure-Editorial-Premium-Propiedad_compressed.pdf",
     "brochurePages": [
       "https://larumstudio.com/wp-content/uploads/2026/06/presentacion-premium-propiedad-de-lujo.webp"
     ],
@@ -622,7 +625,7 @@
     "faq": [
       {
         "pregunta": "¿Se aceptan visitas internacionales?",
-        "respuesta": "Sí. Coordinamos visitas con video previo, traducción simultánea (EN/ES/DE) y acompañamiento completo desde el aeropuerto. Hemos recibido compradores de Argentina, Brasil, España, Alemania y EE.UU."
+        "respuesta": "Sí. Coordinamos visitas con vídeollamada previa, traducción simultánea (EN/ES/DE) y acompañamiento completo desde el aeropuerto. Hemos recibido compradores de Argentina, Brasil, España, Alemania y EE.UU."
       },
       {
         "pregunta": "¿Incluye el mobiliario?",

@@ -337,11 +337,11 @@ function AmenitiesGrouped({ amenities }: { amenities: string[] }) {
 function DocumentationCards({ docs }: { docs: any[] }) {
   const getMeta = (doc: any) => {
     const titulo = (doc.titulo || '').toLowerCase()
-    if (titulo.includes('plano')) return { color: '#c9a96e', preview: '⌖' }
-    if (titulo.includes('certific')) return { color: '#7a8a6a', preview: '◈' }
-    if (titulo.includes('ficha')) return { color: '#8a7a6a', preview: '⬙' }
-    if (titulo.includes('qr')) return { color: '#111', preview: 'QR' }
-    return { color: '#c9a96e', preview: 'PDF' }
+    if (titulo.includes('plano')) return { color: '#c9a96e', preview: '⌖', hasThumb: true }
+    if (titulo.includes('certific')) return { color: '#7a8a6a', preview: '◈', hasThumb: true }
+    if (titulo.includes('ficha')) return { color: '#8a7a6a', preview: '⬙', hasThumb: true }
+    if (titulo.includes('qr')) return { color: '#111', preview: 'QR', hasThumb: false }
+    return { color: '#c9a96e', preview: 'PDF', hasThumb: true }
   }
   return (
     <div className={extraStyles.docCardsGrid}>
@@ -349,9 +349,18 @@ function DocumentationCards({ docs }: { docs: any[] }) {
         const meta = getMeta(d)
         return (
           <a key={i} href={d.url} target="_blank" rel="noopener" className={extraStyles.docCard}>
-            <div className={extraStyles.docCardPreview} style={{ borderColor: meta.color }}>
-              <span className={extraStyles.docCardPreviewIcon} style={{ color: meta.color }}>{meta.preview}</span>
-              <span className={extraStyles.docCardNumber}>{String(i + 1).padStart(2, '0')}</span>
+            <div className={extraStyles.docCardPreview} style={{ borderColor: meta.color, overflow: 'hidden', position: 'relative' }}>
+              {d.thumbnailUrl && !d.thumbnailUrl.endsWith('.pdf') ? (
+                <img src={d.thumbnailUrl} alt={d.titulo} style={{ width: '100%', height: '100%', objectFit: 'cover', position: 'absolute', top: 0, left: 0 }} />
+              ) : meta.preview === 'QR' && d.url && d.url.match(/\.(png|jpg|webp)/) ? (
+                <img src={d.url} alt="QR" style={{ width: '70%', height: '70%', objectFit: 'contain', margin: 'auto' }} />
+              ) : (
+                <>
+                  <span className={extraStyles.docCardPreviewIcon} style={{ color: meta.color, fontSize: meta.preview.length <= 2 ? '1.8rem' : '1rem' }}>{meta.preview}</span>
+                  <span style={{ position: 'absolute', bottom: '6px', left: '8px', fontSize: '0.55rem', fontWeight: 600, letterSpacing: '0.1em', color: meta.color, opacity: 0.6 }}>PDF</span>
+                </>
+              )}
+              <span className={extraStyles.docCardNumber} style={{ position: 'relative', zIndex: 1 }}>{String(i + 1).padStart(2, '0')}</span>
             </div>
             <div className={extraStyles.docCardInfo}>
               <h4 className={extraStyles.docCardTitle}>{d.titulo}</h4>
@@ -595,13 +604,14 @@ function RevealSection({ children, className = '', as = 'section', id, style }: 
   return <Tag ref={reveal.ref as any} className={`${reveal.className} ${styles.stagger} ${className}`} id={id} style={style}>{children}</Tag>
 }
 
-function BrochureForm({ agentEmail, compact, privacidadTexto, privacidadUrl }: { agentEmail: string, compact?: boolean, privacidadTexto?: string, privacidadUrl?: string }) {
+function BrochureForm({ agentEmail, compact, privacidadTexto, privacidadUrl, brochureUrl }: { agentEmail: string, compact?: boolean, privacidadTexto?: string, privacidadUrl?: string, brochureUrl?: string }) {
   const [submitted, setSubmitted] = useState(false)
   const [nombre, setNombre] = useState('')
   const [email, setEmail] = useState('')
   const [whatsapp, setWhatsapp] = useState('')
   const [loading, setLoading] = useState(false)
-  const canSubmit = whatsapp.trim() !== ''
+  const [accepted, setAccepted] = useState(false)
+  const canSubmit = whatsapp.trim() !== '' && email.trim() !== '' && accepted
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!canSubmit) return
@@ -621,9 +631,23 @@ function BrochureForm({ agentEmail, compact, privacidadTexto, privacidadUrl }: {
   }
   if (submitted) {
     return (
-      <div className={styles.memoriaSuccess}>
-        <p className={styles.memoriaSuccessTitle}>Solicitud recibida.</p>
-        <p className={styles.memoriaSuccessDesc}>Te contactamos en las próximas horas con la memoria completa.</p>
+      <div style={{ textAlign: 'center', padding: '3rem 2rem', background: '#1a1714', borderRadius: '6px' }}>
+        <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: '2rem', color: '#fff', marginBottom: '0.75rem' }}>Solicitud recibida.</p>
+        <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: '0.85rem', color: 'rgba(255,255,255,0.6)', marginBottom: '2rem' }}>Te contactamos en las próximas horas con la memoria completa.</p>
+        {brochureUrl && <button type="button" className={styles.memoriaBtn} style={{ display: 'inline-flex', gap: '0.5rem', cursor: 'pointer', border: 'none' }} onClick={() => {
+          const iframe = document.createElement('iframe')
+          iframe.style.display = 'none'
+          iframe.src = brochureUrl
+          document.body.appendChild(iframe)
+          const link = document.createElement('a')
+          link.href = brochureUrl
+          link.download = 'Brochure-Villa-San-Bernardino.pdf'
+          link.target = '_blank'
+          link.rel = 'noopener'
+          document.body.appendChild(link)
+          link.click()
+          document.body.removeChild(link)
+        }}><IconDownload /> Descargar Brochure</button>}
       </div>
     )
   }
@@ -633,10 +657,10 @@ function BrochureForm({ agentEmail, compact, privacidadTexto, privacidadUrl }: {
         <div className={styles.formField}><input className={styles.formInput} type="text" placeholder="NOMBRE" value={nombre} onChange={e => setNombre(e.target.value)} /></div>
         <div className={styles.formField}><input className={styles.formInput} type="tel" placeholder="WHATSAPP *" value={whatsapp} onChange={e => setWhatsapp(e.target.value)} /></div>
       </div>
-      <div className={styles.formField}><input className={styles.formInput} type="email" placeholder="EMAIL" value={email} onChange={e => setEmail(e.target.value)} /></div>
+      <div className={styles.formField}><input className={styles.formInput} type="email" placeholder="EMAIL *" required value={email} onChange={e => setEmail(e.target.value)} /></div>
       <div className={styles.privacidadWrap}>
-        <div style={{ display: 'flex', alignItems: 'flex-start', gap: '0.5rem', marginTop: '1.25rem' }}>
-        <input type="checkbox" className={styles.privacidadCheck} id="privacidad-brochure" style={{ marginTop: '3px' }} />
+        <div style={{ display: 'flex', alignItems: 'flex-start', gap: '0.5rem', marginTop: '1.5rem', marginBottom: '0.75rem' }}>
+        <input type="checkbox" className={styles.privacidadCheck} id="privacidad-brochure" style={{ marginTop: '3px' }} checked={accepted} onChange={e => setAccepted(e.target.checked)} required />
         <label htmlFor="privacidad-brochure" className={styles.privacidadLabel} style={{ margin: 0 }}>
           {privacidadUrl ? <>{(privacidadTexto || 'Acepto la ').replace('política de privacidad', '').trim()} <a href={privacidadUrl} target="_blank" rel="noopener">política de privacidad</a></> : (privacidadTexto || 'Acepto la política de privacidad')}
         </label>
@@ -735,6 +759,15 @@ export default function PropertyPage({ data }: { data: any }) {
         </div>
       </section>
 
+
+      {/* Rotate phone hint - mobile only */}
+      <div className={extraStyles.rotateHint}>
+        <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.2} style={{ transform: 'rotate(-90deg)' }}>
+          <rect x="5" y="2" width="14" height="20" rx="3"/><path d="M12 18h.01"/>
+        </svg>
+        <span>Para una experiencia inmersiva, gire su dispositivo en horizontal</span>
+      </div>
+
       {/* STATS - #15 escalonado + #16 contador animado */}
       <section className={styles.statsRow}>
         <div className={styles.statsRowInner}>
@@ -774,9 +807,9 @@ export default function PropertyPage({ data }: { data: any }) {
             <p className={styles.eyebrow}>La Historia</p>
             <h2 className={styles.storyTitle}>Lo que se siente al llegar</h2>
             <p className={styles.storyDesc}>Al cruzar el portón, el mundo se queda afuera. Solo queda el lago, reflejado entre los árboles. Un umbral que muy pocos tienen el privilegio de atravesar.</p>
-            <p className={styles.storyDesc} style={{ marginTop: '1.25rem' }}>San Bernardino siempre se guardó en silencio. Esta casa forma parte de esa herencia: un lugar pensado no para impresionar, sino para que uno pueda volver a estar.</p>
-            <p className={styles.storyDesc} style={{ marginTop: '1.25rem' }}>Aquí el amanecer no se celebra. Se vive. El espacio no presiona. Contiene. Y por primera vez en mucho tiempo, no hace falta explicarse.</p>
-            <p className={styles.storyDesc} style={{ marginTop: '1.25rem' }}>Cruzar ese portón no es llegar a una residencia. Es recordar que todavía existen refugios que no se anuncian.</p>
+            <p className={styles.storyDesc} style={{ marginTop: '1.5rem', marginBottom: '0.75rem' }}>San Bernardino siempre se guardó en silencio. Esta casa forma parte de esa herencia: un lugar pensado no para impresionar, sino para que uno pueda volver a estar.</p>
+            <p className={styles.storyDesc} style={{ marginTop: '1.5rem', marginBottom: '0.75rem' }}>Aquí el amanecer no se celebra. Se vive. El espacio no presiona. Contiene. Y por primera vez en mucho tiempo, no hace falta explicarse.</p>
+            <p className={styles.storyDesc} style={{ marginTop: '1.5rem', marginBottom: '0.75rem' }}>Cruzar ese portón no es llegar a una residencia. Es recordar que todavía existen refugios que no se anuncian.</p>
           </div>
           <div className={styles.storyRight}><div className={styles.storyImgWrap}><img loading="lazy" src={property.story?.image || property.posterHero} alt={property.story?.title || property.name} className={styles.storyImg} /></div></div>
         </div>
@@ -885,7 +918,7 @@ export default function PropertyPage({ data }: { data: any }) {
               <div className={styles.lifestyleHeader}>
                 <p className={styles.eyebrow}>{property.lifestyle.eyebrow}</p>
                 <h2 className={styles.lifestyleTitle}>{property.lifestyle.title}</h2>
-                {(property.lifestyle.introParagraphs || [property.lifestyle.intro]).filter(Boolean).map((para: string, i: number) => (<p key={i} className={styles.lifestyleIntro} style={i > 0 ? { marginTop: '1.25rem' } : {}}>{para}</p>))}
+                {(property.lifestyle.introParagraphs || [property.lifestyle.intro]).filter(Boolean).map((para: string, i: number) => (<p key={i} className={styles.lifestyleIntro} style={i > 0 ? { marginTop: '1.5rem', marginBottom: '0.75rem' } : {}}>{para}</p>))}
                 <a href="/entorno" className={styles.locationBtnSecondary} style={{ marginTop: "2rem", display: "inline-block" }}>Descubre San Bernardino →</a>
               </div>
             </div>
@@ -957,7 +990,7 @@ export default function PropertyPage({ data }: { data: any }) {
 
       <RevealSection className={styles.trustDocsSection}>
         <div className={styles.trustDocsHeader}><p className={styles.eyebrow}>Recursos</p><h2 className={styles.sectionTitle}>Todo lo que necesita para evaluar con criterio.</h2></div>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2.5rem', maxWidth: '1200px', margin: '0 auto', padding: '0 2.5rem' }}>
+        <div className={extraStyles.recursosGrid}>
           <div>
             <h3 className={styles.trustDocsColTitle}>Documentación</h3>
             {property.descargables && property.descargables.length > 0 ? <DocumentationCards docs={property.descargables} /> : null}
@@ -987,7 +1020,7 @@ export default function PropertyPage({ data }: { data: any }) {
             <h2 className={styles.memoriaTitle}>Memoria de la Residencia.</h2>
             <p className={styles.memoriaDesc}>No es un catálogo. Es un documento privado, elaborado con criterio y discreción.</p>
             <p className={styles.memoriaMetaInline}>Documento privado · PDF exclusivo · envío inmediato</p>
-            <div className={styles.memoriaInlineForm}><BrochureForm agentEmail={property.agentEmail} compact={true} privacidadTexto={property.privacidadTexto} privacidadUrl={property.privacidadUrl} /></div>
+            <div className={styles.memoriaInlineForm}><BrochureForm agentEmail={property.agentEmail} compact={true} privacidadTexto={property.privacidadTexto} privacidadUrl={property.privacidadUrl} brochureUrl={property.brochure} /></div>
           </div>
           {property.brochurePages && property.brochurePages.length > 0 && (
             <div className={styles.memoriaBalancedRight} style={property.brochurePages.length === 1 ? { display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '0', background: '#f5f3ef', borderRadius: '0', overflow: 'visible' } : { display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '12px', padding: '2rem', background: '#f5f3ef', borderRadius: '6px', alignContent: 'center' }}>

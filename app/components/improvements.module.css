@@ -1398,3 +1398,46 @@
 .amenityCard:hover .amenityCardIcon svg {
   transform: scale(1.08);
 }
+
+/* Rotate phone hint - mobile only */
+.rotateHint {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 1rem 2rem;
+  background: rgba(30,25,15,0.03);
+  border-bottom: 1px solid rgba(30,25,15,0.06);
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.68rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgba(30,25,15,0.45);
+}
+.rotateHint svg {
+  opacity: 0.4;
+  flex-shrink: 0;
+}
+@media (max-width: 768px) {
+  .rotateHint { display: flex; }
+}
+@media (orientation: landscape) {
+  .rotateHint { display: none !important; }
+}
+
+/* Recursos responsive grid */
+.recursosGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2.5rem;
+}
+@media (max-width: 768px) {
+  .recursosGrid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    padding: 0 1.5rem;
+  }
+}
