@@ -37,8 +37,8 @@
         "label": "asesorando élite"
       },
       {
-        "valor": "42 días",
-        "label": "tiempo de venta promedio"
+        "valor": "3 de 10",
+        "label": "propiedades aceptadas"
       }
     ]
   },
@@ -85,8 +85,8 @@
     "positioning": {
       "eyebrow": "El significado",
       "paragraphs": [
-        "En San Bernardino, las casas frente al lago rara vez se anuncian: se transmiten entre quienes ya pertenecen al lugar.",
-        "Esta es una de ellas. Ochocientos metros construidos sobre casi cuatro mil de terreno privado, a un paso del agua y a una hora del centro de Asunción. Una residencia concebida para vivirse todo el año, no para visitarse en verano."
+        "En San Bernardino, las residencias frente al lago cambian de manos en privado. Esta es una de ellas.",
+        "Ochocientos metros construidos sobre casi cuatro mil de terreno privado, a un paso del lago Ypacaraí y a menos de una hora de Asunción. Un equilibrio entre naturaleza, silencio y proximidad que define lo que hoy se busca."
       ]
     },
     "story": {
@@ -579,7 +579,7 @@
         "titulo": "Cena con amigos",
         "desc": "Cocina gourmet abierta, living que se expande a la terraza. Espacio para 10 sin que nadie se sienta de paso. La casa recibe, no se llena.",
         "icono": "cena",
-        "imagen": "https://larumstudio.com/wp-content/uploads/2026/04/unnamed-2.webp"
+        "imagen": "https://larumstudio.com/wp-content/uploads/2026/07/noche-salon-comedor.webp"
       }
     ],
     "testimonioPropietario": {
@@ -591,36 +591,32 @@
     "inversion": {
       "eyebrow": "Inversión y legado",
       "titulo": "Un refugio que sostiene su valor cuando el resto fluctúa",
-      "descripcion": "San Bernardino es de las pocas zonas del país que no se ha masificado ni perdido su carácter. La oferta frente al lago es finita, la demanda de privacidad crece cada año. Comprar aquí es apostar por un estilo de vida que perdura y por un activo que no se deprecia con modas.",
+      "descripcion": "San Bernardino es de las pocas zonas del país que no se ha masificado ni perdido su carácter. La oferta de residencias frente al lago es estructuralmente limitada, y la demanda de privacidad residencial crece de forma sostenida.",
       "datos": [
         {
-          "label": "Precio m² San Ber frente lago",
-          "valor": "USD 950 - 1.200",
-          "tendencia": "+8.3% últimos 5 años",
+          "label": "Oferta frente al lago",
+          "valor": "Limitada",
+          "tendencia": "Terreno finito, sin nuevos desarrollos",
           "icono": "tendencia"
         },
         {
-          "label": "Precio m² Asunción premium",
-          "valor": "USD 1.800 - 2.400",
-          "tendencia": "+4.1% últimos 5 años",
-          "icono": "comparacion"
+          "label": "Demanda residencial premium",
+          "valor": "Creciente",
+          "tendencia": "Familias que buscan residencia permanente",
+          "icono": "demanda"
         },
         {
-          "label": "Ocupación anual premium lago",
-          "valor": "87%",
-          "tendencia": "vs 62% en 2019",
-          "icono": "ocupacion"
-        },
-        {
-          "label": "Terrenos disponibles frente lago",
-          "valor": "12",
-          "tendencia": "en radio de 2km, vs 47 en 2018",
-          "icono": "escasez"
+          "label": "Carácter del entorno",
+          "valor": "Preservado",
+          "tendencia": "Sin masificación ni pérdida de identidad",
+          "icono": "preservado"
         }
       ],
-      "plusvalia": "Proyección conservadora: 6-9% anual en USD en corredores premium del lago, basada en escasez de suelo y consolidación de servicios.",
-      "fuente": "Datos internos Larum Studio + relevamiento mercado premium Paraguay 2024 + informe Sucha Hecho",
-      "cta": "Solicitar informe de plusvalía completo"
+      "plusvalia": {
+        "titulo": "Potencial patrimonial",
+        "descripcion": "Una propiedad de estas características, en una ubicación que no se replica, tiende a revalorizarse por escasez natural del suelo y crecimiento orgánico de la zona. Para una proyección concreta, solicite nuestro informe de mercado actualizado.",
+        "porcentaje": ""
+      }
     },
     "faq": [
       {
@@ -768,8 +764,8 @@
       }
     },
     "urgenciaSutil": {
-      "texto": "Esta residencia se presenta a un número selecto de familias este trimestre.",
-      "subtexto": "La agenda de visitas tiene disponibilidad limitada — coordinamos con 48h de anticipación.",
+      "texto": "Disponibilidad sujeta a agenda.",
+      "subtexto": "Coordinamos visitas con 48 horas de anticipación.",
       "variante": "elegante"
     },
     "videoHeroLoop": {

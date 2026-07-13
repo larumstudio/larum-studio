@@ -385,7 +385,7 @@ function UnDiaEnCasa({ data }: { data: any[] }) {
         <div className={extraStyles.unDiaHeader}>
           <p className={styles.eyebrow}>Un día en esta casa</p>
           <h2 className={extraStyles.unDiaTitle}>No se visita. Se habita.</h2>
-          <p className={extraStyles.unDiaIntro}>De la primera luz del lago al último brindis en la terraza, así transcurre un día donde el tiempo deja de empujar. Esto es lo que hacen los mejores hoteles boutique: te dejan vivirlo antes de llegar.</p>
+          <p className={extraStyles.unDiaIntro}>De la primera luz del lago al último brindis en la terraza, así transcurre un día donde el tiempo deja de empujar.</p>
         </div>
         <div className={extraStyles.unDiaTimeline}>
           {data.map((item: any, i: number) => (
@@ -484,7 +484,10 @@ function InversionSection({ data }: { data: any }) {
             </div>
           ))}
         </div>
-        {data.plusvalia && <p className={extraStyles.inversionPlusvalia}>{data.plusvalia}</p>}
+        {data.plusvalia && <div className={extraStyles.inversionPlusvalia}>
+          <h4 style={{ fontSize: '1.1rem', marginBottom: '0.5rem' }}>{data.plusvalia.titulo}</h4>
+          <p style={{ opacity: 0.7, lineHeight: 1.6 }}>{data.plusvalia.descripcion}</p>
+        </div>}
         {data.fuente && <p className={extraStyles.inversionFuente}>Fuente: {data.fuente}</p>}
       </div>
     </RevealSection>
@@ -760,13 +763,6 @@ export default function PropertyPage({ data }: { data: any }) {
       </section>
 
 
-      {/* Rotate phone hint - mobile only */}
-      <div className={extraStyles.rotateHint}>
-        <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.2} style={{ transform: 'rotate(-90deg)' }}>
-          <rect x="5" y="2" width="14" height="20" rx="3"/><path d="M12 18h.01"/>
-        </svg>
-        <span>Para una experiencia inmersiva, gire su dispositivo en horizontal</span>
-      </div>
 
       {/* STATS - #15 escalonado + #16 contador animado */}
       <section className={styles.statsRow}>
@@ -1004,7 +1000,7 @@ export default function PropertyPage({ data }: { data: any }) {
             </div>
             <h3 className={styles.trustDocsColTitle} style={{ marginTop: '2rem' }}>Calculadoras</h3>
             <div className={styles.calcGrid}>
-              <button type="button" className={styles.calcCard} onClick={() => setCalculatorOpen('mortgage')}><div className={styles.calcIconWrap}><svg width="28" height="28" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1}><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M8 6h8M8 10h2M14 10h2M8 14h2M14 14h2M8 18h2M14 18h2"/></svg></div><span className={styles.calcLabel}>Calcula tu hipoteca</span><span className={styles.calcArrow}>→</span></button>
+              <div className={styles.calcCard} style={{ cursor: 'default' }}><div className={styles.calcIconWrap}><svg width="28" height="28" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1}><path d="M12 2v4M8 4v2M16 4v2"/><rect x="3" y="8" width="18" height="14" rx="2"/><path d="M3 14h18"/><path d="M7 11h2M11 11h2M15 11h2M7 18h2M11 18h2"/></svg></div><span className={styles.calcLabel}>Potencial de renta</span><p style={{ fontSize: '0.72rem', lineHeight: 1.5, color: 'rgba(30,25,15,0.5)', marginTop: '0.5rem' }}>San Bernardino presenta una demanda creciente de alquiler vacacional premium. Solicite un informe personalizado de rentabilidad proyectada para esta propiedad.</p></div>
               <button type="button" className={styles.calcCard} onClick={() => setCalculatorOpen('purchase')}><div className={styles.calcIconWrap}><svg width="28" height="28" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1}><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/><path d="M9 22V12h6v10"/></svg></div><span className={styles.calcLabel}>Calcula el coste de compra</span><span className={styles.calcArrow}>→</span></button>
             </div>
           </div>
@@ -1047,7 +1043,7 @@ export default function PropertyPage({ data }: { data: any }) {
                 <div className={styles.agentStatItem}><div className={styles.agentStatVal}>40</div><div className={styles.agentStatLabel}>propiedades de lujo</div></div>
                 <div className={styles.agentStatItem}><div className={styles.agentStatVal}>US$125M</div><div className={styles.agentStatLabel}>ventas concretadas</div></div>
                 <div className={styles.agentStatItem}><div className={styles.agentStatVal}>5 años</div><div className={styles.agentStatLabel}>asesorando élite</div></div>
-                <div className={styles.agentStatItem}><div className={styles.agentStatVal}>42 días</div><div className={styles.agentStatLabel}>tiempo de venta</div></div>
+                <div className={styles.agentStatItem}><div className={styles.agentStatVal}>3 de 10</div><div className={styles.agentStatLabel}>propiedades aceptadas</div></div>
               </div>
               <div className={styles.agentExpandedBtns}>
                 <a href={whatsappUrl} target="_blank" rel="noopener" className={styles.agentExpandedBtn}><IconWhatsapp /> WHATSAPP</a>
@@ -1087,7 +1083,7 @@ export default function PropertyPage({ data }: { data: any }) {
         <div className={styles.footerBottom}><span>© 2026 {property.footerTitulo || 'Larum Studio'}. Todos los derechos reservados.</span></div>
       </footer>
 
-      {agent.whatsapp && <a href={whatsappUrl} className={styles.waFloat} target="_blank" rel="noopener" aria-label="WhatsApp"><IconWhatsapp /></a>}
+      {/* WhatsApp integrado en sección de agente, no flotante */}
       <AnalyticsScripts ga4Id={property.ga4Id} metaPixelId={property.metaPixelId} />
     </div>
   )
