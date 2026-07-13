@@ -292,13 +292,15 @@ function categorizeAmenity(label: string): 'bienestar' | 'exterior' | 'servicios
   if (/JARDIN|TERRAZA|VISTA|MUELLE|PLAYA|CANCHA|GOLF|JARDÍN|EXTERIOR|QUINCHO|PARRILLA/i.test(l)) return 'exterior'
   return 'servicios'
 }
-function AmenitiesGrouped({ amenities }: { amenities: string[] }) {
+function AmenitiesGrouped({ amenities, categorias }: { amenities: string[]; categorias?: { bienestar?: string[]; exterior?: string[]; servicios?: string[] } }) {
   const [active, setActive] = useState<'bienestar' | 'exterior' | 'servicios'>('bienestar')
-  const grouped = {
-    bienestar: amenities.filter(a => categorizeAmenity(a) === 'bienestar'),
-    exterior: amenities.filter(a => categorizeAmenity(a) === 'exterior'),
-    servicios: amenities.filter(a => categorizeAmenity(a) === 'servicios'),
-  }
+  const grouped = categorias && (categorias.bienestar?.length || categorias.exterior?.length || categorias.servicios?.length)
+    ? { bienestar: categorias.bienestar || [], exterior: categorias.exterior || [], servicios: categorias.servicios || [] }
+    : {
+        bienestar: amenities.filter(a => categorizeAmenity(a) === 'bienestar'),
+        exterior: amenities.filter(a => categorizeAmenity(a) === 'exterior'),
+        servicios: amenities.filter(a => categorizeAmenity(a) === 'servicios'),
+      }
   if (grouped.bienestar.length === 0 && grouped.exterior.length === 0) {
     grouped.bienestar = amenities.slice(0, 3)
     grouped.exterior = amenities.slice(3, 6)
@@ -384,8 +386,8 @@ function UnDiaEnCasa({ data }: { data: any[] }) {
       <div className={extraStyles.unDiaInner}>
         <div className={extraStyles.unDiaHeader}>
           <p className={styles.eyebrow}>Un día en esta casa</p>
-          <h2 className={extraStyles.unDiaTitle}>No se visita. Se habita.</h2>
-          <p className={extraStyles.unDiaIntro}>De la primera luz del lago al último brindis en la terraza, así transcurre un día donde el tiempo deja de empujar.</p>
+          <h2 className={extraStyles.unDiaTitle}>{property.unDiaTitle || 'No se visita. Se habita.'}</h2>
+          <p className={extraStyles.unDiaIntro}>{property.unDiaIntro || 'De la primera luz del lago al último brindis en la terraza, así transcurre un día donde el tiempo deja de empujar.'}</p>
         </div>
         <div className={extraStyles.unDiaTimeline}>
           {data.map((item: any, i: number) => (
@@ -753,8 +755,8 @@ export default function PropertyPage({ data }: { data: any }) {
             </div>
           )}
           <div className={`${styles.heroCenteredBtns} ${extraStyles.heroBtnsAnimated}`}>
-            <a href={whatsappUrl} target="_blank" rel="noopener" className={`${styles.heroCenteredBtnPrimary} ${extraStyles.ctaGlow}`}>SOLICITAR AGENDA PRIVADA</a>
-            {property.brochure && <a href="#memoria" className={styles.heroCenteredBtnSecondary}>DESCARGAR BROCHURE →</a>}
+            <a href={whatsappUrl} target="_blank" rel="noopener" className={`${styles.heroCenteredBtnPrimary} ${extraStyles.ctaGlow}`}>{property.heroCtaPrimary || 'SOLICITAR AGENDA PRIVADA'}</a>
+            {property.brochure && <a href="#memoria" className={styles.heroCenteredBtnSecondary}>{property.heroCtaSecondary || 'DESCARGAR BROCHURE →'}</a>}
           </div>
           <div className={`${styles.heroScrollHint} ${extraStyles.heroScrollAnimated}`}>
             <span>SCROLL</span><div className={styles.heroScrollLine} />
@@ -784,14 +786,15 @@ export default function PropertyPage({ data }: { data: any }) {
         <RevealSection className={styles.positioning}>
           <div className={styles.posIntro}>
             <div className={styles.posIntroLeft}>
-              <div className={styles.posIntroNum}><span>01</span><span className={styles.posIntroLine} /><span className={styles.posIntroLabel}>Porque algunos lugares no se eligen. Se reconocen.</span></div>
-              <h2 className={styles.posIntroTitle}>En San Bernardino, las casas frente al lago rara vez se anuncian: se transmiten entre quienes ya pertenecen al lugar.</h2>
-              <p className={styles.posIntroItalicLine}>Esta es una de ellas.</p>
+              <div className={styles.posIntroNum}><span>01</span><span className={styles.posIntroLine} /><span className={styles.posIntroLabel}>{property.positioning.prefijo || property.positioning.eyebrow || ''}</span></div>
+              <h2 className={styles.posIntroTitle}>{property.positioning.titulo || property.positioning.paragraphs?.[0] || ''}</h2>
+              {property.positioning.subtitulo && <p className={styles.posIntroItalicLine}>{property.positioning.subtitulo}</p>}
             </div>
             <div className={styles.posIntroRight}>
-              <p className={styles.posIntroPara}>No fue hecha para ser vista. Fue hecha para ser vivida. Un lugar donde el lago no es paisaje, sino presencia constante.</p>
-              <p className={styles.posIntroPara}>Aquí no se viene a descansar de la vida. Se viene a recordarla y conectar con ella.</p>
-              <blockquote className={styles.posQuoteBlock}><p>«Las cosas verdaderamente valiosas son aquellas que no están a la venta para cualquiera.»</p></blockquote>
+              {(property.positioning.parrafos || property.positioning.paragraphs?.slice(1) || []).map((p: string, i: number) => (
+                <p key={i} className={styles.posIntroPara}>{p}</p>
+              ))}
+              {property.positioning.cita && <blockquote className={styles.posQuoteBlock}><p>«{property.positioning.cita}»</p></blockquote>}
             </div>
           </div>
         </RevealSection>
@@ -801,11 +804,10 @@ export default function PropertyPage({ data }: { data: any }) {
         <div className={styles.storyInner}>
           <div className={styles.storyLeft}>
             <p className={styles.eyebrow}>La Historia</p>
-            <h2 className={styles.storyTitle}>Lo que se siente al llegar</h2>
-            <p className={styles.storyDesc}>Al cruzar el portón, el mundo se queda afuera. Solo queda el lago, reflejado entre los árboles. Un umbral que muy pocos tienen el privilegio de atravesar.</p>
-            <p className={styles.storyDesc} style={{ marginTop: '1.5rem', marginBottom: '0.75rem' }}>San Bernardino siempre se guardó en silencio. Esta casa forma parte de esa herencia: un lugar pensado no para impresionar, sino para que uno pueda volver a estar.</p>
-            <p className={styles.storyDesc} style={{ marginTop: '1.5rem', marginBottom: '0.75rem' }}>Aquí el amanecer no se celebra. Se vive. El espacio no presiona. Contiene. Y por primera vez en mucho tiempo, no hace falta explicarse.</p>
-            <p className={styles.storyDesc} style={{ marginTop: '1.5rem', marginBottom: '0.75rem' }}>Cruzar ese portón no es llegar a una residencia. Es recordar que todavía existen refugios que no se anuncian.</p>
+            <h2 className={styles.storyTitle}>{property.story?.title || 'Lo que se siente al llegar'}</h2>
+            {(property.story?.paragraphs || []).map((p: string, i: number) => (
+              <p key={i} className={styles.storyDesc} style={i > 0 ? { marginTop: '1.5rem', marginBottom: '0.75rem' } : {}}>{p}</p>
+            ))}
           </div>
           <div className={styles.storyRight}><div className={styles.storyImgWrap}><img loading="lazy" src={property.story?.image || property.posterHero} alt={property.story?.title || property.name} className={styles.storyImg} /></div></div>
         </div>
@@ -825,28 +827,22 @@ export default function PropertyPage({ data }: { data: any }) {
           <div className={styles.videoFeatureInner}>
             <div className={styles.videoFeatureHeader}><p className={styles.eyebrow}>Recorrido</p><h2 className={styles.videoFeatureTitle}>Adéntrate en el viaje</h2></div>
             <div className={styles.videoFeatureFrame}>
-              <video className={styles.videoFeatureEl} controls poster="https://larumstudio.com/wp-content/uploads/2026/04/unnamed-1.webp" preload="none"><source src={property.videoPresentacion} type="video/mp4" /></video>
+              <video className={styles.videoFeatureEl} controls poster={property.posterHero || ''} preload="none"><source src={property.videoPresentacion} type="video/mp4" /></video>
               <div className={styles.videoFeatureMeta}><span className={styles.videoFeatureLabel}>Recorrido completo · 4K</span><span className={styles.videoFeatureDur}>{property.videoDuration || '1:19'} min</span></div>
             </div>
           </div>
         </RevealSection>
       )}
 
+      {property.featuresGrid && property.featuresGrid.items && property.featuresGrid.items.length > 0 && (
       <RevealSection className={styles.features}>
         <div className={styles.featuresInner}>
-          <p className={styles.eyebrow}>Por qué esta casa, y no otra</p>
-          <h2 className={styles.sectionTitleH2}>El lugar que eliges cuando ya no buscas más</h2>
+          <p className={styles.eyebrow}>{property.featuresGrid.eyebrow || 'Por qué esta casa, y no otra'}</p>
+          <h2 className={styles.sectionTitleH2}>{property.featuresGrid.titulo || 'El lugar que eliges cuando ya no buscas más'}</h2>
           <div className={styles.featuresGrid}>
-            {[
-              { icono: 'Hoja', title: 'Una piscina infinity que se integra al paisaje', desc: 'El agua parece continuar hasta el lago.' },
-              { icono: 'Escudo', title: 'Privacidad verdadera', desc: 'Un entorno que te envuelve y te protege.' },
-              { icono: 'Casa', title: 'Libertad dentro de la casa', desc: 'Espacios independientes para cada momento.' },
-              { icono: 'Ubicacion', title: 'Dos mundos sin renunciar a ninguno', desc: 'El lago por la tarde. Asunción cuando lo necesitas.' },
-              { icono: 'Llave', title: 'Cero obras. Cero esperas.', desc: 'Residencia lista para habitar desde el primer día.' },
-              { icono: 'Diamante', title: 'Un enclave que resiste el paso del tiempo', desc: 'San Bernardino no se ha masificado.' },
-            ].map((f, i) => (
+            {property.featuresGrid.items.map((f: any, i: number) => (
               <div key={i} className={`${styles.featureItem} ${extraStyles.featureItemReveal}`} style={{ transitionDelay: `${i * 110}ms` }}>
-                <div className={styles.featureIcon}>{featureIconByName[f.icono]}</div>
+                <div className={styles.featureIcon}>{featureIconByName[f.icono] || featureIcons[i % featureIcons.length]}</div>
                 <h4 className={styles.featureTitle}>{f.title}</h4>
                 <p className={styles.featureDesc}>{f.desc}</p>
               </div>
@@ -897,10 +893,10 @@ export default function PropertyPage({ data }: { data: any }) {
       {property.amenities && property.amenities.length > 0 && (
         <RevealSection className={styles.amenities} id="amenities">
           <div className={styles.amenitiesLeft}>
-            <p className={styles.eyebrow}>Amenities</p>
-            <h2 className={styles.amenitiesTitle}>Bienestar en<br />cada detalle.</h2>
-            <p className={styles.amenitiesDesc}>Espacios diseñados para disfrutar en familia, recibir con elegancia y relajarse en completo confort.</p>
-            <AmenitiesGrouped amenities={property.amenities} />
+            <p className={styles.eyebrow}>{property.amenitiesEyebrow || 'Amenities'}</p>
+            <h2 className={styles.amenitiesTitle}>{property.amenitiesTitle || 'Bienestar en cada detalle.'}</h2>
+            <p className={styles.amenitiesDesc}>{property.amenitiesDesc || 'Espacios diseñados para disfrutar en familia, recibir con elegancia y relajarse en completo confort.'}</p>
+            <AmenitiesGrouped amenities={property.amenities} categorias={property.amenitiesCategorias} />
           </div>
           <div className={styles.amenitiesRight}><img loading="lazy" src={property.amenitiesImage || property.posterHero} alt="Amenities" /><div className={styles.amenitiesImgOverlay} /></div>
         </RevealSection>
@@ -927,7 +923,7 @@ export default function PropertyPage({ data }: { data: any }) {
         </RevealSection>
       )}
 
-      <FullBleedBreak src="https://larumstudio.com/wp-content/uploads/2026/07/Piscina-2560px-upscaled.webp" caption="Residencia San Bernardino" />
+      <FullBleedBreak src={property.fullBleedImage1 || property.posterHero || ''} caption={property.fullBleedCaption1 || ''} />
 
       <RevealSection className={styles.location} id="ubicacion">
         <div className={styles.locationInner}>
@@ -994,7 +990,7 @@ export default function PropertyPage({ data }: { data: any }) {
           <div>
             <h3 className={styles.trustDocsColTitle}>Garantías</h3>
             <div className={styles.garantiaAccordion}>
-              {['Documentación al día y verificada', 'Libre de gravámenes, impuestos e hipotecas', 'Título original y lista para escriturar', 'Proceso de compra acompañado y transparente'].map((item, i) => (
+              {(property.trust || ['Documentación al día y verificada', 'Libre de gravámenes, impuestos e hipotecas', 'Título original y lista para escriturar', 'Proceso de compra acompañado y transparente']).map((item: string, i: number) => (
                 <details key={i} className={styles.garantiaAccItem}><summary className={styles.garantiaAccSummary}><span className={styles.garantiaAccCheck}><IconCheck /></span><span className={styles.garantiaAccLabel}>{item}</span><span className={styles.garantiaAccChevron}><svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}><path d="M6 9l6 6 6-6"/></svg></span></summary><div className={styles.garantiaAccBody}><p>Verificado y documentado como parte del proceso de compra acompañada.</p></div></details>
               ))}
             </div>
@@ -1012,10 +1008,10 @@ export default function PropertyPage({ data }: { data: any }) {
       <RevealSection className={styles.memoria} id="memoria">
         <div className={styles.memoriaBalanced}>
           <div className={styles.memoriaBalancedLeft}>
-            <p className={styles.eyebrow}>Documentación</p>
-            <h2 className={styles.memoriaTitle}>Memoria de la Residencia.</h2>
-            <p className={styles.memoriaDesc}>No es un catálogo. Es un documento privado, elaborado con criterio y discreción.</p>
-            <p className={styles.memoriaMetaInline}>Documento privado · PDF exclusivo · envío inmediato</p>
+            <p className={styles.eyebrow}>{property.memoriaEyebrow || 'Documentación'}</p>
+            <h2 className={styles.memoriaTitle}>{property.memoriaTitle || 'Memoria de la Residencia.'}</h2>
+            <p className={styles.memoriaDesc}>{property.memoriaDesc || 'No es un catálogo. Es un documento privado, elaborado con criterio y discreción.'}</p>
+            <p className={styles.memoriaMetaInline}>{property.memoriaMeta || 'Documento privado · PDF exclusivo · envío inmediato'}</p>
             <div className={styles.memoriaInlineForm}><BrochureForm agentEmail={property.agentEmail} compact={true} privacidadTexto={property.privacidadTexto} privacidadUrl={property.privacidadUrl} brochureUrl={property.brochure} /></div>
           </div>
           {property.brochurePages && property.brochurePages.length > 0 && (
@@ -1031,49 +1027,67 @@ export default function PropertyPage({ data }: { data: any }) {
       {(agent.bio || agent.authority) && (
         <RevealSection className={styles.agentExpanded}>
           <div className={styles.agentExpandedInner}>
-            <div className={styles.agentExpandedPhoto}><img loading="lazy" src="https://larumstudio.com/wp-content/uploads/2026/07/William-Rowe-scaled.webp" alt="William Rowe" /></div>
+            <div className={styles.agentExpandedPhoto}><img loading="lazy" src={agent.photo || ''} alt={agent.name || ''} /></div>
             <div className={styles.agentExpandedInfo}>
-              <p className={styles.agentExpandedCargo}>Senior Advisor · Luxury Properties</p>
-              <h2 className={styles.agentExpandedName}>William Rowe</h2>
-              <p className={styles.agentExpandedBio}>No trabaja con volumen. Trabaja con criterio.</p>
-              <p className={styles.agentExpandedBio} style={{ marginTop: '1rem' }}>Representa solo un número selecto de residencias al año —aquellas que poseen carácter, ubicación privilegiada y una historia que merece ser contada con precisión. Cada una es tratada como una obra singular: estudiada, narrada y posicionada para encontrar al comprador que realmente la entiende.</p>
-              <p className={styles.agentExpandedBio} style={{ marginTop: '1rem' }}>Su enfoque combina conocimiento profundo del mercado de alto nivel, discreción absoluta y una capacidad única para transmitir el valor emocional de cada propiedad.</p>
-              <p className={styles.agentExpandedBio} style={{ marginTop: '1rem', fontStyle: 'italic', opacity: 0.7 }}>Idiomas: Inglés, Español, Alemán</p>
-              <div className={styles.agentStatsRow}>
-                <div className={styles.agentStatItem}><div className={styles.agentStatVal}>40</div><div className={styles.agentStatLabel}>propiedades de lujo</div></div>
-                <div className={styles.agentStatItem}><div className={styles.agentStatVal}>US$125M</div><div className={styles.agentStatLabel}>ventas concretadas</div></div>
-                <div className={styles.agentStatItem}><div className={styles.agentStatVal}>5 años</div><div className={styles.agentStatLabel}>asesorando élite</div></div>
-                <div className={styles.agentStatItem}><div className={styles.agentStatVal}>3 de 10</div><div className={styles.agentStatLabel}>propiedades aceptadas</div></div>
-              </div>
+              <p className={styles.agentExpandedCargo}>{agent.cargo || agent.title || ''}</p>
+              <h2 className={styles.agentExpandedName}>{agent.name || ''}</h2>
+              {agent.bio && <p className={styles.agentExpandedBio}>{agent.bio}</p>}
+              {agent.bioExtendida && <p className={styles.agentExpandedBio} style={{ marginTop: '1rem' }}>{agent.bioExtendida}</p>}
+              {agent.idiomas && agent.idiomas.length > 0 && <p className={styles.agentExpandedBio} style={{ marginTop: '1rem', fontStyle: 'italic', opacity: 0.7 }}>Idiomas: {agent.idiomas.join(', ')}</p>}
+              {agent.statsLogros && agent.statsLogros.length > 0 && (
+                <div className={styles.agentStatsRow}>
+                  {agent.statsLogros.map((st: any, i: number) => (
+                    <div key={i} className={styles.agentStatItem}><div className={styles.agentStatVal}>{st.valor}</div><div className={styles.agentStatLabel}>{st.label}</div></div>
+                  ))}
+                </div>
+              )}
               <div className={styles.agentExpandedBtns}>
-                <a href={whatsappUrl} target="_blank" rel="noopener" className={styles.agentExpandedBtn}><IconWhatsapp /> WHATSAPP</a>
-                <a href={agent.email ? `mailto:${agent.email}` : '#'} className={styles.agentExpandedBtn}><IconMail /> EMAIL</a>
-                <a href="https://www.linkedin.com/company/larumstudiohq/" target="_blank" rel="noopener" className={styles.agentExpandedBtn}><IconLinkedin /> LINKEDIN</a>
-                <a href="https://www.instagram.com/larumstudio/" target="_blank" rel="noopener" className={styles.agentExpandedBtn}><IconInstagram /> INSTAGRAM</a>
+                {agent.whatsapp && <a href={whatsappUrl} target="_blank" rel="noopener" className={styles.agentExpandedBtn}><IconWhatsapp /> WHATSAPP</a>}
+                {agent.email && <a href={`mailto:${agent.email}`} className={styles.agentExpandedBtn}><IconMail /> EMAIL</a>}
+                {agent.linkedin && <a href={agent.linkedin} target="_blank" rel="noopener" className={styles.agentExpandedBtn}><IconLinkedin /> LINKEDIN</a>}
+                {agent.instagram && <a href={agent.instagram} target="_blank" rel="noopener" className={styles.agentExpandedBtn}><IconInstagram /> INSTAGRAM</a>}
               </div>
             </div>
           </div>
         </RevealSection>
       )}
 
-      <FullBleedBreak src="https://larumstudio.com/wp-content/uploads/2026/07/Salon-2560px-upscaled.webp" />
+      <FullBleedBreak src={property.fullBleedImage2 || property.posterHero || ''} />
+
+      {property.fullBleedImage3 && <FullBleedBreak src={property.fullBleedImage3} />
 
       <RevealSection className={styles.contact} id="contacto">
         <div className={styles.contactClean}>
           <div className={styles.contactCleanLeft}>
-            <p className={styles.contactEyebrow}>Acceso Privado</p>
-            <h2 className={styles.contactTitle}>Visitas bajo cita.</h2>
+            <p className={styles.contactEyebrow}>{property.contactEyebrow || 'Acceso Privado'}</p>
+            <h2 className={styles.contactTitle}>{property.contactTitle || 'Visitas bajo cita.'}</h2>
             <div className={styles.contactEditorial}>
-              <p>Esta residencia no se exhibe en portales. Las visitas se coordinan de forma privada y bajo cita previa.</p>
-              <p className={extraStyles.urgenciaSutil}>Esta residencia se presenta a un número selecto de familias este trimestre · La agenda de visitas tiene disponibilidad limitada</p>
+              <p>{property.contactDesc || 'Esta residencia no se exhibe en portales. Las visitas se coordinan de forma privada y bajo cita previa.'}</p>
+              {property.urgenciaSutil && <p className={extraStyles.urgenciaSutil}>{property.urgenciaSutil.texto}{property.urgenciaSutil.subtexto ? ` · ${property.urgenciaSutil.subtexto}` : ''}</p>}
             </div>
           </div>
-          <div className={styles.contactQrCenter}><img src="https://larumstudio.com/wp-content/uploads/2026/07/qr-code.png" alt="QR" style={{ width: '280px', height: '280px', maxWidth: '100%', objectFit: 'contain', display: 'block', margin: '0 auto' }} /><span className={styles.contactQrLabel} style={{ marginTop: '1.5rem', display: 'block' }}>Escanea para acceder</span></div>
+          <div className={styles.contactQrCenter}><img src={property.qrUrl || ''} alt="QR" style={{ width: '280px', height: '280px', maxWidth: '100%', objectFit: 'contain', display: 'block', margin: '0 auto' }} /><span className={styles.contactQrLabel} style={{ marginTop: '1.5rem', display: 'block' }}>Escanea para acceder</span></div>
           <div className={styles.contactForm}>
             {[{ name: 'nombre', placeholder: 'NOMBRE', type: 'text' }, { name: 'email', placeholder: 'EMAIL', type: 'email' }, { name: 'telefono', placeholder: 'TELÉFONO', type: 'tel' }, { name: 'fecha', placeholder: 'FECHA PREFERIDA', type: 'text' }].map(field => (
               <div key={field.name} className={styles.formField}><input type={field.type} name={field.name} placeholder={field.placeholder} value={form[field.name as keyof typeof form]} onChange={e => setForm({ ...form, [e.target.name]: e.target.value })} className={styles.formInput} /></div>
             ))}
-            <button type="button" className={styles.formBtn}>Solicitar agenda privada</button>
+            <button type="button" className={styles.formBtn} onClick={async () => {
+              if (!form.email && !form.telefono) return
+              try {
+                const fd = new FormData()
+                fd.append('nombre', form.nombre || '—')
+                fd.append('email', form.email || '—')
+                fd.append('telefono', form.telefono || '—')
+                fd.append('fecha_preferida', form.fecha || '—')
+                fd.append('propiedad', property.name || '')
+                fd.append('_subject', `Solicitud visita privada — ${property.name || ''}`)
+                fd.append('_captcha', 'false')
+                fd.append('_template', 'table')
+                await fetch(`https://formsubmit.co/${property.agentEmail || agent.email}`, { method: 'POST', body: fd })
+                setForm({ nombre: '', email: '', telefono: '', fecha: '' })
+                alert('Solicitud enviada. Te contactaremos en breve.')
+              } catch { alert('Error al enviar. Intenta por WhatsApp.') }
+            }}>Solicitar agenda privada</button>
           </div>
         </div>
       </RevealSection>
