@@ -828,6 +828,16 @@ export default function PropertyPage({ data }: { data: any }) {
               <video className={styles.videoFeatureEl} controls poster="https://larumstudio.com/wp-content/uploads/2026/04/unnamed-1.webp" preload="none"><source src={property.videoPresentacion} type="video/mp4" /></video>
               <div className={styles.videoFeatureMeta}><span className={styles.videoFeatureLabel}>Recorrido completo · 4K</span><span className={styles.videoFeatureDur}>{property.videoDuration || '1:19'} min</span></div>
             </div>
+            {property.videoMarkers && property.videoMarkers.length > 0 && (
+              <div className={styles.videoMarkers}>
+                {property.videoMarkers.map((m: any, i: number) => (
+                  <div key={i} className={styles.videoMarker}>
+                    <span className={styles.videoMarkerTime}>{m.time}</span>
+                    <span className={styles.videoMarkerLabel}>{m.label}</span>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         </RevealSection>
       )}
