@@ -1,13 +1,13 @@
 /* ============================================================
-   app/page.tsx  —  RUTA ESPAÑOLA  (SUSTITUIR ARCHIVO)
+   app/en/page.tsx  —  RUTA INGLESA  (ARCHIVO NUEVO)
 
-   Cambio respecto al original: pasa lang="es" y el diccionario.
-   La URL "/" no se mueve, el HTML servido es el mismo.
-   Nada indexado se rompe.
+   Crear la carpeta app/en/ y colocar este archivo dentro.
+   Añadir un archivo nuevo no puede romper las rutas
+   existentes: Next.js resuelve por carpeta.
    ============================================================ */
 import type { Metadata } from 'next'
-import PropertyPage from './components/PropertyPage'
-import data from './data/property.json'
+import PropertyPage from '../components/PropertyPage'
+import data from '../data/property.en.json'
 
 const SITE = 'https://landing.larumstudio.com'
 
@@ -15,20 +15,20 @@ export const metadata: Metadata = {
   title: `${data.property.name} — ${data.property.badge}`,
   description: data.property.tagline,
   alternates: {
-    canonical: SITE + '/',
+    canonical: SITE + '/en',
     languages: { 'es-PY': SITE + '/', en: SITE + '/en', 'x-default': SITE + '/' },
   },
   openGraph: {
     title: data.property.heroHeadline,
     description: data.property.tagline,
-    url: SITE + '/',
-    locale: 'es_PY',
-    alternateLocale: ['en_US'],
+    url: SITE + '/en',
+    locale: 'en_US',
+    alternateLocale: ['es_PY'],
     images: [{ url: data.property.posterHero }],
     type: 'website',
   },
 }
 
 export default function Page() {
-  return <PropertyPage data={data} lang="es" />
+  return <PropertyPage data={data} lang="en" />
 }

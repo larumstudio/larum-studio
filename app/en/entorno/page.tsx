@@ -1,11 +1,11 @@
 /* ============================================================
-   app/entorno/page.tsx  —  SUSTITUIR ARCHIVO
+   app/en/entorno/page.tsx  —  ARCHIVO NUEVO
 
-   Añade metadata con hreflang. La URL no se mueve.
+   Crear carpeta app/en/entorno/ y colocar dentro.
    ============================================================ */
 import type { Metadata } from 'next'
-import EntornoPage from '../components/EntornoPage'
-import location from '../data/location.json'
+import EntornoPage from '../../components/EntornoPage'
+import location from '../../data/location.en.json'
 
 const SITE = 'https://landing.larumstudio.com'
 
@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   title: `${location.hero.title} — ${location.country}`,
   description: location.hero.subtitle,
   alternates: {
-    canonical: SITE + '/entorno',
+    canonical: SITE + '/en/entorno',
     languages: {
       'es-PY': SITE + '/entorno',
       en: SITE + '/en/entorno',
@@ -23,13 +23,13 @@ export const metadata: Metadata = {
   openGraph: {
     title: location.hero.title,
     description: location.hero.subtitle,
-    url: SITE + '/entorno',
-    locale: 'es_PY',
-    alternateLocale: ['en_US'],
+    url: SITE + '/en/entorno',
+    locale: 'en_US',
+    alternateLocale: ['es_PY'],
     images: [{ url: location.hero.image }],
   },
 }
 
 export default function Page() {
-  return <EntornoPage data={location} lang="es" />
+  return <EntornoPage data={location} lang="en" />
 }

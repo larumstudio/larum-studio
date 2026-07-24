@@ -1,8 +1,11 @@
 import Link from "next/link";
 import styles from "./entorno.module.css";
+import LanguageSwitch from "./LanguageSwitch";
+import { getDict, type Lang } from "../lib/i18n";
 
 type EntornoPageProps = {
   location: any;
+  lang?: Lang;
 };
 
 const iconSymbols: Record<string, string> = {
@@ -15,7 +18,9 @@ const iconSymbols: Record<string, string> = {
   privacy: "□"
 };
 
-export default function EntornoPage({ location }: EntornoPageProps) {
+export default function EntornoPage({ location, lang = "es" }: EntornoPageProps) {
+  const t = getDict(lang);
+  const home = lang === "en" ? "/en" : "/";
   return (
     <main className={styles.entornoPage}>
       <section className={styles.hero}>
@@ -28,9 +33,12 @@ export default function EntornoPage({ location }: EntornoPageProps) {
         <div className={styles.heroNav}>
           <div className={styles.logo}>LARUM</div>
 
-          <Link href="/" className={styles.backLink}>
-            Volver a la propiedad
-          </Link>
+          <div className={styles.heroNavRight}>
+            <LanguageSwitch lang={lang} pathname={lang === "en" ? "/en/entorno" : "/entorno"} />
+            <Link href={home} className={styles.backLink}>
+              {lang === "en" ? "Back to the residence" : "Volver a la propiedad"}
+            </Link>
+          </div>
         </div>
 
         <div className={styles.heroContent}>
@@ -237,7 +245,7 @@ export default function EntornoPage({ location }: EntornoPageProps) {
             <h2 className={styles.ctaTitle}>{location.cta.title}</h2>
             <p className={styles.ctaText}>{location.cta.text}</p>
 
-            <Link href="/" className={styles.ctaButton}>
+            <Link href={home} className={styles.ctaButton}>
               {location.cta.buttonLabel}
             </Link>
           </div>

@@ -9,32 +9,32 @@
     "photo": "https://larumstudio.com/wp-content/uploads/2026/07/William-Rowe-scaled.webp",
     "authority": "No trabaja con volumen. Trabaja con criterio. Representa solo un número selecto de residencias al año.",
     "bio": "No trabaja con volumen. Trabaja con criterio. Representa solo un número selecto de residencias al año —aquellas que poseen carácter, ubicación privilegiada y una historia que merece ser contada con precisión. Cada una es tratada como una obra singular: estudiada, narrada y posicionada para encontrar al comprador que realmente la entiende.",
-    "bioExtendida": "Su enfoque combina conocimiento profundo del mercado de alto nivel, discreción absoluta y una capacidad única para transmitir el valor emocional de cada propiedad. Ha asesorado a familias, empresarios y compradores internacionales que buscan algo más que metros cuadrados: buscan pertenencia.",
+    "bioExtendida": "Su enfoque combina conocimiento profundo del mercado de alto nivel, discreción absoluta y la capacidad de transmitir el valor de cada propiedad a compradores nacionales e internacionales. Acompaña el proceso completo: desde la primera visita privada hasta la escritura, coordinando con los profesionales legales y fiscales que cada operación requiere.",
     "idiomas": [
       "Inglés",
       "Español",
       "Alemán"
     ],
     "credenciales": [
-      "Top 1% Luxury Agents Paraguay 2024",
-      "Certified Luxury Home Marketing Specialist",
-      "Miembro International Luxury Alliance"
+      "[Certificación profesional del asesor]",
+      "[Membresía en asociación internacional]",
+      "[Reconocimiento de mercado]"
     ],
     "scheduleUrl": "",
     "linkedin": "https://www.linkedin.com/company/larumstudiohq/",
     "instagram": "https://www.instagram.com/larumstudio/",
     "statsLogros": [
       {
-        "valor": "25",
+        "valor": "40",
         "label": "propiedades de lujo"
       },
       {
-        "valor": "US$7.5M",
-        "label": "ventas concretadas"
+        "valor": "US$125M",
+        "label": "volumen transaccionado"
       },
       {
-        "valor": "10 años",
-        "label": "asesorando élite"
+        "valor": "5 años",
+        "label": "de trayectoria"
       },
       {
         "valor": "3 de 10",
@@ -103,57 +103,64 @@
       "items": [
         {
           "title": "Piscina exterior de diseño",
-          "desc": "Espacio privado de descanso integrado con el entorno natural de la propiedad."
+          "desc": "Espacio privado de descanso integrado con el entorno natural de la propiedad.",
+          "icono": "Hoja"
         },
         {
           "title": "3.900 m² de terreno",
-          "desc": "Distancia real con el vecino más cercano. El tipo de privacidad que ya no se construye en las zonas nuevas."
+          "desc": "Distancia real con el vecino más cercano. El tipo de privacidad que ya no se construye en las zonas nuevas.",
+          "icono": "Escudo"
         },
         {
           "title": "800 m² para vivir sin pisarse",
-          "desc": "Seis habitaciones, áreas sociales y de bienestar separadas. Espacio para una familia entera y para sus invitados."
+          "desc": "Seis habitaciones, áreas sociales y de bienestar separadas. Espacio para una familia entera y para sus invitados.",
+          "icono": "Casa"
         },
         {
           "title": "A una hora de Asunción",
-          "desc": "El negocio en la capital, el descanso en el lago, el mismo día. Doble vida sin sacrificar ninguna."
+          "desc": "El negocio en la capital, el descanso en el lago, el mismo día. Doble vida sin sacrificar ninguna.",
+          "icono": "Ubicacion"
         },
         {
           "title": "Lista para habitar",
-          "desc": "Cero obra, cero espera. Se escritura y se entra. La inversión ya está hecha y mantenida."
+          "desc": "Cero obra, cero espera. Se escritura y se entra. La inversión ya está hecha y mantenida.",
+          "icono": "Llave"
         },
         {
           "title": "San Bernardino consolidado",
-          "desc": "Una de las zonas que mejor ha sostenido su valor en Paraguay. Comprar aquí es comprar permanencia."
+          "desc": "Una de las zonas que mejor ha sostenido su valor en Paraguay. Comprar aquí es comprar permanencia.",
+          "icono": "Diamante"
         }
-      ]
+      ],
+      "title": "El lugar que eliges cuando ya no buscas más"
     },
     "amenities": [
-      "PISCINA INFINITY",
-      "GIMNASIO PRIVADO",
-      "JARDÍN EXTERIOR",
-      "TERRAZA PRIVADA",
-      "JACUZZI INTERIOR",
-      "COCINA GOURMET",
-      "ESTACIONAMIENTO",
-      "SEGURIDAD 24H",
-      "VISTA PANORÁMICA"
+      "infinity_pool",
+      "private_gym",
+      "garden",
+      "private_terrace",
+      "indoor_jacuzzi",
+      "gourmet_kitchen",
+      "parking",
+      "security_24h",
+      "panoramic_view"
     ],
     "amenitiesImage": "https://larumstudio.com/wp-content/uploads/2026/04/unnamed-22.webp",
     "amenitiesCategorias": {
       "bienestar": [
-        "PISCINA INFINITY",
-        "GIMNASIO PRIVADO",
-        "JACUZZI INTERIOR"
+        "infinity_pool",
+        "private_gym",
+        "indoor_jacuzzi"
       ],
       "exterior": [
-        "JARDÍN EXTERIOR",
-        "TERRAZA PRIVADA",
-        "VISTA PANORÁMICA"
+        "garden",
+        "private_terrace",
+        "panoramic_view"
       ],
       "servicios": [
-        "COCINA GOURMET",
-        "ESTACIONAMIENTO",
-        "SEGURIDAD 24H"
+        "gourmet_kitchen",
+        "parking",
+        "security_24h"
       ]
     },
     "lifestyle": {
@@ -191,7 +198,6 @@
       "address": "San Bernardino, Departamento de Cordillera, Paraguay",
       "description": "Frente al lago Ypacaraí, en el corredor residencial más consolidado de San Bernardino. Camino asfaltado hasta el acceso, conexión directa a la autopista a Asunción y el agua a pocos minutos.",
       "mapsUrl": "https://www.google.com/maps/place/San+Bernardino/@-25.3277542,-57.2992066,13z",
-      "googleMapsEmbed": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14406.5!2d-57.2992066!3d-25.3277542!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x945da9a7d1234567%3A0x1234567890abcdef!2sSan%20Bernardino!5e0!3m2!1ses!2spy!4v1234567890",
       "mapImage": "https://larumstudio.com/wp-content/uploads/2026/06/mapa-san-bernardino.jpg",
       "landmarks": [
         {
@@ -285,7 +291,7 @@
     },
     "floorPlan": {
       "image": "https://larumstudio.com/wp-content/uploads/2026/05/plano-3d-san-bernardino.webp",
-      "note": "Distribución y superficies orientativas. Sujetas a verificación en visita.",
+      "note": "Distribución y superficies aproximadas de los ambientes interiores principales. Verificación exacta disponible durante el proceso de due diligence.",
       "areas": [
         {
           "ambiente": "Hall de entrada y galería",
@@ -335,28 +341,28 @@
     ],
     "gastos": [
       {
-        "concepto": "Expensas / Comunidad",
+        "concepto": "Expensas y comunidad",
         "valor": "USD 450 / mes",
         "icono": "edificio",
-        "detalle": "Mantenimiento barrio cerrado"
+        "detalle": "Mantenimiento del barrio cerrado"
       },
       {
-        "concepto": "Seguridad 24h",
+        "concepto": "Seguridad 24 h",
         "valor": "Incluido",
-        "icono": "otro",
-        "detalle": "Guardia y CCTV"
+        "icono": "seguridad",
+        "detalle": "Guardia permanente y CCTV"
       },
       {
         "concepto": "Jardinería y piscina",
         "valor": "USD 350 / mes",
-        "icono": "otro",
+        "icono": "jardin",
         "detalle": "Mantenimiento completo"
       },
       {
-        "concepto": "Consumo eléctrico promedio",
+        "concepto": "Consumo eléctrico",
         "valor": "USD 180 / mes",
-        "icono": "otro",
-        "detalle": "Sin contar climatización intensiva"
+        "icono": "electricidad",
+        "detalle": "Promedio anual, sin climatización intensiva"
       }
     ],
     "descargables": [
@@ -399,7 +405,7 @@
     "gallery": [
       {
         "url": "https://larumstudio.com/wp-content/uploads/2026/05/amanecer.webp",
-        "caption": "Amanecer en la propiedad - 06:42 AM"
+        "caption": "Amanecer en la propiedad — 06:42"
       },
       {
         "url": "https://larumstudio.com/wp-content/uploads/2026/04/unnamed-5.webp",
@@ -565,7 +571,7 @@
         "titulo": "Pausa activa con vistas",
         "desc": "Gimnasio privado con luz natural y vista al jardín. El entrenamiento no interrumpe el día, lo completa. Sin colas, sin horarios, sin compartir.",
         "icono": "gimnasio",
-        "imagen": "https://larumstudio.com/wp-content/uploads/2026/04/unnamed-22.webp"
+        "imagen": "https://larumstudio.com/wp-content/uploads/2026/04/unnamed-23.webp"
       },
       {
         "hora": "18:30",
@@ -583,10 +589,10 @@
       }
     ],
     "testimonioPropietario": {
-      "frase": "Los domingos nos sentamos aquí y el mundo desaparece. No es una casa, es un paréntesis. El lago hace el resto.",
-      "autor": "Familia propietaria · 6 años habitando la residencia",
-      "contexto": "Sobre el valor de vivir frente al lago todo el año, sin ser segunda residencia",
-      "avatar": "https://larumstudio.com/wp-content/uploads/2026/07/William-Rowe-scaled.webp"
+      "frase": "[Testimonio del propietario actual. Dos o tres frases sobre lo que significó vivir aquí.]",
+      "autor": "[Familia propietaria · años de residencia]",
+      "contexto": "[Contexto de la cita]",
+      "avatar": ""
     },
     "inversion": {
       "eyebrow": "Inversión y legado",
@@ -614,34 +620,34 @@
       ],
       "plusvalia": {
         "titulo": "Potencial patrimonial",
-        "descripcion": "Una propiedad de estas características, en una ubicación que no se replica, tiende a revalorizarse por escasez natural del suelo y crecimiento orgánico de la zona. Para una proyección concreta, solicite nuestro informe de mercado actualizado.",
+        "descripcion": "La escasez estructural de terrenos frente al lago y el carácter preservado del entorno son factores que históricamente sostienen el atractivo patrimonial de este tipo de activos. Las proyecciones específicas deben evaluarse mediante un informe de mercado actualizado.",
         "porcentaje": ""
       }
     },
     "faq": [
       {
-        "pregunta": "¿Se aceptan visitas internacionales?",
-        "respuesta": "Sí. Coordinamos visitas con vídeollamada previa, traducción simultánea (EN/ES/DE) y acompañamiento completo desde el aeropuerto. Hemos recibido compradores de Argentina, Brasil, España, Alemania y EE.UU."
+        "pregunta": "¿Se coordinan visitas internacionales?",
+        "respuesta": "Sí. La visita se prepara con una videollamada previa para cubrir lo esencial antes del viaje, y el recorrido se acompaña de principio a fin. Atención en español, inglés y alemán."
       },
       {
-        "pregunta": "¿Incluye el mobiliario?",
-        "respuesta": "Consulte. Parte del mobiliario premium de living, comedor y suites puede incluirse según negociación. La memoria técnica detalla exactamente qué está incluido y qué no. Cocina equipada sí incluida."
+        "pregunta": "¿El mobiliario está incluido?",
+        "respuesta": "Parcialmente, y es negociable. La cocina se entrega equipada. Parte del mobiliario de living, comedor y suites puede incluirse según acuerdo; la memoria técnica detalla qué entra y qué no."
       },
       {
-        "pregunta": "¿Cuál es el proceso de compra?",
-        "respuesta": "1. Validación de perfil e interés real. 2. Visita privada con agente senior. 3. Reserva del 10% con contrato privado. 4. Due diligence legal y verificación de títulos. 5. Escritura pública. Acompañamiento integral legal y fiscal."
+        "pregunta": "¿Cómo es el proceso de compra?",
+        "respuesta": "Cinco pasos: validación del perfil, visita privada, reserva del 10 % con contrato privado, due diligence legal y verificación de títulos, y escritura pública. El asesor coordina con los profesionales legales y fiscales en cada etapa."
       },
       {
-        "pregunta": "¿Tiempo de entrega y estado actual?",
-        "respuesta": "Inmediata. La propiedad está habitada y mantenida, lista para habitar sin obras ni esperas. Se entrega con limpieza profunda y puesta a punto de jardín/piscina."
+        "pregunta": "¿Puede comprar un extranjero sin residencia?",
+        "respuesta": "Sí. La legislación paraguaya permite a personas físicas y jurídicas extranjeras adquirir inmuebles urbanos en propiedad plena, sin requisito de residencia. El proceso se acompaña con asesoría legal y fiscal independiente."
       },
       {
-        "pregunta": "¿Impuestos y gastos mensuales reales?",
-        "respuesta": "Expensas barrio cerrado USD 450/mes, jardinería y piscina USD 350/mes, consumo eléctrico promedio USD 180/mes sin climatización intensiva. Impuestos municipales al día. Use las calculadoras en Recursos para estimación de cierre."
+        "pregunta": "¿En qué estado se entrega y cuándo?",
+        "respuesta": "Entrega inmediata. La residencia está habitada y mantenida: sin obras pendientes ni plazos. Se entrega con limpieza profunda y puesta a punto de jardín y piscina."
       },
       {
-        "pregunta": "¿Se puede financiar?",
-        "respuesta": "El propietario evalúa financiación parcial a corto plazo para perfiles cualificados. Consulte condiciones. Tenemos calculadora de hipoteca integrada con banca local."
+        "pregunta": "¿Cuáles son los gastos mensuales reales?",
+        "respuesta": "Expensas del barrio cerrado, mantenimiento de jardín y piscina, y consumo eléctrico. El detalle está en la sección de gastos estimados. Impuestos municipales al día."
       }
     ],
     "loQueNoSeVe": [
@@ -686,15 +692,15 @@
         ]
       }
     ],
-    "diaNoche": {
-      "titulo": "Transición día y noche — la misma toma, 12 horas después",
-      "descripcion": "A las 06:42 y a las 20:15. Sin filtros, sin retoque. La luz hace todo el trabajo.",
+     "diaNoche": {
+      "titulo": "Una villa diseñada para brillar a cualquier hora.",
+      "descripcion": "El amanecer invita a comenzar el día con calma. El mediodía llena los espacios de energía. El atardecer convierte las vistas en protagonistas. La noche ofrece el escenario perfecto para disfrutar en privado.",
       "imagenDia": "https://larumstudio.com/wp-content/uploads/2026/05/amanecer.webp",
       "imagenNoche": "https://larumstudio.com/wp-content/uploads/2026/05/noche.webp",
       "videoTransicion": "https://larumstudio.com/wp-content/uploads/2026/05/Transicion-dia-a-noche-cinematica-Optimizada-Web.mp4"
     },
     "miniMapa": {
-      "embedUrl": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14406.5!2d-57.2992066!3d-25.3277542!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x945da9a7d1234567%3A0x1234567890abcdef!2sSan%20Bernardino!5e0!3m2!1ses!2spy!4v1234567890",
+      "embedUrl": "",
       "pins": [
         {
           "id": "propiedad",
@@ -750,19 +756,6 @@
         }
       ]
     },
-    "i18n": {
-      "en": {
-        "heroHeadline": "A house by Lake Ypacaraí, where hurry has no entry.",
-        "badge": "Luxury Villa · San Bernardino",
-        "precio": "USD 3,500,000",
-        "cta": "Request Private Viewing",
-        "ubicacion": "Location",
-        "amenities": "Amenities",
-        "galeria": "Gallery",
-        "testimonio": "The owner says",
-        "inversion": "Investment & Heritage"
-      }
-    },
     "urgenciaSutil": {
       "texto": "Disponibilidad sujeta a agenda.",
       "subtexto": "Coordinamos visitas con 48 horas de anticipación.",
@@ -770,23 +763,9 @@
     },
     "videoHeroLoop": {
       "url": "https://larumstudio.com/wp-content/uploads/2026/07/Piscina-2560px-upscaled.mp4",
-      "poster": "https://larumstudio.com/wp-content/uploads/2026/04/unnamed-22.webp",
+      "poster": "",
       "descripcion": "Piscina infinity con reflejos - loop 12s hero",
       "duracion": "12s"
-    },
-    "amenitiesIconografia": {
-      "estilo": "linea fina editorial - stroke 1px - estilo Larum Studio",
-      "iconos": {
-        "PISCINA INFINITY": "infinity pool - borde desbordante + linea agua",
-        "GIMNASIO PRIVADO": "mancuerna minimalista",
-        "JARDÍN EXTERIOR": "hoja + tallo - 3 hojas",
-        "TERRAZA PRIVADA": "baranda + horizonte",
-        "JACUZZI INTERIOR": "elipse + burbujas",
-        "COCINA GOURMET": "gorro chef + isla",
-        "ESTACIONAMIENTO": "P + auto silueta",
-        "SEGURIDAD 24H": "escudo + check",
-        "VISTA PANORÁMICA": "ojo + panorámica 180"
-      }
     },
     "performance": {
       "heroPriority": true,
@@ -794,6 +773,8 @@
       "videoPreload": "auto para hero, metadata para 4K tour",
       "mobileFirst": true,
       "poster4K": "https://larumstudio.com/wp-content/uploads/2026/04/unnamed-1.webp"
-    }
+    },
+    "garantiasNota": "La documentación completa se pone a disposición de compradores cualificados, bajo coordinación con el asesor y los profesionales legales intervinientes.",
+    "lang": "es"
   }
 }

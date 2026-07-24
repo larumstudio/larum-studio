@@ -20,9 +20,6 @@
   right: 0;
   z-index: 999;
   padding: 1.25rem 0;
-  background: rgba(10, 10, 10, 0.95);           /* ✅ FIX: siempre con fondo negro */
-  backdrop-filter: blur(16px);
-  border-bottom: 1px solid rgba(255,255,255,0.06);
   transition: background 0.4s ease, backdrop-filter 0.4s ease;
 }
 .navbarScrolled {
@@ -4343,11 +4340,13 @@
 ══════════════════════════════════════════════════ */
 
 /* ✅ 1. NAVBAR: fondo negro siempre (fix hero navbar transparente) */
+/* NEUTRALIZADO — lo gestiona ahora el nav adaptativo
 .navbar {
   background: rgba(10, 10, 10, 0.95) !important;
   backdrop-filter: blur(16px) !important;
   border-bottom: 1px solid rgba(255,255,255,0.06) !important;
 }
+*/
 .navInner {
   max-width: 1600px !important;
   padding: 0 clamp(1.5rem, 4vw, 3rem) !important;

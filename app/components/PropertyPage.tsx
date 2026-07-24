@@ -3,6 +3,13 @@ import React, { useState, useEffect, useRef, useCallback } from 'react'
 import styles from '../page.module.css'
 import extraStyles from './improvements.module.css'
 import CalculatorModal, { type CalculatorType } from './calculators/CalculatorModal'
+import LanguageSwitch from './LanguageSwitch'
+import { DayNightScroll, lightAt, hourToPos } from './LightSystem'
+// AdaptiveNav desactivado temporalmente
+import {
+  getDict, amenityLabel, amenityCategory, formatNumber, formatTime,
+  interpolate, type Lang, type AmenityCategory, type Dict,
+} from '../lib/i18n'
 
 /* =================== HOOKS BASE + FASE 2 =================== */
 function useReveal(threshold = 0.12) {
@@ -113,7 +120,7 @@ function parseStat(value: string) {
   return { num: isNaN(num) ? 0 : num, suffix, isNum: !isNaN(num) }
 }
 
-function CountUpStat({ value, label, index }: { value: string; label: string; index: number }) {
+function CountUpStat({ value, label, index, lang }: { value: string; label: string; index: number; lang: Lang }) {
   const ref = useRef<HTMLDivElement>(null)
   const [active, setActive] = useState(false)
   const { num, suffix, isNum } = parseStat(value)
@@ -138,7 +145,7 @@ function CountUpStat({ value, label, index }: { value: string; label: string; in
   const formatted =
     !isNum ? value : active && count < num
       ? suffix.includes('m²') || num >= 100
-        ? `${new Intl.NumberFormat('es-PY').format(count)}${suffix ? ` ${suffix}` : ''}`
+        ? `${formatNumber(count, lang)}${suffix ? ` ${suffix}` : ''}`
         : `${count}${suffix ? ` ${suffix}` : ''}`
       : value // al final muestra valor original exacto para no romper "3.900 m²" vs "3,900"
 
@@ -180,7 +187,7 @@ function ScrollProgressBar() {
   )
 }
 
-function BackToTop() {
+function BackToTop({ t }: { t: Dict }) {
   const [show, setShow] = useState(false)
   useEffect(() => {
     const onScroll = () => setShow(window.scrollY > window.innerHeight * 0.8)
@@ -189,7 +196,7 @@ function BackToTop() {
   }, [])
   if (!show) return null
   return (
-    <button className={extraStyles.backToTop} onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} aria-label="Volver arriba">
+    <button className={extraStyles.backToTop} onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} aria-label={t.a11y.volverArriba}>
       <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.3}><path d="M12 19V5M5 12l7-7 7 7"/></svg>
     </button>
   )
@@ -275,39 +282,28 @@ function GalleryLightbox({ images, startIndex, onClose }: { images: any[]; start
 }
 
 const amenityIcons: Record<string, React.ReactNode> = {
-  'PISCINA INFINITY': <svg width="36" height="36" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1}><path d="M2 15c2-2 4-2 6 0s4 2 6 0 4-2 6 0"/><path d="M2 19c2-2 4-2 6 0s4 2 6 0 4-2 6 0"/><rect x="4" y="4" width="16" height="10" rx="3"/></svg>,
-  'GIMNASIO PRIVADO': <svg width="36" height="36" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1}><path d="M6.5 6.5h-2a1 1 0 00-1 1v9a1 1 0 001 1h2M17.5 6.5h2a1 1 0 011 1v9a1 1 0 01-1 1h-2M6.5 12h11M6.5 6.5v11M17.5 6.5v11"/></svg>,
-  'JARDÍN EXTERIOR': <svg width="36" height="36" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1}><path d="M12 22V12"/><path d="M8 12c0-3 2-5 4-6 2 1 4 3 4 6"/><path d="M5 16c0-2.5 2-4.5 4-5"/><path d="M19 16c0-2.5-2-4.5-4-5"/><path d="M2 22h20"/></svg>,
-  'TERRAZA PRIVADA': <svg width="36" height="36" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1}><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/><path d="M4 22h16"/><path d="M9 22v-5h6v5"/></svg>,
-  'JACUZZI INTERIOR': <svg width="36" height="36" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1}><ellipse cx="12" cy="15" rx="8" ry="3.5"/><path d="M4 15v2.5c0 2 3.6 3.5 8 3.5s8-1.5 8-3.5V15"/><path d="M8 8c0-1.5.7-3 2-3s2 1.5 2 3"/><path d="M13 8c0-1.5.7-3 2-3s2 1.5 2 3"/></svg>,
-  'COCINA GOURMET': <svg width="36" height="36" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1}><path d="M12 2v4M8 2v2M16 2v2"/><rect x="3" y="8" width="18" height="12" rx="2"/><path d="M3 14h18"/><circle cx="8" cy="18" r="1"/><circle cx="16" cy="18" r="1"/></svg>,
-  'ESTACIONAMIENTO': <svg width="36" height="36" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1}><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 17V7h4a3 3 0 010 6H9"/></svg>,
-  'SEGURIDAD 24H': <svg width="36" height="36" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1}><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>,
-  'VISTA PANORÁMICA': <svg width="36" height="36" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1}><circle cx="12" cy="12" r="3"/><path d="M2 12c2.5-4 6-7 10-7s7.5 3 10 7c-2.5 4-6 7-10 7s-7.5-3-10-7z"/></svg>,
+  'infinity_pool': <svg width="36" height="36" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1}><path d="M2 15c2-2 4-2 6 0s4 2 6 0 4-2 6 0"/><path d="M2 19c2-2 4-2 6 0s4 2 6 0 4-2 6 0"/><rect x="4" y="4" width="16" height="10" rx="3"/></svg>,
+  'private_gym': <svg width="36" height="36" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1}><path d="M6.5 6.5h-2a1 1 0 00-1 1v9a1 1 0 001 1h2M17.5 6.5h2a1 1 0 011 1v9a1 1 0 01-1 1h-2M6.5 12h11M6.5 6.5v11M17.5 6.5v11"/></svg>,
+  'garden': <svg width="36" height="36" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1}><path d="M12 22V12"/><path d="M8 12c0-3 2-5 4-6 2 1 4 3 4 6"/><path d="M5 16c0-2.5 2-4.5 4-5"/><path d="M19 16c0-2.5-2-4.5-4-5"/><path d="M2 22h20"/></svg>,
+  'private_terrace': <svg width="36" height="36" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1}><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/><path d="M4 22h16"/><path d="M9 22v-5h6v5"/></svg>,
+  'indoor_jacuzzi': <svg width="36" height="36" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1}><ellipse cx="12" cy="15" rx="8" ry="3.5"/><path d="M4 15v2.5c0 2 3.6 3.5 8 3.5s8-1.5 8-3.5V15"/><path d="M8 8c0-1.5.7-3 2-3s2 1.5 2 3"/><path d="M13 8c0-1.5.7-3 2-3s2 1.5 2 3"/></svg>,
+  'gourmet_kitchen': <svg width="36" height="36" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1}><path d="M12 2v4M8 2v2M16 2v2"/><rect x="3" y="8" width="18" height="12" rx="2"/><path d="M3 14h18"/><circle cx="8" cy="18" r="1"/><circle cx="16" cy="18" r="1"/></svg>,
+  'parking': <svg width="36" height="36" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1}><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 17V7h4a3 3 0 010 6H9"/></svg>,
+  'security_24h': <svg width="36" height="36" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1}><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>,
+  'panoramic_view': <svg width="36" height="36" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1}><circle cx="12" cy="12" r="3"/><path d="M2 12c2.5-4 6-7 10-7s7.5 3 10 7c-2.5 4-6 7-10 7s-7.5-3-10-7z"/></svg>,
   'DEFAULT': <svg width="36" height="36" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1}><circle cx="12" cy="12" r="3"/><circle cx="12" cy="12" r="9"/></svg>
 }
-function categorizeAmenity(label: string): 'bienestar' | 'exterior' | 'servicios' {
-  const l = label.toUpperCase()
-  if (/PISCINA|JACUZZI|GIMNASIO|SPA|SAUNA|MASAJE|YOGA|CINE|THEATER|GYM|WELLNESS/i.test(l)) return 'bienestar'
-  if (/JARDIN|TERRAZA|VISTA|MUELLE|PLAYA|CANCHA|GOLF|JARDÍN|EXTERIOR|QUINCHO|PARRILLA/i.test(l)) return 'exterior'
-  return 'servicios'
-}
-function AmenitiesGrouped({ amenities }: { amenities: string[] }) {
-  const [active, setActive] = useState<'bienestar' | 'exterior' | 'servicios'>('bienestar')
-  const grouped = {
-    bienestar: amenities.filter(a => categorizeAmenity(a) === 'bienestar'),
-    exterior: amenities.filter(a => categorizeAmenity(a) === 'exterior'),
-    servicios: amenities.filter(a => categorizeAmenity(a) === 'servicios'),
-  }
-  if (grouped.bienestar.length === 0 && grouped.exterior.length === 0) {
-    grouped.bienestar = amenities.slice(0, 3)
-    grouped.exterior = amenities.slice(3, 6)
-    grouped.servicios = amenities.slice(6)
+function AmenitiesGrouped({ amenities, lang, t }: { amenities: string[]; lang: Lang; t: Dict }) {
+  const [active, setActive] = useState<AmenityCategory>('bienestar')
+  const grouped: Record<AmenityCategory, string[]> = {
+    bienestar: amenities.filter(k => amenityCategory(k) === 'bienestar'),
+    exterior: amenities.filter(k => amenityCategory(k) === 'exterior'),
+    servicios: amenities.filter(k => amenityCategory(k) === 'servicios'),
   }
   const categories = [
-    { key: 'bienestar' as const, label: 'Bienestar', count: grouped.bienestar.length, desc: 'Piscina, jacuzzi, gimnasio y descanso' },
-    { key: 'exterior' as const, label: 'Exterior', count: grouped.exterior.length, desc: 'Jardín, terraza, vistas y entorno' },
-    { key: 'servicios' as const, label: 'Servicios', count: grouped.servicios.length, desc: 'Seguridad, parking, cocina gourmet' },
+    { key: 'bienestar' as const, label: t.amenities.bienestar, count: grouped.bienestar.length, desc: t.amenities.bienestarDesc },
+    { key: 'exterior' as const, label: t.amenities.exterior, count: grouped.exterior.length, desc: t.amenities.exteriorDesc },
+    { key: 'servicios' as const, label: t.amenities.servicios, count: grouped.servicios.length, desc: t.amenities.serviciosDesc },
   ]
   return (
     <div className={extraStyles.amenitiesGrouped}>
@@ -322,10 +318,10 @@ function AmenitiesGrouped({ amenities }: { amenities: string[] }) {
       </div>
       <div className={extraStyles.amenitiesTabContent}>
         <div className={extraStyles.amenitiesIconsGrid}>
-          {grouped[active].map((label, i) => (
+          {grouped[active].map((key, i) => (
             <div key={`${active}-${i}`} className={extraStyles.amenityCard} style={{ animationDelay: `${i * 80}ms` }}>
-              <div className={extraStyles.amenityCardIcon}>{amenityIcons[label] || amenityIcons['DEFAULT']}</div>
-              <span className={extraStyles.amenityCardLabel}>{label}</span>
+              <div className={extraStyles.amenityCardIcon}>{amenityIcons[key] || amenityIcons['DEFAULT']}</div>
+              <span className={extraStyles.amenityCardLabel}>{amenityLabel(key, lang)}</span>
             </div>
           ))}
         </div>
@@ -334,7 +330,7 @@ function AmenitiesGrouped({ amenities }: { amenities: string[] }) {
   )
 }
 
-function DocumentationCards({ docs }: { docs: any[] }) {
+function DocumentationCards({ docs, t, lang }: { docs: any[]; t: Dict; lang: Lang }) {
   const getMeta = (doc: any) => {
     const titulo = (doc.titulo || '').toLowerCase()
     if (titulo.includes('plano')) return { color: '#c9a96e', preview: '⌖', hasThumb: true }
@@ -353,7 +349,7 @@ function DocumentationCards({ docs }: { docs: any[] }) {
               {d.thumbnailUrl && !d.thumbnailUrl.endsWith('.pdf') ? (
                 <img src={d.thumbnailUrl} alt={d.titulo} style={{ width: '100%', height: '100%', objectFit: 'cover', position: 'absolute', top: 0, left: 0 }} />
               ) : meta.preview === 'QR' && d.url && d.url.match(/\.(png|jpg|webp)/) ? (
-                <img src={d.url} alt="QR" style={{ width: '70%', height: '70%', objectFit: 'contain', margin: 'auto' }} />
+                <img src={d.url} alt={t.a11y.qrAlt} style={{ width: '70%', height: '70%', objectFit: 'contain', margin: 'auto' }} />
               ) : (
                 <>
                   <span className={extraStyles.docCardPreviewIcon} style={{ color: meta.color, fontSize: meta.preview.length <= 2 ? '1.8rem' : '1rem' }}>{meta.preview}</span>
@@ -363,7 +359,12 @@ function DocumentationCards({ docs }: { docs: any[] }) {
               <span className={extraStyles.docCardNumber} style={{ position: 'relative', zIndex: 1 }}>{String(i + 1).padStart(2, '0')}</span>
             </div>
             <div className={extraStyles.docCardInfo}>
-              <h4 className={extraStyles.docCardTitle}>{d.titulo}</h4>
+              <h4 className={extraStyles.docCardTitle}>
+                {d.titulo}
+                {lang === 'en' && d.idiomaArchivo === 'es' && (
+                  <span className={extraStyles.docLangNote}>Spanish original</span>
+                )}
+              </h4>
               {d.detalle && <p className={extraStyles.docCardDetail}>{d.detalle}</p>}
               <span className={extraStyles.docCardAction}>Ver documento <IconArrow /></span>
             </div>
@@ -377,40 +378,6 @@ function DocumentationCards({ docs }: { docs: any[] }) {
 
 
 /* =================== FASE 3 - CONTENIDO PREMIUM =================== */
-function UnDiaEnCasa({ data }: { data: any[] }) {
-  if (!data || !data.length) return null
-  return (
-    <RevealSection className={extraStyles.unDiaSection}>
-      <div className={extraStyles.unDiaInner}>
-        <div className={extraStyles.unDiaHeader}>
-          <p className={styles.eyebrow}>Un día en esta casa</p>
-          <h2 className={extraStyles.unDiaTitle}>No se visita. Se habita.</h2>
-          <p className={extraStyles.unDiaIntro}>De la primera luz del lago al último brindis en la terraza, así transcurre un día donde el tiempo deja de empujar.</p>
-        </div>
-        <div className={extraStyles.unDiaTimeline}>
-          {data.map((item: any, i: number) => (
-            <div key={i} className={extraStyles.unDiaItem} style={{ animationDelay: `${i * 120}ms` }}>
-              <div className={extraStyles.unDiaTimeWrap}>
-                <span className={extraStyles.unDiaTime}>{item.hora}</span>
-                <span className={extraStyles.unDiaDot} />
-                <span className={extraStyles.unDiaLine} />
-              </div>
-              <div className={extraStyles.unDiaContent}>
-                <h4 className={extraStyles.unDiaItemTitle}>{item.titulo}</h4>
-                <p className={extraStyles.unDiaItemDesc}>{item.desc}</p>
-              </div>
-              {item.imagen && (
-                <div className={extraStyles.unDiaImg}>
-                  <img loading="lazy" src={item.imagen} alt={item.titulo} />
-                </div>
-              )}
-            </div>
-          ))}
-        </div>
-      </div>
-    </RevealSection>
-  )
-}
 
 function TestimonioPropietario({ data }: { data: any }) {
   if (!data) return null
@@ -428,42 +395,6 @@ function TestimonioPropietario({ data }: { data: any }) {
   )
 }
 
-function DiaNocheSlider({ data }: { data: any }) {
-  const [pos, setPos] = useState(50)
-  const ref = useRef<HTMLDivElement>(null)
-  if (!data) return null
-  const onMove = (e: any) => {
-    const el = ref.current
-    if (!el) return
-    const rect = el.getBoundingClientRect()
-    const clientX = e.touches ? e.touches[0].clientX : e.clientX
-    const x = ((clientX - rect.left) / rect.width) * 100
-    setPos(Math.max(5, Math.min(95, x)))
-  }
-  return (
-    <RevealSection className={extraStyles.diaNocheSection}>
-      <div className={extraStyles.diaNocheInner}>
-        <div className={extraStyles.diaNocheHeader}>
-          <p className={styles.eyebrow}>Transición real</p>
-          <h2 className={extraStyles.diaNocheTitle}>{data.titulo || 'Día y noche, misma toma'}</h2>
-          <p className={extraStyles.diaNocheDesc}>{data.descripcion}</p>
-        </div>
-        <div ref={ref} className={extraStyles.diaNocheSlider} onMouseMove={onMove} onTouchMove={onMove} onMouseDown={onMove}>
-          <img src={data.imagenNoche} alt="Noche" className={extraStyles.diaNocheImgBack} />
-          <div className={extraStyles.diaNocheImgFrontWrap} style={{ width: `${pos}%` }}>
-            <img src={data.imagenDia} alt="Día" className={extraStyles.diaNocheImgFront} />
-          </div>
-          <div className={extraStyles.diaNocheHandle} style={{ left: `${pos}%` }}>
-            <div className={extraStyles.diaNocheHandleLine} />
-            <div className={extraStyles.diaNocheHandleCircle}>↔</div>
-          </div>
-          <span className={`${extraStyles.diaNocheLabel} ${extraStyles.diaNocheLabelDia}`}>06:42 AM</span>
-          <span className={`${extraStyles.diaNocheLabel} ${extraStyles.diaNocheLabelNoche}`}>20:15 PM</span>
-        </div>
-      </div>
-    </RevealSection>
-  )
-}
 
 function InversionSection({ data }: { data: any }) {
   if (!data) return null
@@ -494,16 +425,16 @@ function InversionSection({ data }: { data: any }) {
   )
 }
 
-function FAQSection({ items }: { items: any[] }) {
+function FAQSection({ items, lang, t }: { items: any[]; lang: Lang; t: Dict }) {
   const [open, setOpen] = useState<number | null>(null)
   if (!items || !items.length) return null
   return (
     <RevealSection className={extraStyles.faqSection}>
       <div className={extraStyles.faqInner}>
         <div className={extraStyles.faqHeader}>
-          <p className={styles.eyebrow}>Preguntas frecuentes</p>
-          <h2 className={extraStyles.faqTitle}>Objeciones resueltas antes de la visita.</h2>
-          <p className={extraStyles.faqIntro}>Respondemos lo que otros dejan para después. Transparencia elegante.</p>
+          <p className={styles.eyebrow}>{t.secciones.faq}</p>
+          <h2 className={extraStyles.faqTitle}>{lang === 'en' ? 'Objections resolved before the viewing.' : 'Objeciones resueltas antes de la visita.'}</h2>
+          <p className={extraStyles.faqIntro}>{lang === 'en' ? 'We answer what others leave for later. Considered transparency.' : 'Respondemos lo que otros dejan para después. Transparencia elegante.'}</p>
         </div>
         <div className={extraStyles.faqList}>
           {items.map((it: any, i: number) => (
@@ -523,15 +454,15 @@ function FAQSection({ items }: { items: any[] }) {
   )
 }
 
-function LoQueNoSeVeSection({ data }: { data: any[] }) {
+function LoQueNoSeVeSection({ data, lang }: { data: any[]; lang: Lang }) {
   if (!data || !data.length) return null
   return (
     <RevealSection className={extraStyles.loQueNoSeVeSection}>
       <div className={extraStyles.loQueNoSeVeInner}>
         <div className={extraStyles.loQueNoSeVeHeader}>
-          <p className={styles.eyebrow}>Lo que no se ve</p>
-          <h2 className={extraStyles.loQueNoSeVeTitle}>El valor está en lo invisible.</h2>
-          <p className={extraStyles.loQueNoSeVeIntro}>Los compradores de lujo valoran lo que sostiene la experiencia todos los días, sin fallar. Seguridad, eficiencia, materiales y autonomía.</p>
+          <p className={styles.eyebrow}>{lang === 'en' ? 'What the photographs do not show' : 'Lo que no se ve'}</p>
+          <h2 className={extraStyles.loQueNoSeVeTitle}>{lang === 'en' ? 'The value is in what you cannot see.' : 'El valor está en lo invisible.'}</h2>
+          <p className={extraStyles.loQueNoSeVeIntro}>{lang === 'en' ? 'Discerning buyers value what sustains the experience every day, without fail. Security, efficiency, materials and autonomy.' : 'Los compradores de lujo valoran lo que sostiene la experiencia todos los días, sin fallar. Seguridad, eficiencia, materiales y autonomía.'}</p>
         </div>
         <div className={extraStyles.loQueNoSeVeGrid}>
           {data.map((cat: any, i: number) => (
@@ -567,13 +498,13 @@ function getLandmarkIcon(lm: any) {
 function getLandmarkDetail(lm: any) { return lm.detalle || '' }
 function getLandmarkMinutes(lm: any) { return lm.minutos || lm.min || '' }
 
-const navLinks = [
-  { href: '#residencia', label: 'Residencia' },
-  { href: '#galeria', label: 'Galería' },
-  { href: '#amenities', label: 'Amenities' },
-  { href: '#entorno', label: 'Entorno' },
-  { href: '#ubicacion', label: 'Ubicación' },
-  { href: '#contacto', label: 'Contacto' },
+const buildNavLinks = (t: Dict) => [
+  { href: '#residencia', label: t.nav.residencia },
+  { href: '#galeria', label: t.nav.galeria },
+  { href: '#amenities', label: t.nav.amenities },
+  { href: '#entorno', label: t.nav.entorno },
+  { href: '#ubicacion', label: t.nav.ubicacion },
+  { href: '#contacto', label: t.nav.contacto },
 ]
 const featureIconByName: Record<string, React.ReactNode> = {
   'Hoja': <svg width="28" height="28" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1}><path d="M11 20A7 7 0 019.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z"/><path d="M2 21c0-3 1.85-5.36 5.08-6"/></svg>,
@@ -607,7 +538,7 @@ function RevealSection({ children, className = '', as = 'section', id, style }: 
   return <Tag ref={reveal.ref as any} className={`${reveal.className} ${styles.stagger} ${className}`} id={id} style={style}>{children}</Tag>
 }
 
-function BrochureForm({ agentEmail, compact, privacidadTexto, privacidadUrl, brochureUrl }: { agentEmail: string, compact?: boolean, privacidadTexto?: string, privacidadUrl?: string, brochureUrl?: string }) {
+function BrochureForm({ agentEmail, compact, privacidadTexto, privacidadUrl, brochureUrl, t, lang }: { agentEmail: string, compact?: boolean, privacidadTexto?: string, privacidadUrl?: string, brochureUrl?: string, t: Dict, lang: Lang }) {
   const [submitted, setSubmitted] = useState(false)
   const [nombre, setNombre] = useState('')
   const [email, setEmail] = useState('')
@@ -635,8 +566,8 @@ function BrochureForm({ agentEmail, compact, privacidadTexto, privacidadUrl, bro
   if (submitted) {
     return (
       <div style={{ textAlign: 'center', padding: '3rem 2rem', background: '#1a1714', borderRadius: '6px' }}>
-        <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: '2rem', color: '#fff', marginBottom: '0.75rem' }}>Solicitud recibida.</p>
-        <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: '0.85rem', color: 'rgba(255,255,255,0.6)', marginBottom: '2rem' }}>Te contactamos en las próximas horas con la memoria completa.</p>
+        <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: '2rem', color: '#fff', marginBottom: '0.75rem' }}>{t.form.exito}</p>
+        <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: '0.85rem', color: 'rgba(255,255,255,0.6)', marginBottom: '2rem' }}>{lang === 'en' ? 'We will be in touch shortly with the full dossier.' : 'Te contactamos en las próximas horas con la memoria completa.'}</p>
         {brochureUrl && <button type="button" className={styles.memoriaBtn} style={{ display: 'inline-flex', gap: '0.5rem', cursor: 'pointer', border: 'none' }} onClick={() => {
           const iframe = document.createElement('iframe')
           iframe.style.display = 'none'
@@ -650,27 +581,27 @@ function BrochureForm({ agentEmail, compact, privacidadTexto, privacidadUrl, bro
           document.body.appendChild(link)
           link.click()
           document.body.removeChild(link)
-        }}><IconDownload /> Descargar Brochure</button>}
+        }}><IconDownload /> {t.descargas.brochure}</button>}
       </div>
     )
   }
   return (
     <form className={compact ? styles.memoriaFormCompact : styles.memoriaFormWrap} onSubmit={handleSubmit}>
       <div className={styles.memoriaFormRow}>
-        <div className={styles.formField}><input className={styles.formInput} type="text" placeholder="NOMBRE" value={nombre} onChange={e => setNombre(e.target.value)} /></div>
-        <div className={styles.formField}><input className={styles.formInput} type="tel" placeholder="WHATSAPP *" value={whatsapp} onChange={e => setWhatsapp(e.target.value)} /></div>
+        <div className={styles.formField}><input className={styles.formInput} type="text" placeholder={t.form.nombre} value={nombre} onChange={e => setNombre(e.target.value)} /></div>
+        <div className={styles.formField}><input className={styles.formInput} type="tel" placeholder={`${t.form.whatsapp} ${t.form.requerido}`} value={whatsapp} onChange={e => setWhatsapp(e.target.value)} /></div>
       </div>
-      <div className={styles.formField}><input className={styles.formInput} type="email" placeholder="EMAIL *" required value={email} onChange={e => setEmail(e.target.value)} /></div>
+      <div className={styles.formField}><input className={styles.formInput} type="email" placeholder={`${t.form.email} ${t.form.requerido}`} required value={email} onChange={e => setEmail(e.target.value)} /></div>
       <div className={styles.privacidadWrap}>
         <div style={{ display: 'flex', alignItems: 'flex-start', gap: '0.5rem', marginTop: '1.5rem', marginBottom: '0.75rem' }}>
         <input type="checkbox" className={styles.privacidadCheck} id="privacidad-brochure" style={{ marginTop: '3px' }} checked={accepted} onChange={e => setAccepted(e.target.checked)} required />
         <label htmlFor="privacidad-brochure" className={styles.privacidadLabel} style={{ margin: 0 }}>
-          {privacidadUrl ? <>{(privacidadTexto || 'Acepto la ').replace('política de privacidad', '').trim()} <a href={privacidadUrl} target="_blank" rel="noopener">política de privacidad</a></> : (privacidadTexto || 'Acepto la política de privacidad')}
+          {privacidadUrl ? <>{(privacidadTexto || 'Acepto la ').replace('política de privacidad', '').trim()} <a href={privacidadUrl} target="_blank" rel="noopener">{t.form.politica}</a></> : (privacidadTexto || lang === 'en' ? 'I accept the privacy policy' : 'Acepto la política de privacidad')}
         </label>
         </div>
       </div>
-      <button type="submit" className={styles.memoriaBtn} disabled={loading || !canSubmit} style={{ opacity: canSubmit ? 1 : 0.45 }}>
-        {loading ? 'Enviando…' : <><IconDownload /> Descargar Brochure de la Propiedad</>}
+      <button type="submit" className={styles.memoriaBtn} disabled={loading || !canSubmit} style={{ opacity: canSubmit ? 1 : 0.45, background: '#c8a45d', color: '#fff', border: 'none' }}>
+        {loading ? t.form.enviando : <><IconDownload /> {t.descargas.brochureLargo}</>}
       </button>
     </form>
   )
@@ -693,7 +624,10 @@ function AnalyticsScripts({ ga4Id, metaPixelId }: { ga4Id?: string; metaPixelId?
   )
 }
 
-export default function PropertyPage({ data }: { data: any }) {
+export default function PropertyPage({ data, lang = 'es' }: { data: any; lang?: Lang }) {
+  const t = getDict(lang)
+  const navLinks = buildNavLinks(t)
+
   const [menuOpen, setMenuOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const [galleryOpen, setGalleryOpen] = useState(false)
@@ -708,29 +642,39 @@ export default function PropertyPage({ data }: { data: any }) {
   }, [])
 
   const { property, agent } = data
-  const waMensaje = encodeURIComponent(`Hola, vi la propiedad ${property.name} y quiero más información`)
+  const waMensaje = encodeURIComponent(
+    lang === 'en'
+      ? `Hello, I saw ${property.name} and would like more information.`
+      : `Hola, vi la propiedad ${property.name} y quiero más información`
+  )
   const whatsappUrl = agent.whatsapp ? `https://wa.me/${agent.whatsapp}?text=${waMensaje}` : '#'
   const allGallery = property.gallery || []
 
   return (
     <div className={styles.page}>
       <ScrollProgressBar />
-      <BackToTop />
+      <BackToTop t={t} />
       {calculatorOpen && <CalculatorModal type={calculatorOpen} onClose={() => setCalculatorOpen(null)} defaultPrice={property?.price} />}
       {lightboxState && <GalleryLightbox images={lightboxState.images} startIndex={lightboxState.index} onClose={() => setLightboxState(null)} />}
       <PageLoader />
 
-      <nav className={`${styles.navbar} ${extraStyles.navbarImproved} ${scrolled ? styles.navbarScrolled : ''} ${scrolled ? extraStyles.navbarScrolledImproved : ''}`}>
+      <nav className={`${styles.navbar} ${scrolled ? styles.navbarScrolled : ''}`}>
         <div className={styles.navInner}>
           <a href="#residencia" className={styles.navLogo}>{property.footerTitulo || 'LARUM STUDIO'}</a>
           <div className={styles.navLinks}>{navLinks.map(l => <a key={l.href} href={l.href} className={styles.navLink}>{l.label}</a>)}</div>
           <div className={styles.navRight}>
-            <a href={whatsappUrl} className={`${styles.navCta} ${extraStyles.navCtaPulse}`} target="_blank" rel="noopener">Agendar Visita</a>
+            <LanguageSwitch lang={lang} />
+            <a href={whatsappUrl} className={`${styles.navCta} ${extraStyles.navCtaPulse}`} target="_blank" rel="noopener">{t.nav.cta}</a>
             <button className={styles.menuBtn} onClick={() => setMenuOpen(!menuOpen)}>{menuOpen ? <IconClose /> : <IconMenu />}</button>
           </div>
         </div>
       </nav>
-      {menuOpen && <div className={styles.mobileMenu}>{navLinks.map(l => <a key={l.href} href={l.href} onClick={() => setMenuOpen(false)}>{l.label}</a>)}</div>}
+      {menuOpen && (
+        <div className={styles.mobileMenu}>
+          {navLinks.map(l => <a key={l.href} href={l.href} onClick={() => setMenuOpen(false)}>{l.label}</a>)}
+          <LanguageSwitch lang={lang} mobile />
+        </div>
+      )}
 
       {/* HERO - #18 CINEMATOGRÁFICO */}
       <section id="residencia" className={styles.hero}>
@@ -748,16 +692,16 @@ export default function PropertyPage({ data }: { data: any }) {
           <HeroHeadlineReveal text={property.heroHeadline || property.name} />
           {property.precio && (
             <div className={`${styles.heroCenteredPrice} ${extraStyles.heroPriceAnimated}`}>
-              <span className={styles.heroCenteredPriceLabel}>PRECIO</span>
+              <span className={styles.heroCenteredPriceLabel}>{t.hero.precio}</span>
               <span className={styles.heroCenteredPriceValue}>{property.precio}</span>
             </div>
           )}
           <div className={`${styles.heroCenteredBtns} ${extraStyles.heroBtnsAnimated}`}>
-            <a href={whatsappUrl} target="_blank" rel="noopener" className={`${styles.heroCenteredBtnPrimary} ${extraStyles.ctaGlow}`}>SOLICITAR AGENDA PRIVADA</a>
-            {property.brochure && <a href="#memoria" className={styles.heroCenteredBtnSecondary}>DESCARGAR BROCHURE →</a>}
+            <a href={whatsappUrl} target="_blank" rel="noopener" className={`${styles.heroCenteredBtnPrimary} ${extraStyles.ctaGlow}`}>{t.form.enviar}</a>
+            {property.brochure && <a href="#memoria" className={styles.heroCenteredBtnSecondary}>{t.descargas.brochureCta}</a>}
           </div>
           <div className={`${styles.heroScrollHint} ${extraStyles.heroScrollAnimated}`}>
-            <span>SCROLL</span><div className={styles.heroScrollLine} />
+            <span>{t.hero.scroll}</span><div className={styles.heroScrollLine} />
           </div>
         </div>
       </section>
@@ -768,14 +712,14 @@ export default function PropertyPage({ data }: { data: any }) {
       <section className={styles.statsRow}>
         <div className={styles.statsRowInner}>
           {[
-            { value: property.stats.terreno || '3.900 m²', label: 'Terreno' },
-            { value: property.stats.construidos || '800 m²', label: 'Construidos' },
-            { value: property.stats.dormitorios || '6', label: 'Dormitorios' },
-            { value: property.stats.banos || '5', label: 'Baños' },
-            { value: property.stats.cocheras || '4', label: 'Aparcamientos' },
-            { value: property.stats.ano || '2018', label: 'Año de Construcción' },
-          ].map((st, i) => (
-            <CountUpStat key={i} value={st.value} label={st.label} index={i} />
+            { value: property.stats.terreno, label: lang === 'en' ? `(sq ft) ${t.stats.terreno}` : t.stats.terreno },
+            { value: property.stats.construidos, label: lang === 'en' ? `(sq ft) ${t.stats.construidos}` : t.stats.construidos },
+            { value: property.stats.dormitorios, label: t.stats.dormitorios },
+            { value: property.stats.banos, label: t.stats.banos },
+            { value: property.stats.cocheras, label: t.stats.cocheras },
+            { value: property.stats.ano, label: t.stats.ano },
+          ].filter(s => s.value).map((st, i) => (
+            <CountUpStat key={i} value={st.value} label={st.label} index={i} lang={lang} />
           ))}
         </div>
       </section>
@@ -784,14 +728,14 @@ export default function PropertyPage({ data }: { data: any }) {
         <RevealSection className={styles.positioning}>
           <div className={styles.posIntro}>
             <div className={styles.posIntroLeft}>
-              <div className={styles.posIntroNum}><span>01</span><span className={styles.posIntroLine} /><span className={styles.posIntroLabel}>Porque algunos lugares no se eligen. Se reconocen.</span></div>
-              <h2 className={styles.posIntroTitle}>En San Bernardino, las casas frente al lago rara vez se anuncian: se transmiten entre quienes ya pertenecen al lugar.</h2>
-              <p className={styles.posIntroItalicLine}>Esta es una de ellas.</p>
+              <div className={styles.posIntroNum}><span>01</span><span className={styles.posIntroLine} /><span className={styles.posIntroLabel}>{lang === 'en' ? 'Because some places are not chosen. They are recognised.' : 'Porque algunos lugares no se eligen. Se reconocen.'}</span></div>
+              <h2 className={styles.posIntroTitle}>{lang === 'en' ? 'In San Bernardino, lakefront houses rarely go on the market. They pass between those who already belong here.' : 'En San Bernardino, las casas frente al lago rara vez se anuncian: se transmiten entre quienes ya pertenecen al lugar.'}</h2>
+              <p className={styles.posIntroItalicLine}>{lang === 'en' ? 'This is one of them.' : 'Esta es una de ellas.'}</p>
             </div>
             <div className={styles.posIntroRight}>
-              <p className={styles.posIntroPara}>No fue hecha para ser vista. Fue hecha para ser vivida. Un lugar donde el lago no es paisaje, sino presencia constante.</p>
-              <p className={styles.posIntroPara}>Aquí no se viene a descansar de la vida. Se viene a recordarla y conectar con ella.</p>
-              <blockquote className={styles.posQuoteBlock}><p>«Las cosas verdaderamente valiosas son aquellas que no están a la venta para cualquiera.»</p></blockquote>
+              <p className={styles.posIntroPara}>{lang === 'en' ? 'It was not built to be seen. It was built to be lived in. A place where the lake is not scenery but constant presence.' : 'No fue hecha para ser vista. Fue hecha para ser vivida. Un lugar donde el lago no es paisaje, sino presencia constante.'}</p>
+              <p className={styles.posIntroPara}>{lang === 'en' ? 'You do not come here to rest from life. You come here to remember it.' : 'Aquí no se viene a descansar de la vida. Se viene a recordarla y conectar con ella.'}</p>
+              <blockquote className={styles.posQuoteBlock}><p>{lang === 'en' ? '"The things that are truly valuable are those that are not for sale to everyone."' : '«Las cosas verdaderamente valiosas son aquellas que no están a la venta para cualquiera.»'}</p></blockquote>
             </div>
           </div>
         </RevealSection>
@@ -800,12 +744,12 @@ export default function PropertyPage({ data }: { data: any }) {
       <RevealSection className={styles.story} id="narrativa">
         <div className={styles.storyInner}>
           <div className={styles.storyLeft}>
-            <p className={styles.eyebrow}>La Historia</p>
-            <h2 className={styles.storyTitle}>Lo que se siente al llegar</h2>
-            <p className={styles.storyDesc}>Al cruzar el portón, el mundo se queda afuera. Solo queda el lago, reflejado entre los árboles. Un umbral que muy pocos tienen el privilegio de atravesar.</p>
-            <p className={styles.storyDesc} style={{ marginTop: '1.5rem', marginBottom: '0.75rem' }}>San Bernardino siempre se guardó en silencio. Esta casa forma parte de esa herencia: un lugar pensado no para impresionar, sino para que uno pueda volver a estar.</p>
-            <p className={styles.storyDesc} style={{ marginTop: '1.5rem', marginBottom: '0.75rem' }}>Aquí el amanecer no se celebra. Se vive. El espacio no presiona. Contiene. Y por primera vez en mucho tiempo, no hace falta explicarse.</p>
-            <p className={styles.storyDesc} style={{ marginTop: '1.5rem', marginBottom: '0.75rem' }}>Cruzar ese portón no es llegar a una residencia. Es recordar que todavía existen refugios que no se anuncian.</p>
+            <p className={styles.eyebrow}>{t.secciones.laHistoria}</p>
+            <h2 className={styles.storyTitle}>{lang === 'en' ? 'What it feels like to arrive' : 'Lo que se siente al llegar'}</h2>
+            <p className={styles.storyDesc}>{lang === 'en' ? 'Past the gate, the world falls away. Only the lake remains, glinting between the trees. A threshold very few have the privilege of crossing.' : 'Al cruzar el portón, el mundo se queda afuera. Solo queda el lago, reflejado entre los árboles. Un umbral que muy pocos tienen el privilegio de atravesar.'}</p>
+            <p className={styles.storyDesc} style={{ marginTop: '1.5rem', marginBottom: '0.75rem' }}>{lang === 'en' ? 'San Bernardino has always kept itself quiet. This house is part of that inheritance: a place designed not to impress, but to let you simply be.' : 'San Bernardino siempre se guardó en silencio. Esta casa forma parte de esa herencia: un lugar pensado no para impresionar, sino para que uno pueda volver a estar.'}</p>
+            <p className={styles.storyDesc} style={{ marginTop: '1.5rem', marginBottom: '0.75rem' }}>{lang === 'en' ? 'Here, sunrise is not celebrated. It is lived. The space does not press. It holds. And for the first time in a long while, nothing needs explaining.' : 'Aquí el amanecer no se celebra. Se vive. El espacio no presiona. Contiene. Y por primera vez en mucho tiempo, no hace falta explicarse.'}</p>
+            <p className={styles.storyDesc} style={{ marginTop: '1.5rem', marginBottom: '0.75rem' }}>{lang === 'en' ? 'To cross that gate is not to arrive at a residence. It is to remember that there are still refuges that are never advertised.' : 'Cruzar ese portón no es llegar a una residencia. Es recordar que todavía existen refugios que no se anuncian.'}</p>
           </div>
           <div className={styles.storyRight}><div className={styles.storyImgWrap}><img loading="lazy" src={property.story?.image || property.posterHero} alt={property.story?.title || property.name} className={styles.storyImg} /></div></div>
         </div>
@@ -815,18 +759,39 @@ export default function PropertyPage({ data }: { data: any }) {
       {property.testimonioPropietario && <TestimonioPropietario data={property.testimonioPropietario} />}
 
       {/* #23 Un día en esta casa */}
-      {property.unDiaEnCasa && <UnDiaEnCasa data={property.unDiaEnCasa} />}
+      {property.unDiaEnCasa && (
+        <RevealSection className={extraStyles.unDiaSection} id="un-dia">
+          <div className={extraStyles.unDiaHeader}>
+            <span className={extraStyles.unDiaTitle}>{t.secciones.unDiaEnCasa}</span>
+            <p className={extraStyles.unDiaIntro}>{t.secciones.unDiaEnCasaDesc}</p>
+          </div>
+          <div className={extraStyles.unDiaTimeline}>
+            {property.unDiaEnCasa.map((item: any, i: number) => {
+              const light = lightAt(hourToPos(item.hora))
+              return (
+              <div key={i} className={extraStyles.unDiaItem} style={{ '--card-accent': light.accent, '--card-glow': light.glow } as React.CSSProperties}>
+                {item.imagen && <div className={extraStyles.unDiaImg}><img src={item.imagen} alt={item.titulo} loading={i < 2 ? 'eager' : 'lazy'} /></div>}
+                <div className={extraStyles.unDiaContent}>
+                  <span className={extraStyles.unDiaTime} style={{ color: light.accent }}>{formatTime(item.hora, lang)}</span>
+                  <h3 className={extraStyles.unDiaItemTitle}>{item.titulo}</h3>
+                  <p className={extraStyles.unDiaItemDesc}>{item.desc}</p>
+                </div>
+              </div>
+            )})}
+          </div>
+        </RevealSection>
+      )}
 
       {/* #29 Comparación día/noche real */}
-      {property.diaNoche && <DiaNocheSlider data={property.diaNoche} />}
+      {property.diaNoche && <DayNightScroll data={property.diaNoche} t={t} lang={lang} />}
 
       {property.videoPresentacion && (
         <RevealSection className={styles.videoFeature} id="video-tour">
           <div className={styles.videoFeatureInner}>
-            <div className={styles.videoFeatureHeader}><p className={styles.eyebrow}>Recorrido</p><h2 className={styles.videoFeatureTitle}>Adéntrate en el viaje</h2></div>
+            <div className={styles.videoFeatureHeader}><p className={styles.eyebrow}>{t.secciones.recorrido}</p><h2 className={styles.videoFeatureTitle}>{lang === 'en' ? 'Step inside the journey' : 'Adéntrate en el viaje'}</h2></div>
             <div className={styles.videoFeatureFrame}>
               <video className={styles.videoFeatureEl} controls poster="https://larumstudio.com/wp-content/uploads/2026/04/unnamed-1.webp" preload="none"><source src={property.videoPresentacion} type="video/mp4" /></video>
-              <div className={styles.videoFeatureMeta}><span className={styles.videoFeatureLabel}>Recorrido completo · 4K</span><span className={styles.videoFeatureDur}>{property.videoDuration || '1:19'} min</span></div>
+              <div className={styles.videoFeatureMeta}><span className={styles.videoFeatureLabel}>{t.secciones.recorridoCompleto}</span><span className={styles.videoFeatureDur}>{property.videoDuration || '1:19'} min</span></div>
             </div>
             {property.videoMarkers && property.videoMarkers.length > 0 && (
               <div className={styles.videoMarkers}>
@@ -844,17 +809,10 @@ export default function PropertyPage({ data }: { data: any }) {
 
       <RevealSection className={styles.features}>
         <div className={styles.featuresInner}>
-          <p className={styles.eyebrow}>Por qué esta casa, y no otra</p>
-          <h2 className={styles.sectionTitleH2}>El lugar que eliges cuando ya no buscas más</h2>
+          <p className={styles.eyebrow}>{property.featuresGrid?.eyebrow || (lang === 'en' ? 'Why this house, and not another' : 'Por qué esta casa, y no otra')}</p>
+          <h2 className={styles.sectionTitleH2}>{property.featuresGrid?.title || (lang === 'en' ? 'The place you choose when you have stopped looking' : 'El lugar que eliges cuando ya no buscas más')}</h2>
           <div className={styles.featuresGrid}>
-            {[
-              { icono: 'Hoja', title: 'Una piscina infinity que se integra al paisaje', desc: 'El agua parece continuar hasta el lago.' },
-              { icono: 'Escudo', title: 'Privacidad verdadera', desc: 'Un entorno que te envuelve y te protege.' },
-              { icono: 'Casa', title: 'Libertad dentro de la casa', desc: 'Espacios independientes para cada momento.' },
-              { icono: 'Ubicacion', title: 'Dos mundos sin renunciar a ninguno', desc: 'El lago por la tarde. Asunción cuando lo necesitas.' },
-              { icono: 'Llave', title: 'Cero obras. Cero esperas.', desc: 'Residencia lista para habitar desde el primer día.' },
-              { icono: 'Diamante', title: 'Un enclave que resiste el paso del tiempo', desc: 'San Bernardino no se ha masificado.' },
-            ].map((f, i) => (
+            {(property.featuresGrid?.items || []).map((f: any, i: number) => (
               <div key={i} className={`${styles.featureItem} ${extraStyles.featureItemReveal}`} style={{ transitionDelay: `${i * 110}ms` }}>
                 <div className={styles.featureIcon}>{featureIconByName[f.icono]}</div>
                 <h4 className={styles.featureTitle}>{f.title}</h4>
@@ -867,12 +825,12 @@ export default function PropertyPage({ data }: { data: any }) {
 
       <RevealSection className={styles.gallerySection} id="galeria">
         <div className={styles.galleryInner}>
-          <div className={styles.galleryHeader}><div><p className={styles.eyebrow}>Galería</p><h2 className={styles.galleryTitle}>Momentos para enamorarte</h2><p className={styles.gallerySubtitle}>Una secuencia visual que sigue el recorrido natural de la propiedad.</p></div></div>
+          <div className={styles.galleryHeader}><div><p className={styles.eyebrow}>{t.secciones.galeria}</p><h2 className={styles.galleryTitle}>{lang === 'en' ? 'Moments to fall in love with' : 'Momentos para enamorarte'}</h2><p className={styles.gallerySubtitle}>{lang === 'en' ? 'A visual sequence that follows the natural flow of the property.' : 'Una secuencia visual que sigue el recorrido natural de la propiedad.'}</p></div></div>
           {allGallery.length > 0 && (
             <div className={extraStyles.galleryPreviewLayoutImproved}>
               <div className={`${extraStyles.galleryHeroImgImproved} ${extraStyles.hoverZoom}`} onClick={() => setLightboxState({ images: allGallery, index: 0 })}>
                 {allGallery[0].isVideo ? <video src={allGallery[0].url} autoPlay muted loop playsInline /> : <img loading="lazy" src={allGallery[0].url} alt={allGallery[0].caption} />}
-                <div className={extraStyles.galleryHeroOverlay}><span>Ver en pantalla completa</span></div>
+                <div className={extraStyles.galleryHeroOverlay}><span>{lang === 'en' ? 'View fullscreen' : 'Ver en pantalla completa'}</span></div>
                 <div className={styles.galCaption}>{allGallery[0].caption}</div>
               </div>
               <div className={extraStyles.galleryThumbRowImproved}>
@@ -882,7 +840,7 @@ export default function PropertyPage({ data }: { data: any }) {
                   </div>
                 ))}
               </div>
-              <div className={styles.galleryCta}><button className={styles.galleryMoreBtn} onClick={() => setGalleryOpen(true)}>Ver galería completa <IconArrow /></button></div>
+              <div className={styles.galleryCta}><button className={styles.galleryMoreBtn} onClick={() => setGalleryOpen(true)}>{t.secciones.verGaleriaCompleta} <IconArrow /></button></div>
             </div>
           )}
         </div>
@@ -891,7 +849,7 @@ export default function PropertyPage({ data }: { data: any }) {
       {galleryOpen && (
         <div className={extraStyles.galleryPanelImproved} onClick={() => setGalleryOpen(false)}>
           <div className={extraStyles.galleryPanelInnerImproved} onClick={e => e.stopPropagation()}>
-            <div className={styles.galleryPanelHeader}><p className={styles.galleryPanelTitle}>Galería completa · {allGallery.length} imágenes</p><button className={styles.galleryPanelClose} onClick={() => setGalleryOpen(false)}><IconClose /></button></div>
+            <div className={styles.galleryPanelHeader}><p className={styles.galleryPanelTitle}>{lang === 'en' ? `Full gallery · ${allGallery.length} images` : `Galería completa · ${allGallery.length} imágenes`}</p><button className={styles.galleryPanelClose} onClick={() => setGalleryOpen(false)}><IconClose /></button></div>
             <div className={extraStyles.galleryPanelGridImproved}>
               {allGallery.map((img: any, i: number) => (
                 <div key={i} className={`${extraStyles.galleryPanelItemImproved} ${extraStyles.hoverZoom}`} onClick={() => setLightboxState({ images: allGallery, index: i })}>
@@ -907,12 +865,12 @@ export default function PropertyPage({ data }: { data: any }) {
       {property.amenities && property.amenities.length > 0 && (
         <RevealSection className={styles.amenities} id="amenities">
           <div className={styles.amenitiesLeft}>
-            <p className={styles.eyebrow}>Amenities</p>
-            <h2 className={styles.amenitiesTitle}>Bienestar en<br />cada detalle.</h2>
-            <p className={styles.amenitiesDesc}>Espacios diseñados para disfrutar en familia, recibir con elegancia y relajarse en completo confort.</p>
-            <AmenitiesGrouped amenities={property.amenities} />
+            <p className={styles.eyebrow}>{lang === 'en' ? 'Amenities' : 'Amenities'}</p>
+            <h2 className={styles.amenitiesTitle}>{t.secciones.amenitiesTitulo}</h2>
+            <p className={styles.amenitiesDesc}>{t.secciones.amenitiesDesc}</p>
+            <AmenitiesGrouped amenities={property.amenities} lang={lang} t={t} />
           </div>
-          <div className={styles.amenitiesRight}><img loading="lazy" src={property.amenitiesImage || property.posterHero} alt="Amenities" /><div className={styles.amenitiesImgOverlay} /></div>
+          <div className={styles.amenitiesRight}><img loading="lazy" src={property.amenitiesImage || property.posterHero} alt={t.a11y.amenitiesAlt} /><div className={styles.amenitiesImgOverlay} /></div>
         </RevealSection>
       )}
 
@@ -925,7 +883,7 @@ export default function PropertyPage({ data }: { data: any }) {
                 <p className={styles.eyebrow}>{property.lifestyle.eyebrow}</p>
                 <h2 className={styles.lifestyleTitle}>{property.lifestyle.title}</h2>
                 {(property.lifestyle.introParagraphs || [property.lifestyle.intro]).filter(Boolean).map((para: string, i: number) => (<p key={i} className={styles.lifestyleIntro} style={i > 0 ? { marginTop: '1.5rem', marginBottom: '0.75rem' } : {}}>{para}</p>))}
-                <a href="/entorno" className={styles.locationBtnSecondary} style={{ marginTop: "2rem", display: "inline-block" }}>Descubre San Bernardino →</a>
+                <a href={lang === "en" ? "/en/entorno" : "/entorno"} className={styles.locationBtnSecondary} style={{ marginTop: "2rem", display: "inline-block" }}>{lang === 'en' ? 'Discover San Bernardino →' : 'Descubre San Bernardino →'}</a>
               </div>
             </div>
             <div className={styles.lifestyleGrid}>
@@ -937,16 +895,16 @@ export default function PropertyPage({ data }: { data: any }) {
         </RevealSection>
       )}
 
-      <FullBleedBreak src="https://larumstudio.com/wp-content/uploads/2026/07/Piscina-2560px-upscaled.webp" caption="Residencia San Bernardino" />
+      <FullBleedBreak src="https://larumstudio.com/wp-content/uploads/2026/07/Piscina-2560px-upscaled.webp" caption={lang === "en" ? "Residence San Bernardino" : "Residencia San Bernardino"} />
 
       <RevealSection className={styles.location} id="ubicacion">
         <div className={styles.locationInner}>
           <div className={styles.locationLeft}>
-            <p className={styles.eyebrow}>Ubicación</p>
+            <p className={styles.eyebrow}>{lang === 'en' ? 'Location' : 'Ubicación'}</p>
             <h2 className={styles.locationTitle}>{property.location.city}</h2>
             {property.location.landmarks && (
               <div className={styles.landmarksList}>
-                <p className={styles.landmarksNearby}>PUNTOS DE INTERÉS</p>
+                <p className={styles.landmarksNearby}>{t.secciones.puntosDeInteres}</p>
                 <div className={styles.landmarksCols}>
                   <div className={styles.landmarksCol}>
                     {property.location.landmarks.slice(0, Math.ceil(property.location.landmarks.length / 2)).map((lm: any, i: number) => (
@@ -964,7 +922,7 @@ export default function PropertyPage({ data }: { data: any }) {
           </div>
           <div className={styles.locationRight}>
             <div className={styles.locationMap}>{property.location.mapImage ? <><img loading="lazy" src={property.location.mapImage} alt={property.location.city} className={styles.mapPhoto} /><div className={styles.mapPhotoOverlay} /></> : <svg className={styles.mapGrid} preserveAspectRatio="none"><defs><pattern id="gridP" width="30" height="30" patternUnits="userSpaceOnUse"><path d="M 30 0 L 0 0 0 30" fill="none" stroke="#ffffff" strokeWidth="0.4" /></pattern></defs><rect width="100%" height="100%" fill="url(#gridP)" /></svg>}</div>
-            {property.location.mapsUrl && <div className={styles.locationMapBtn}><a href={property.location.mapsUrl} target="_blank" rel="noopener" className={styles.locationBtn}>Descubrir en el Mapa</a></div>}
+            {property.location.mapsUrl && <div className={styles.locationMapBtn}><a href={property.location.mapsUrl} target="_blank" rel="noopener" className={styles.locationBtn}>{lang === 'en' ? 'View on Map' : 'Descubrir en el Mapa'}</a></div>}
           </div>
         </div>
       </RevealSection>
@@ -972,21 +930,21 @@ export default function PropertyPage({ data }: { data: any }) {
       {property.floorPlan && property.floorPlan.areas && (
         <RevealSection className={styles.plano} id="plano">
           <div className={styles.planoInner}>
-            <div className={styles.planoHeader}><p className={styles.eyebrow}>Un recorrido con sentido</p><h2 className={styles.planoTitleTop}>Donde cada espacio encuentra su razón de ser.</h2></div>
+            <div className={styles.planoHeader}><p className={styles.eyebrow}>{lang === 'en' ? 'A layout with purpose' : 'Un recorrido con sentido'}</p><h2 className={styles.planoTitleTop}>{lang === 'en' ? 'Where every room earns its place.' : 'Donde cada espacio encuentra su razón de ser.'}</h2></div>
             <div className={styles.planoTwoCol}>
-              {property.floorPlan.image && <div className={styles.planoImgCol}><img loading="lazy" src={property.floorPlan.image} alt="Plano" /></div>}
-              <div className={styles.planoTableCol}><table className={styles.areaTable}><thead><tr><th>Ambiente</th><th>Superficie aprox.</th></tr></thead><tbody>{property.floorPlan.areas.map((a: any, i: number) => (<tr key={i}><td>{a.ambiente}</td><td>{a.superficie}</td></tr>))}</tbody></table></div>
+              {property.floorPlan.image && <div className={styles.planoImgCol}><img loading="lazy" src={property.floorPlan.image} alt={t.a11y.planoAlt} /></div>}
+              <div className={styles.planoTableCol}><table className={styles.areaTable}><thead><tr><th>{t.secciones.ambiente}</th><th>{t.secciones.superficieAprox}</th></tr></thead><tbody>{property.floorPlan.areas.map((a: any, i: number) => (<tr key={i}><td>{a.ambiente}</td><td>{a.superficie}</td></tr>))}</tbody></table></div>
             </div>
           </div>
         </RevealSection>
       )}
 
-      {property.loQueNoSeVe && <LoQueNoSeVeSection data={property.loQueNoSeVe} />}
+      {property.loQueNoSeVe && <LoQueNoSeVeSection data={property.loQueNoSeVe} lang={lang} />}
 
       {property.gastos && property.gastos.length > 0 && (
         <RevealSection className={styles.gastosSection}>
           <div className={styles.gastosInner}>
-            <div style={{ marginBottom: '2rem' }}><p className={styles.eyebrow}>Gastos estimados</p></div>
+            <div style={{ marginBottom: '2rem' }}><p className={styles.eyebrow}>{t.secciones.gastosEstimados}</p></div>
             <div className={styles.gastosGrid}>{property.gastos.map((g: any, i: number) => (<div key={i} className={styles.gastoItem}><div className={styles.gastoIconWrap}>{gastoIcons[g.icono] || gastoIcons['otro']}</div><div className={styles.gastoInfo}><span className={styles.gastoConcepto}>{g.concepto}</span><span className={styles.gastoValor}>{g.valor}</span></div></div>))}</div>
           </div>
         </RevealSection>
@@ -995,43 +953,43 @@ export default function PropertyPage({ data }: { data: any }) {
       {property.inversion && <InversionSection data={property.inversion} />}
 
       <RevealSection className={styles.trustDocsSection}>
-        <div className={styles.trustDocsHeader}><p className={styles.eyebrow}>Recursos</p><h2 className={styles.sectionTitle}>Todo lo que necesita para evaluar con criterio.</h2></div>
+        <div className={styles.trustDocsHeader}><p className={styles.eyebrow}>{t.secciones.recursos}</p><h2 className={styles.sectionTitle}>{lang === 'en' ? 'Everything you need to evaluate with confidence.' : 'Todo lo que necesita para evaluar con criterio.'}</h2></div>
         <div className={extraStyles.recursosGrid}>
           <div>
-            <h3 className={styles.trustDocsColTitle}>Documentación</h3>
-            {property.descargables && property.descargables.length > 0 ? <DocumentationCards docs={property.descargables} /> : null}
+            <h3 className={styles.trustDocsColTitle}>{lang === 'en' ? 'Documentation' : 'Documentación'}</h3>
+            {property.descargables && property.descargables.length > 0 ? <DocumentationCards docs={property.descargables} t={t} lang={lang} /> : null}
           </div>
           <div>
-            <h3 className={styles.trustDocsColTitle}>Garantías</h3>
+            <h3 className={styles.trustDocsColTitle}>{lang === 'en' ? 'Assurances' : 'Garantías'}</h3>
             <div className={styles.garantiaAccordion}>
-              {['Documentación al día y verificada', 'Libre de gravámenes, impuestos e hipotecas', 'Título original y lista para escriturar', 'Proceso de compra acompañado y transparente'].map((item, i) => (
-                <details key={i} className={styles.garantiaAccItem}><summary className={styles.garantiaAccSummary}><span className={styles.garantiaAccCheck}><IconCheck /></span><span className={styles.garantiaAccLabel}>{item}</span><span className={styles.garantiaAccChevron}><svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}><path d="M6 9l6 6 6-6"/></svg></span></summary><div className={styles.garantiaAccBody}><p>Verificado y documentado como parte del proceso de compra acompañada.</p></div></details>
+              {(lang === 'en' ? ['Documentation current and verified', 'Free of liens and mortgages', 'Original title deed, ready for conveyance', 'Accompanied and transparent purchase process'] : ['Documentación al día y verificada', 'Libre de gravámenes, impuestos e hipotecas', 'Título original y lista para escriturar', 'Proceso de compra acompañado y transparente']).map((item, i) => (
+                <details key={i} className={styles.garantiaAccItem}><summary className={styles.garantiaAccSummary}><span className={styles.garantiaAccCheck}><IconCheck /></span><span className={styles.garantiaAccLabel}>{item}</span><span className={styles.garantiaAccChevron}><svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}><path d="M6 9l6 6 6-6"/></svg></span></summary><div className={styles.garantiaAccBody}><p>{lang === 'en' ? 'Verified and documented as part of the accompanied purchase process.' : 'Verificado y documentado como parte del proceso de compra acompañada.'}</p></div></details>
               ))}
             </div>
-            <h3 className={styles.trustDocsColTitle} style={{ marginTop: '2rem' }}>Calculadoras</h3>
+            <h3 className={styles.trustDocsColTitle} style={{ marginTop: '2rem' }}>{t.secciones.calculadoras}</h3>
             <div className={styles.calcGrid}>
-              <div className={styles.calcCard} style={{ cursor: 'default' }}><div className={styles.calcIconWrap}><svg width="28" height="28" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1}><path d="M12 2v4M8 4v2M16 4v2"/><rect x="3" y="8" width="18" height="14" rx="2"/><path d="M3 14h18"/><path d="M7 11h2M11 11h2M15 11h2M7 18h2M11 18h2"/></svg></div><span className={styles.calcLabel}>Potencial de renta</span><p style={{ fontSize: '0.72rem', lineHeight: 1.5, color: 'rgba(30,25,15,0.5)', marginTop: '0.5rem' }}>San Bernardino presenta una demanda creciente de alquiler vacacional premium. Solicite un informe personalizado de rentabilidad proyectada para esta propiedad.</p></div>
-              <button type="button" className={styles.calcCard} onClick={() => setCalculatorOpen('purchase')}><div className={styles.calcIconWrap}><svg width="28" height="28" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1}><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/><path d="M9 22V12h6v10"/></svg></div><span className={styles.calcLabel}>Calcula el coste de compra</span><span className={styles.calcArrow}>→</span></button>
+              <div className={styles.calcCard} style={{ cursor: 'default' }}><div className={styles.calcIconWrap}><svg width="28" height="28" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1}><path d="M12 2v4M8 4v2M16 4v2"/><rect x="3" y="8" width="18" height="14" rx="2"/><path d="M3 14h18"/><path d="M7 11h2M11 11h2M15 11h2M7 18h2M11 18h2"/></svg></div><span className={styles.calcLabel}>{lang === 'en' ? 'Rental potential' : 'Potencial de renta'}</span><p style={{ fontSize: '0.72rem', lineHeight: 1.5, color: 'rgba(200,180,140,0.7)', marginTop: '0.5rem' }}>{lang === 'en' ? 'San Bernardino has growing demand for premium holiday lets. Request a personalised yield projection for this property.' : 'San Bernardino presenta una demanda creciente de alquiler vacacional premium. Solicite un informe personalizado de rentabilidad proyectada para esta propiedad.'}</p></div>
+              <button type="button" className={styles.calcCard} onClick={() => setCalculatorOpen('purchase')}><div className={styles.calcIconWrap}><svg width="28" height="28" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1}><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/><path d="M9 22V12h6v10"/></svg></div><span className={styles.calcLabel}>{t.secciones.calculaCosteCompra}</span><span className={styles.calcArrow}>→</span></button>
             </div>
           </div>
         </div>
       </RevealSection>
 
-      {property.faq && <FAQSection items={property.faq} />}
+      {property.faq && <FAQSection items={property.faq} lang={lang} t={t} />}
 
       <RevealSection className={styles.memoria} id="memoria">
         <div className={styles.memoriaBalanced}>
           <div className={styles.memoriaBalancedLeft}>
-            <p className={styles.eyebrow}>Documentación</p>
-            <h2 className={styles.memoriaTitle}>Memoria de la Residencia.</h2>
-            <p className={styles.memoriaDesc}>No es un catálogo. Es un documento privado, elaborado con criterio y discreción.</p>
-            <p className={styles.memoriaMetaInline}>Documento privado · PDF exclusivo · envío inmediato</p>
-            <div className={styles.memoriaInlineForm}><BrochureForm agentEmail={property.agentEmail} compact={true} privacidadTexto={property.privacidadTexto} privacidadUrl={property.privacidadUrl} brochureUrl={property.brochure} /></div>
+            <p className={styles.eyebrow}>{lang === 'en' ? 'Documentation' : 'Documentación'}</p>
+            <h2 className={styles.memoriaTitle}>{lang === 'en' ? 'Residence dossier.' : 'Memoria de la Residencia.'}</h2>
+            <p className={styles.memoriaDesc}>{lang === 'en' ? 'Not a catalogue. A private document, prepared with care and discretion.' : 'No es un catálogo. Es un documento privado, elaborado con criterio y discreción.'}</p>
+            <p className={styles.memoriaMetaInline}>{lang === 'en' ? 'Private document · Exclusive PDF · Immediate delivery' : 'Documento privado · PDF exclusivo · envío inmediato'}</p>
+            <div className={styles.memoriaInlineForm}><BrochureForm agentEmail={property.agentEmail} compact={true} privacidadTexto={property.privacidadTexto} privacidadUrl={property.privacidadUrl} brochureUrl={property.brochure} t={t} lang={lang} /></div>
           </div>
           {property.brochurePages && property.brochurePages.length > 0 && (
             <div className={styles.memoriaBalancedRight} style={property.brochurePages.length === 1 ? { display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '0', background: '#f5f3ef', borderRadius: '0', overflow: 'visible' } : { display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '12px', padding: '2rem', background: '#f5f3ef', borderRadius: '6px', alignContent: 'center' }}>
               {property.brochurePages.map((page: string, i: number) => (
-                <img key={i} loading="lazy" src={page} alt={`Memoria página ${i + 1}`} style={property.brochurePages.length === 1 ? { width: '100%', height: '100%', objectFit: 'cover', borderRadius: '0' } : { width: '100%', height: 'auto', objectFit: 'contain', borderRadius: '3px', boxShadow: '0 4px 16px rgba(0,0,0,0.12)' }} />
+                <img key={i} loading="lazy" src={page} alt={`${lang === 'en' ? 'Dossier page' : 'Memoria página'} ${i + 1}`} style={property.brochurePages.length === 1 ? { width: '100%', height: '100%', objectFit: 'cover', borderRadius: '0' } : { width: '100%', height: 'auto', objectFit: 'contain', borderRadius: '3px', boxShadow: '0 4px 16px rgba(0,0,0,0.12)' }} />
               ))}
             </div>
           )}
@@ -1041,25 +999,25 @@ export default function PropertyPage({ data }: { data: any }) {
       {(agent.bio || agent.authority) && (
         <RevealSection className={styles.agentExpanded}>
           <div className={styles.agentExpandedInner}>
-            <div className={styles.agentExpandedPhoto}><img loading="lazy" src="https://larumstudio.com/wp-content/uploads/2026/07/William-Rowe-scaled.webp" alt="William Rowe" /></div>
+            <div className={styles.agentExpandedPhoto}><img loading="lazy" src="https://larumstudio.com/wp-content/uploads/2026/07/William-Rowe-scaled.webp" alt={agent.name || t.a11y.retratoAsesor} /></div>
             <div className={styles.agentExpandedInfo}>
-              <p className={styles.agentExpandedCargo}>Senior Advisor · Luxury Properties</p>
-              <h2 className={styles.agentExpandedName}>William Rowe</h2>
-              <p className={styles.agentExpandedBio}>No trabaja con volumen. Trabaja con criterio.</p>
-              <p className={styles.agentExpandedBio} style={{ marginTop: '1rem' }}>Representa solo un número selecto de residencias al año —aquellas que poseen carácter, ubicación privilegiada y una historia que merece ser contada con precisión. Cada una es tratada como una obra singular: estudiada, narrada y posicionada para encontrar al comprador que realmente la entiende.</p>
-              <p className={styles.agentExpandedBio} style={{ marginTop: '1rem' }}>Su enfoque combina conocimiento profundo del mercado de alto nivel, discreción absoluta y una capacidad única para transmitir el valor emocional de cada propiedad.</p>
-              <p className={styles.agentExpandedBio} style={{ marginTop: '1rem', fontStyle: 'italic', opacity: 0.7 }}>Idiomas: Inglés, Español, Alemán</p>
+              <p className={styles.agentExpandedCargo}>{agent.cargo || 'Senior Advisor · Luxury Properties'}</p>
+              <h2 className={styles.agentExpandedName}>{agent.name || 'William Rowe'}</h2>
+              <p className={styles.agentExpandedBio}>{agent.authority || (lang === 'en' ? 'Does not work in volume. Works by selection.' : 'No trabaja con volumen. Trabaja con criterio.')}</p>
+              <p className={styles.agentExpandedBio} style={{ marginTop: '1rem' }}>{agent.bio || ''}</p>
+              <p className={styles.agentExpandedBio} style={{ marginTop: '1rem' }}>{agent.bioExtendida || ''}</p>
+              <p className={styles.agentExpandedBio} style={{ marginTop: '1rem', fontStyle: 'italic', opacity: 0.7 }}>{lang === 'en' ? `Languages: ${(agent.idiomas || ['English','Spanish','German']).join(', ')}` : `Idiomas: ${(agent.idiomas || ['Inglés','Español','Alemán']).join(', ')}`}</p>
               <div className={styles.agentStatsRow}>
-                <div className={styles.agentStatItem}><div className={styles.agentStatVal}>40</div><div className={styles.agentStatLabel}>propiedades de lujo</div></div>
-                <div className={styles.agentStatItem}><div className={styles.agentStatVal}>US$125M</div><div className={styles.agentStatLabel}>ventas concretadas</div></div>
-                <div className={styles.agentStatItem}><div className={styles.agentStatVal}>5 años</div><div className={styles.agentStatLabel}>asesorando élite</div></div>
-                <div className={styles.agentStatItem}><div className={styles.agentStatVal}>3 de 10</div><div className={styles.agentStatLabel}>propiedades aceptadas</div></div>
+                <div className={styles.agentStatItem}><div className={styles.agentStatVal}>{agent.statsLogros?.[0]?.valor || '40'}</div><div className={styles.agentStatLabel}>{agent.statsLogros?.[0]?.label || (lang === 'en' ? 'luxury properties' : 'propiedades de lujo')}</div></div>
+                <div className={styles.agentStatItem}><div className={styles.agentStatVal}>{agent.statsLogros?.[1]?.valor || 'US$125M'}</div><div className={styles.agentStatLabel}>{agent.statsLogros?.[1]?.label || (lang === 'en' ? 'transaction volume' : 'ventas concretadas')}</div></div>
+                <div className={styles.agentStatItem}><div className={styles.agentStatVal}>{agent.statsLogros?.[2]?.valor || (lang === 'en' ? '5 years' : '5 años')}</div><div className={styles.agentStatLabel}>{agent.statsLogros?.[2]?.label || (lang === 'en' ? 'advising at the top' : 'asesorando élite')}</div></div>
+                <div className={styles.agentStatItem}><div className={styles.agentStatVal}>{agent.statsLogros?.[3]?.valor || (lang === 'en' ? '3 in 10' : '3 de 10')}</div><div className={styles.agentStatLabel}>{agent.statsLogros?.[3]?.label || (lang === 'en' ? 'properties accepted' : 'propiedades aceptadas')}</div></div>
               </div>
               <div className={styles.agentExpandedBtns}>
-                <a href={whatsappUrl} target="_blank" rel="noopener" className={styles.agentExpandedBtn}><IconWhatsapp /> WHATSAPP</a>
-                <a href={agent.email ? `mailto:${agent.email}` : '#'} className={styles.agentExpandedBtn}><IconMail /> EMAIL</a>
-                <a href="https://www.linkedin.com/company/larumstudiohq/" target="_blank" rel="noopener" className={styles.agentExpandedBtn}><IconLinkedin /> LINKEDIN</a>
-                <a href="https://www.instagram.com/larumstudio/" target="_blank" rel="noopener" className={styles.agentExpandedBtn}><IconInstagram /> INSTAGRAM</a>
+                <a href={whatsappUrl} target="_blank" rel="noopener" className={styles.agentExpandedBtn}><IconWhatsapp /> {t.contacto.whatsapp}</a>
+                <a href={agent.email ? `mailto:${agent.email}` : '#'} className={styles.agentExpandedBtn}><IconMail /> {t.contacto.email}</a>
+                <a href="https://www.linkedin.com/company/larumstudiohq/" target="_blank" rel="noopener" className={styles.agentExpandedBtn}><IconLinkedin /> {t.contacto.linkedin}</a>
+                <a href="https://www.instagram.com/larumstudio/" target="_blank" rel="noopener" className={styles.agentExpandedBtn}><IconInstagram /> {t.contacto.instagram}</a>
               </div>
             </div>
           </div>
@@ -1071,26 +1029,26 @@ export default function PropertyPage({ data }: { data: any }) {
       <RevealSection className={styles.contact} id="contacto">
         <div className={styles.contactClean}>
           <div className={styles.contactCleanLeft}>
-            <p className={styles.contactEyebrow}>Acceso Privado</p>
-            <h2 className={styles.contactTitle}>Visitas bajo cita.</h2>
+            <p className={styles.contactEyebrow}>{t.hero.accesoPrivado}</p>
+            <h2 className={styles.contactTitle}>{t.hero.visitasBajoCita}</h2>
             <div className={styles.contactEditorial}>
-              <p>Esta residencia no se exhibe en portales. Las visitas se coordinan de forma privada y bajo cita previa.</p>
-              <p className={extraStyles.urgenciaSutil}>Esta residencia se presenta a un número selecto de familias este trimestre · La agenda de visitas tiene disponibilidad limitada</p>
+              <p>{lang === 'en' ? 'This residence is not listed on portals. Viewings are arranged privately and by appointment.' : 'Esta residencia no se exhibe en portales. Las visitas se coordinan de forma privada y bajo cita previa.'}</p>
+              <p className={extraStyles.urgenciaSutil}>{lang === 'en' ? 'This residence is being presented to a select number of families this quarter · The viewing calendar has limited availability' : 'Esta residencia se presenta a un número selecto de familias este trimestre · La agenda de visitas tiene disponibilidad limitada'}</p>
             </div>
           </div>
-          <div className={styles.contactQrCenter}><img src="https://larumstudio.com/wp-content/uploads/2026/07/qr-code.png" alt="QR" style={{ width: '280px', height: '280px', maxWidth: '100%', objectFit: 'contain', display: 'block', margin: '0 auto' }} /><span className={styles.contactQrLabel} style={{ marginTop: '1.5rem', display: 'block' }}>Escanea para acceder</span></div>
+          <div className={styles.contactQrCenter}><img src="https://larumstudio.com/wp-content/uploads/2026/07/qr-code.png" alt="QR" style={{ width: '280px', height: '280px', maxWidth: '100%', objectFit: 'contain', display: 'block', margin: '0 auto' }} /><span className={styles.contactQrLabel} style={{ marginTop: '1.5rem', display: 'block' }}>{lang === 'en' ? 'Scan to access' : 'Escanea para acceder'}</span></div>
           <div className={styles.contactForm}>
-            {[{ name: 'nombre', placeholder: 'NOMBRE', type: 'text' }, { name: 'email', placeholder: 'EMAIL', type: 'email' }, { name: 'telefono', placeholder: 'TELÉFONO', type: 'tel' }, { name: 'fecha', placeholder: 'FECHA PREFERIDA', type: 'text' }].map(field => (
+            {[{ name: 'nombre', placeholder: lang === 'en' ? 'NAME' : 'NOMBRE', type: 'text' }, { name: 'email', placeholder: lang === 'en' ? 'EMAIL' : 'EMAIL', type: 'email' }, { name: 'telefono', placeholder: lang === 'en' ? 'PHONE' : 'TELÉFONO', type: 'tel' }, { name: 'fecha', placeholder: lang === 'en' ? 'PREFERRED DATE' : 'FECHA PREFERIDA', type: 'text' }].map(field => (
               <div key={field.name} className={styles.formField}><input type={field.type} name={field.name} placeholder={field.placeholder} value={form[field.name as keyof typeof form]} onChange={e => setForm({ ...form, [e.target.name]: e.target.value })} className={styles.formInput} /></div>
             ))}
-            <button type="button" className={styles.formBtn}>Solicitar agenda privada</button>
+            <button type="button" className={styles.formBtn}>{t.form.enviar}</button>
           </div>
         </div>
       </RevealSection>
 
       <footer className={styles.footer}>
         <div className={styles.footerInner}><div className={styles.footerCol}><div className={styles.footerLogo}>{property.footerTitulo || 'LARUM STUDIO'}</div><p className={styles.footerTagline}>{property.footerDesc || 'Micrositios inmobiliarios de alto impacto.'}</p></div><nav className={styles.footerNavGrid}>{navLinks.map(l => <a key={l.href} href={l.href} className={styles.footerLink}>{l.label}</a>)}</nav></div>
-        <div className={styles.footerBottom}><span>© 2026 {property.footerTitulo || 'Larum Studio'}. Todos los derechos reservados.</span></div>
+        <div className={styles.footerBottom}><span>{lang === 'en' ? `© 2026 ${property.footerTitulo || 'Larum Studio'}. All rights reserved.` : `© 2026 ${property.footerTitulo || 'Larum Studio'}. Todos los derechos reservados.`}</span></div>
       </footer>
 
       {/* WhatsApp integrado en sección de agente, no flotante */}
