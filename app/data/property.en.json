@@ -54,24 +54,28 @@
     "posterHero": "https://larumstudio.com/wp-content/uploads/2026/05/noche.webp",
     "posterVideo": "https://larumstudio.com/wp-content/uploads/2026/05/noche.webp",
     "videoHero": "https://larumstudio.com/wp-content/uploads/2026/05/Transicion-dia-a-noche-cinematica-Optimizada-Web.mp4",
-    "videoPresentacion": "https://larumstudio.com/wp-content/uploads/2026/07/videotour-SB-1080p-Castellano_Optimizado_Web.mp4",
-    "videoDuration": "1:19",
+    "videoPresentacion": "https://larumstudio.com/wp-content/uploads/2026/07/san-bernardino-1080p-Ingles_Optimizado_Web.mp4",
+    "videoDuration": "1:38",
     "videoMarkers": [
       {
         "time": "0:00",
         "label": "Arrival"
       },
       {
-        "time": "0:27",
-        "label": "Entertaining"
+        "time": "0:24",
+        "label": "Social areas"
       },
       {
-        "time": "0:35",
+        "time": "0:40",
         "label": "Wellness"
       },
       {
-        "time": "0:43",
+        "time": "0:49",
         "label": "Suites"
+      },
+      {
+        "time": "1:15",
+        "label": "Exterior"
       }
     ],
     "stats": {
