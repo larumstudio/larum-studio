@@ -20,16 +20,18 @@ interface Props {
   pathname?: string
   /** true dentro del menú móvil (más aire, separador superior) */
   mobile?: boolean
+  /** true para la variante que solo aparece en la barra top en móvil */
+  topbar?: boolean
 }
 
-export default function LanguageSwitch({ lang, pathname, mobile = false }: Props) {
+export default function LanguageSwitch({ lang, pathname, mobile = false, topbar = false }: Props) {
   const current =
     pathname ?? (typeof window !== 'undefined' ? window.location.pathname : '/')
 
   const esHref = altPath(current, 'es')
   const enHref = altPath(current, 'en')
 
-  const cls = `${extraStyles.langSwitch} ${mobile ? extraStyles.langSwitchMobile : ''}`
+  const cls = `${extraStyles.langSwitch} ${mobile ? extraStyles.langSwitchMobile : ''} ${topbar ? extraStyles.langSwitchTopbar : ''}`
 
   const opt = (active: boolean) =>
     `${extraStyles.langOption} ${active ? extraStyles.langOptionActive : ''}`

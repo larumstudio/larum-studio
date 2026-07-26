@@ -494,6 +494,7 @@ export default function PropertyPage({ data, lang = 'es' }: { data: any, lang?: 
           </div>
           <div className={styles.navRight}>
             <LanguageSwitch lang={lang} pathname={pathname || (lang === 'en' ? '/en' : '/')} />
+            <LanguageSwitch lang={lang} pathname={pathname || (lang === 'en' ? '/en' : '/')} topbar />
             <a href={whatsappUrl} className={styles.navCta} target="_blank" rel="noopener">{lang === 'en' ? 'Book a Viewing' : 'Agendar Visita'}</a>
             <button className={styles.menuBtn} onClick={() => setMenuOpen(!menuOpen)} aria-label={menuOpen ? (lang === 'en' ? 'Close menu' : 'Cerrar menú') : (lang === 'en' ? 'Open menu' : 'Abrir menú')}>
               {menuOpen ? <IconClose /> : <IconMenu />}

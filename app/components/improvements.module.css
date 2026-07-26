@@ -1763,8 +1763,21 @@
 }
 
 @media (max-width: 900px) {
-  .langSwitch:not(.langSwitchMobile) {
+  .langSwitch:not(.langSwitchMobile):not(.langSwitchTopbar) {
     display: none;
+  }
+}
+
+/* Variante topbar: solo visible en móvil, al lado del hamburger */
+.langSwitchTopbar {
+  display: none !important;
+}
+@media (max-width: 900px) {
+  .langSwitchTopbar {
+    display: inline-flex !important;
+    gap: 0.45rem;
+    font-size: 0.65rem;
+    margin-right: 0.25rem;
   }
 }
 
