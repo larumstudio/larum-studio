@@ -1,7 +1,11 @@
 'use client'
 import React, { useState, useEffect, useRef } from 'react'
+import { usePathname } from 'next/navigation'
 import styles from '../page.module.css'
 import CalculatorModal, { type CalculatorType } from './calculators/CalculatorModal'
+import { amenityLabel } from '../lib/i18n'
+import LanguageSwitch from './LanguageSwitch'
+import { useAdaptiveNavTone } from './AdaptiveNav'
 function useReveal() {
   const ref = useRef<HTMLElement>(null);
   const [visible, setVisible] = useState(false);
@@ -182,13 +186,21 @@ function AnalyticsScripts({ ga4Id, metaPixelId }: { ga4Id?: string; metaPixelId?
   );
 }
 
-const navLinks = [
+const navLinksEs = [
   { href: '#residencia', label: 'Residencia' },
   { href: '#galeria', label: 'Galería' },
-  { href: '#amenities', label: 'Amenities' },
+  { href: '#amenities', label: 'Comodidades' },
   { href: '#entorno', label: 'Entorno' },
   { href: '#ubicacion', label: 'Ubicación' },
   { href: '#contacto', label: 'Contacto' },
+]
+const navLinksEn = [
+  { href: '#residencia', label: 'Residence' },
+  { href: '#galeria', label: 'Gallery' },
+  { href: '#amenities', label: 'Amenities' },
+  { href: '#entorno', label: 'Area' },
+  { href: '#ubicacion', label: 'Location' },
+  { href: '#contacto', label: 'Contact' },
 ]
 
 const amenityIcons: Record<string, React.ReactNode> = {
@@ -293,13 +305,37 @@ function RevealSection({ children, className = '', as = 'section', id, style }: 
   return <Tag ref={reveal.ref as any} className={`${reveal.className} ${styles.stagger} ${className}`} id={id} style={style}>{children}</Tag>;
 }
 
-function BrochureForm({ agentEmail, compact, privacidadTexto, privacidadUrl }: { agentEmail: string, compact?: boolean, privacidadTexto?: string, privacidadUrl?: string }) {
+function BrochureForm({ agentEmail, compact, privacidadTexto, privacidadUrl, lang = 'es', brochureUrl }: { agentEmail: string, compact?: boolean, privacidadTexto?: string, privacidadUrl?: string, lang?: 'es' | 'en', brochureUrl?: string }) {
   const [submitted, setSubmitted] = React.useState(false)
   const [nombre, setNombre] = React.useState('')
   const [email, setEmail] = React.useState('')
   const [whatsapp, setWhatsapp] = React.useState('')
   const [loading, setLoading] = React.useState(false)
   const canSubmit = whatsapp.trim() !== ''
+
+  const T = lang === 'en' ? {
+    successTitle: 'We have received your request.',
+    successDesc: 'We will be in touch shortly with the full brochure.',
+    placeholderName: 'NAME',
+    placeholderWA: 'WHATSAPP *',
+    placeholderEmail: 'EMAIL',
+    submit: 'Download property brochure',
+    sending: 'Sending…',
+    privacyDefault: 'I agree to the Privacy Policy',
+    privacyLink: 'Privacy Policy',
+    subject: 'Brochure request',
+  } : {
+    successTitle: 'Hemos recibido su solicitud.',
+    successDesc: 'En breve nos pondremos en contacto con usted con la memoria completa.',
+    placeholderName: 'NOMBRE',
+    placeholderWA: 'WHATSAPP *',
+    placeholderEmail: 'EMAIL',
+    submit: 'Descargar brochure de la propiedad',
+    sending: 'Enviando…',
+    privacyDefault: 'Acepto la política de privacidad',
+    privacyLink: 'política de privacidad',
+    subject: 'Solicitud brochure',
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -310,20 +346,33 @@ function BrochureForm({ agentEmail, compact, privacidadTexto, privacidadUrl }: {
       fd.append('nombre', nombre || '—')
       fd.append('email', email || '—')
       fd.append('whatsapp', whatsapp)
-      fd.append('_subject', 'Solicitud Memoria')
+      fd.append('_subject', T.subject)
       fd.append('_captcha', 'false')
       fd.append('_template', 'table')
       await fetch(`https://formsubmit.co/${agentEmail}`, { method: 'POST', body: fd })
     } catch (_) {}
     setLoading(false)
     setSubmitted(true)
+    // Autodescarga del brochure al enviar el formulario
+    if (brochureUrl) {
+      try {
+        const a = document.createElement('a')
+        a.href = brochureUrl
+        a.target = '_blank'
+        a.rel = 'noopener noreferrer'
+        a.download = ''
+        document.body.appendChild(a)
+        a.click()
+        document.body.removeChild(a)
+      } catch (_) {}
+    }
   }
 
   if (submitted) {
     return (
-      <div className={styles.memoriaSuccess}>
-        <p className={styles.memoriaSuccessTitle}>Solicitud recibida.</p>
-        <p className={styles.memoriaSuccessDesc}>Te contactamos en las próximas horas con la memoria completa.</p>
+      <div className={styles.memoriaSuccess} role="status" aria-live="polite">
+        <p className={styles.memoriaSuccessTitle}>{T.successTitle}</p>
+        <p className={styles.memoriaSuccessDesc}>{T.successDesc}</p>
       </div>
     )
   }
@@ -332,30 +381,43 @@ function BrochureForm({ agentEmail, compact, privacidadTexto, privacidadUrl }: {
     <form className={compact ? styles.memoriaFormCompact : styles.memoriaFormWrap} onSubmit={handleSubmit}>
       <div className={styles.memoriaFormRow}>
         <div className={styles.formField}>
-          <input className={styles.formInput} type="text" placeholder="NOMBRE" value={nombre} onChange={e => setNombre(e.target.value)} />
+          <input className={styles.formInput} type="text" placeholder={T.placeholderName} value={nombre} onChange={e => setNombre(e.target.value)} />
         </div>
         <div className={styles.formField}>
-          <input className={styles.formInput} type="tel" placeholder="WHATSAPP *" value={whatsapp} onChange={e => setWhatsapp(e.target.value)} />
+          <input className={styles.formInput} type="tel" placeholder={T.placeholderWA} value={whatsapp} onChange={e => setWhatsapp(e.target.value)} />
         </div>
       </div>
       <div className={styles.formField}>
-        <input className={styles.formInput} type="email" placeholder="EMAIL" value={email} onChange={e => setEmail(e.target.value)} />
+        <input className={styles.formInput} type="email" placeholder={T.placeholderEmail} value={email} onChange={e => setEmail(e.target.value)} />
       </div>
       <div className={styles.privacidadWrap}>
           <input type="checkbox" className={styles.privacidadCheck} id="privacidad-brochure" />
           <label htmlFor="privacidad-brochure" className={styles.privacidadLabel}>
-            {privacidadUrl ? (
-              <>{(privacidadTexto || 'Acepto la ').replace('política de privacidad', '').trim()} <a href={privacidadUrl} target="_blank" rel="noopener">política de privacidad</a></>
-            ) : (privacidadTexto || 'Acepto la política de privacidad')}
+            {(() => {
+              // Extrae "política de privacidad" / "Privacy Policy" del texto y lo convierte en enlace,
+              // preservando el resto del copy (incluidos signos de puntuación finales).
+              const raw = (privacidadTexto || T.privacyDefault).trim()
+              const linkRegex = /(política de privacidad|Privacy Policy)/i
+              const m = raw.match(linkRegex)
+              if (!privacidadUrl || !m) return raw
+              const [before, after] = raw.split(m[0])
+              return (
+                <>
+                  {before}
+                  <a href={privacidadUrl} target="_blank" rel="noopener">{m[0]}</a>
+                  {after}
+                </>
+              )
+            })()}
           </label>
         </div>
       <button type="submit" className={styles.memoriaBtn} disabled={loading || !canSubmit} style={{ opacity: canSubmit ? 1 : 0.45 }}>
-        {loading ? 'Enviando…' : <><IconDownload /> Descargar Brochure de la Propiedad</>}
+        {loading ? T.sending : <><IconDownload /> {T.submit}</>}
       </button>
     </form>
   )
 }
-export default function PropertyPage({ data }: { data: any }) {
+export default function PropertyPage({ data, lang = 'es' }: { data: any, lang?: 'es' | 'en' }) {
   const [menuOpen, setMenuOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const [galleryOpen, setGalleryOpen] = useState(false)
@@ -363,6 +425,12 @@ export default function PropertyPage({ data }: { data: any }) {
   const [previewIndex, setPreviewIndex] = useState<number | null>(null)
   const [form, setForm] = useState({ nombre: '', email: '', telefono: '', fecha: '' })
   const [calculatorOpen, setCalculatorOpen] = useState<CalculatorType | null>(null)
+  const [activeMarker, setActiveMarker] = useState<number>(0)
+  const [formStatus, setFormStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
+  const videoTourRef = useRef<HTMLVideoElement | null>(null)
+  const pathname = usePathname()
+  const navTone = useAdaptiveNavTone(80)
+  const navLinks = lang === 'en' ? navLinksEn : navLinksEs
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 60)
@@ -370,8 +438,34 @@ export default function PropertyPage({ data }: { data: any }) {
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
+  // Marcador activo del video: se recalcula en cada timeupdate
+  useEffect(() => {
+    const v = videoTourRef.current
+    const markers = data?.property?.videoMarkers as any[] | undefined
+    if (!v || !markers || markers.length === 0) return
+    const secondsOf = (m: any): number => {
+      if (typeof m.seconds === 'number') return m.seconds
+      const parts = String(m.time || '0:00').split(':').map((n: string) => parseInt(n, 10) || 0)
+      return parts.length === 2 ? parts[0] * 60 + parts[1] : parts[0]
+    }
+    const onTime = () => {
+      const t = v.currentTime
+      let idx = 0
+      for (let i = 0; i < markers.length; i++) {
+        if (t + 0.25 >= secondsOf(markers[i])) idx = i
+      }
+      setActiveMarker(idx)
+    }
+    v.addEventListener('timeupdate', onTime)
+    return () => v.removeEventListener('timeupdate', onTime)
+  }, [data])
+
   const { property, agent } = data
-  const waMensaje = encodeURIComponent(`Hola, vi la propiedad ${property.name} y quiero más información`)
+  const waMensaje = encodeURIComponent(
+    lang === 'en'
+      ? `Hello, I saw the ${property.name} listing and would like more information.`
+      : `Hola, vi la propiedad ${property.name} y quiero más información`
+  )
   const whatsappUrl = agent.whatsapp ? `https://wa.me/${agent.whatsapp}?text=${waMensaje}` : '#'
 
   return (
@@ -381,21 +475,27 @@ export default function PropertyPage({ data }: { data: any }) {
     type={calculatorOpen}
     onClose={() => setCalculatorOpen(null)}
     defaultPrice={property?.price}
+    lang={lang}
   />
 )}
 
       <PageLoader />
 
       {/* NAVBAR */}
-      <nav className={`${styles.navbar} ${scrolled ? styles.navbarScrolled : ''}`}>
+      <nav
+        className={`${styles.navbar} ${scrolled ? styles.navbarScrolled : ''}`}
+        data-adaptive-nav
+        data-tone={navTone}
+      >
         <div className={styles.navInner}>
           <a href="#residencia" className={styles.navLogo}>{property.footerTitulo || 'LARUM STUDIO'}</a>
           <div className={styles.navLinks}>
             {navLinks.map(l => <a key={l.href} href={l.href} className={styles.navLink}>{l.label}</a>)}
           </div>
           <div className={styles.navRight}>
-            <a href={whatsappUrl} className={styles.navCta} target="_blank" rel="noopener">Agendar Visita</a>
-            <button className={styles.menuBtn} onClick={() => setMenuOpen(!menuOpen)}>
+            <LanguageSwitch lang={lang} pathname={pathname || (lang === 'en' ? '/en' : '/')} />
+            <a href={whatsappUrl} className={styles.navCta} target="_blank" rel="noopener">{lang === 'en' ? 'Book a Viewing' : 'Agendar Visita'}</a>
+            <button className={styles.menuBtn} onClick={() => setMenuOpen(!menuOpen)} aria-label={menuOpen ? (lang === 'en' ? 'Close menu' : 'Cerrar menú') : (lang === 'en' ? 'Open menu' : 'Abrir menú')}>
               {menuOpen ? <IconClose /> : <IconMenu />}
             </button>
           </div>
@@ -405,13 +505,14 @@ export default function PropertyPage({ data }: { data: any }) {
       {menuOpen && (
         <div className={styles.mobileMenu}>
           {navLinks.map(l => <a key={l.href} href={l.href} onClick={() => setMenuOpen(false)}>{l.label}</a>)}
+          <LanguageSwitch lang={lang} pathname={pathname || (lang === 'en' ? '/en' : '/')} mobile />
         </div>
       )}
 
       {/* HERO — CLEAN CENTERED */}
       <section id="residencia" className={styles.hero}>
         {property.videoHero ? (
-          <video className={styles.heroBgVideo} autoPlay muted loop playsInline poster={property.posterHero} preload="auto" key={property.videoHero}>
+          <video className={styles.heroBgVideo} autoPlay muted loop playsInline poster={property.posterHero} preload="metadata" key={property.videoHero}>
             <source src={property.videoHero} type="video/mp4" />
           </video>
         ) : (
@@ -429,9 +530,9 @@ export default function PropertyPage({ data }: { data: any }) {
             </div>
           )}
           <div className={`${styles.heroCenteredBtns} ${styles.heroEnter} ${styles.heroEnter3}`}>
-            <a href={whatsappUrl} target="_blank" rel="noopener" className={styles.heroCenteredBtnPrimary}>SOLICITAR AGENDA PRIVADA</a>
+            <a href={whatsappUrl} target="_blank" rel="noopener" className={styles.heroCenteredBtnPrimary}>{lang === 'en' ? 'REQUEST A PRIVATE VIEWING' : 'SOLICITAR AGENDA PRIVADA'}</a>
             {property.brochure && (
-              <a href="#memoria" className={styles.heroCenteredBtnSecondary}>DESCARGAR BROCHURE →</a>
+              <a href="#memoria" className={styles.heroCenteredBtnSecondary}>{lang === 'en' ? 'DOWNLOAD BROCHURE →' : 'DESCARGAR BROCHURE →'}</a>
             )}
           </div>
           <div className={`${styles.heroScrollHint} ${styles.heroEnter} ${styles.heroEnter4}`}>
@@ -445,12 +546,12 @@ export default function PropertyPage({ data }: { data: any }) {
       <RevealSection className={styles.statsRow}>
         <div className={styles.statsRowInner}>
           {[
-            { value: property.stats.terreno || '3.900 m²', label: 'Terreno' },
-            { value: property.stats.construidos || '800 m²', label: 'Construidos' },
-            { value: property.stats.dormitorios || '6', label: 'Dormitorios' },
-            { value: property.stats.banos || '5', label: 'Baños' },
-            { value: property.stats.cocheras || '4', label: 'Aparcamientos' },
-            { value: property.stats.ano || '2018', label: 'Año de Construcción' },
+            { value: property.stats.terreno, label: lang === 'en' ? 'Plot' : 'Terreno' },
+            { value: property.stats.construidos, label: lang === 'en' ? 'Built area' : 'Construidos' },
+            { value: property.stats.dormitorios, label: lang === 'en' ? 'Bedrooms' : 'Dormitorios' },
+            { value: property.stats.banos, label: lang === 'en' ? 'Bathrooms' : 'Baños' },
+            { value: property.stats.cocheras || '4', label: lang === 'en' ? 'Garage' : 'Aparcamientos' },
+            { value: property.stats.ano || '2018', label: lang === 'en' ? 'Built' : 'Año de Construcción' },
           ].map((st, i) => (
             <div key={i} className={styles.statsRowItem}>
               <div className={styles.statsRowValue}>{st.value}</div>
@@ -469,18 +570,24 @@ export default function PropertyPage({ data }: { data: any }) {
               <div className={styles.posIntroNum}>
                 <span>01</span>
                 <span className={styles.posIntroLine} />
-                <span className={styles.posIntroLabel}>Porque algunos lugares no se eligen. Se reconocen.</span>
+                <span className={styles.posIntroLabel}>{lang === 'en' ? 'BECAUSE SOME PLACES ARE NOT CHOSEN. THEY ARE RECOGNISED.' : 'PORQUE ALGUNOS LUGARES NO SE ELIGEN. SE RECONOCEN.'}</span>
               </div>
               <h2 className={styles.posIntroTitle}>
-                En San Bernardino, las casas frente al lago rara vez se anuncian: se transmiten entre quienes ya pertenecen al lugar.
+                {property.positioning.paragraphs?.[0]}
               </h2>
-              <p className={styles.posIntroItalicLine}>Esta es una de ellas.</p>
+              <p className={styles.posIntroItalicLine}>{lang === 'en' ? 'This is one of them.' : 'Esta es una de ellas.'}</p>
             </div>
             <div className={styles.posIntroRight}>
-              <p className={styles.posIntroPara}>No fue hecha para ser vista. Fue hecha para ser vivida. Un lugar donde el lago no es paisaje, sino presencia constante. Donde las mañanas no tienen prisa y las noches se extienden sin fin.</p>
-              <p className={styles.posIntroPara}>Aquí no se viene a descansar de la vida. Se viene a recordarla y conectar con ella. A habitar con calma, con espacio y con la certeza de que ya no hay nada que demostrar.</p>
+              <p className={styles.posIntroPara}>{lang === 'en'
+                ? 'It was not built to be seen. It was built to be lived in. A place where the lake is not scenery, but a constant presence. Where mornings are unhurried and evenings stretch on without end.'
+                : 'No fue hecha para ser vista. Fue hecha para ser vivida. Un lugar donde el lago no es paisaje, sino presencia constante. Donde las mañanas no tienen prisa y las noches se extienden sin fin.'}</p>
+              <p className={styles.posIntroPara}>{lang === 'en'
+                ? 'One does not come here to rest from life. One comes to remember it and reconnect. To dwell in calm, in space, and with the certainty that there is nothing left to prove.'
+                : 'Aquí no se viene a descansar de la vida. Se viene a recordarla y a reconectar con ella. A habitar con calma, con espacio y con la certeza de que ya no hay nada que demostrar.'}</p>
               <blockquote className={styles.posQuoteBlock}>
-                <p>«Las cosas verdaderamente valiosas son aquellas que no están a la venta para cualquiera.»</p>
+                <p>{lang === 'en'
+                  ? '"The truly valuable things are those that are not for sale to just anyone."'
+                  : '«Las cosas verdaderamente valiosas son aquellas que no están a la venta para cualquiera.»'}</p>
               </blockquote>
             </div>
           </div>
@@ -488,16 +595,15 @@ export default function PropertyPage({ data }: { data: any }) {
       )}
 
 
-      {/* STORY */}
+      {/* STORY (renderizado desde JSON) */}
       <RevealSection className={styles.story} id="narrativa">
         <div className={styles.storyInner}>
           <div className={styles.storyLeft}>
-            <p className={styles.eyebrow}>La Historia</p>
-            <h2 className={styles.storyTitle}>Lo que se siente al llegar</h2>
-            <p className={styles.storyDesc}>Al cruzar el portón, el mundo se queda afuera. Solo queda el lago, reflejado entre los árboles. Un umbral que muy pocos tienen el privilegio de atravesar.</p>
-            <p className={styles.storyDesc} style={{ marginTop: '1.25rem' }}>San Bernardino siempre se guardó en silencio. Esta casa forma parte de esa herencia: un lugar pensado no para impresionar, sino para que uno pueda volver a estar.</p>
-            <p className={styles.storyDesc} style={{ marginTop: '1.25rem' }}>Aquí el amanecer no se celebra. Se vive. El espacio no presiona. Contiene. Y por primera vez en mucho tiempo, no hace falta explicarse.</p>
-            <p className={styles.storyDesc} style={{ marginTop: '1.25rem' }}>Cruzar ese portón no es llegar a una residencia.<br />Es recordar que todavía existen refugios que no se anuncian.</p>
+            <p className={styles.eyebrow}>{lang === 'en' ? 'The Story' : 'La Historia'}</p>
+            <h2 className={styles.storyTitle}>{property.story?.title}</h2>
+            {property.story?.paragraphs?.map((p: string, i: number) => (
+              <p key={i} className={styles.storyDesc} style={i > 0 ? { marginTop: '1.25rem' } : {}}>{p}</p>
+            ))}
           </div>
           <div className={styles.storyRight}>
             <div className={styles.storyImgWrap}>
@@ -512,49 +618,87 @@ export default function PropertyPage({ data }: { data: any }) {
         <RevealSection className={styles.videoFeature} id="video-tour">
           <div className={styles.videoFeatureInner}>
             <div className={styles.videoFeatureHeader}>
-              <p className={styles.eyebrow}>Recorrido</p>
-              <h2 className={styles.videoFeatureTitle}>Adéntrate en el viaje</h2>
+              <p className={styles.eyebrow}>{lang === 'en' ? 'Tour' : 'Recorrido'}</p>
+              <h2 className={styles.videoFeatureTitle}>{lang === 'en' ? 'Walk through every room.' : 'Conozca la residencia.'}</h2>
             </div>
             <div className={styles.videoFeatureFrame}>
               <div className={styles.videoCornerTL} /><div className={styles.videoCornerTR} />
               <div className={styles.videoCornerBL} /><div className={styles.videoCornerBR} />
-              {/* Cambio 1: Video poster URL fija */}
-              <video className={styles.videoFeatureEl} controls poster="https://larumstudio.com/wp-content/uploads/2026/04/unnamed-1.webp" preload="none" key={property.videoPresentacion}>
+              <video
+                ref={videoTourRef}
+                className={styles.videoFeatureEl}
+                controls
+                poster="https://larumstudio.com/wp-content/uploads/2026/04/unnamed-1.webp"
+                preload="metadata"
+                key={property.videoPresentacion}
+              >
                 <source src={property.videoPresentacion} type="video/mp4" />
               </video>
               <div className={styles.videoFeatureMeta}>
-                <span className={styles.videoFeatureLabel}>Recorrido completo · 4K</span>
-                <span className={styles.videoFeatureDur}>{property.videoDuration || '1:19'} min</span>
+                <span className={styles.videoFeatureLabel}>
+                  {lang === 'en'
+                    ? `Full tour · 4K · ${(property.videoDuration || '1:38').replace(/^(\d+):(\d+)$/, '$1 min $2 sec')}`
+                    : `Recorrido completo · 4K · ${(property.videoDuration || '1:23').replace(/^(\d+):(\d+)$/, '$1 min $2 s')}`}
+                </span>
               </div>
             </div>
             {property.videoMarkers && property.videoMarkers.length > 0 && (
-              <div className={styles.videoMarkers}>
-                {property.videoMarkers.map((m: any, i: number) => (
-                  <div key={i} className={styles.videoMarker}>
-                    <span className={styles.videoMarkerTime}>{m.time}</span>
-                    <span className={styles.videoMarkerLabel}>{m.label}</span>
-                  </div>
-                ))}
+              <div
+                className={styles.videoMarkers}
+                style={{
+                  display: 'grid',
+                  gridTemplateColumns: `repeat(${property.videoMarkers.length}, minmax(0, 1fr))`,
+                  gap: '0.5rem',
+                }}
+              >
+                {property.videoMarkers.map((m: any, i: number) => {
+                  const seconds = typeof m.seconds === 'number'
+                    ? m.seconds
+                    : (() => {
+                        const parts = String(m.time || '0:00').split(':').map((n: string) => parseInt(n, 10) || 0);
+                        return parts.length === 2 ? parts[0] * 60 + parts[1] : parts[0];
+                      })();
+                  const active = activeMarker === i;
+                  return (
+                    <button
+                      key={i}
+                      type="button"
+                      className={styles.videoMarker}
+                      aria-label={`${lang === 'en' ? 'Go to' : 'Ir a'} ${m.time} — ${m.label}`}
+                      aria-current={active ? 'true' : undefined}
+                      onClick={() => {
+                        const v = videoTourRef.current;
+                        if (!v) return;
+                        v.currentTime = seconds;
+                        v.play().catch(() => {});
+                      }}
+                      style={{
+                        background: 'none',
+                        border: 'none',
+                        cursor: 'pointer',
+                        textAlign: 'left',
+                        padding: 0,
+                        opacity: active ? 1 : 0.75,
+                      }}
+                    >
+                      <span className={styles.videoMarkerTime}>{m.time}</span>
+                      <span className={styles.videoMarkerLabel}>{m.label}</span>
+                    </button>
+                  );
+                })}
               </div>
             )}
           </div>
         </RevealSection>
       )}
 
-      {/* FEATURES */}
+      {/* FEATURES (renderizado desde JSON) */}
       <RevealSection className={styles.features}>
         <div className={styles.featuresInner}>
-          <p className={styles.eyebrow}>Por qué esta casa, y no otra</p>
-          <h2 className={styles.sectionTitleH2}>El lugar que eliges cuando ya no buscas más</h2>
+          <p className={styles.eyebrow}>{property.featuresGrid?.eyebrow || (lang === 'en' ? 'Why this house, and not another' : 'Por qué esta casa, y no otra')}</p>
+          <h2 className={styles.sectionTitleH2}>{property.featuresGrid?.title || (lang === 'en' ? 'The place you choose when you have stopped looking' : 'El lugar que se elige cuando ya no se busca más')}</h2>
           <div className={styles.featuresGrid}>
-            {[
-              { icono: 'Hoja', title: 'Una piscina infinity que se integra al paisaje', desc: 'El agua parece continuar hasta el lago. Un espacio de descanso privado donde la naturaleza no se observa, sino que se vive como parte del día a día.' },
-              { icono: 'Escudo', title: 'Privacidad verdadera', desc: 'Un entorno que te envuelve y te protege. Sin vecinos cercanos ni construcciones que invadan tu horizonte. Un refugio donde la intimidad es real, no prometida.' },
-              { icono: 'Casa', title: 'Libertad dentro de la casa', desc: 'Espacios independientes para cada momento de la vida: intimidad familiar, recepción de invitados y zonas de puro descanso. Cada ambiente tiene su propio propósito.' },
-              { icono: 'Ubicacion', title: 'Dos mundos sin renunciar a ninguno', desc: 'El lago por la tarde. Asunción cuando lo necesitas. La distancia ideal entre el descanso profundo y la vida activa, sin sacrificar acceso ni comodidad.' },
-              { icono: 'Llave', title: 'Cero obras. Cero esperas.', desc: 'Una residencia completamente lista para habitar desde el primer día. La inversión ya está hecha. Solo queda disfrutarla sin plazos ni imprevistos.' },
-              { icono: 'Diamante', title: 'Un enclave que resiste el paso del tiempo', desc: 'San Bernardino es de las pocas zonas que no se han masificado ni perdido su carácter. Comprar aquí es apostar por un estilo de vida que perdura.' },
-            ].map((f, i) => (
+            {(property.featuresGrid?.items || []).map((f: any, i: number) => (
               <div key={i} className={styles.featureItem}>
                 <div className={styles.featureIcon}>{featureIconByName[f.icono] || featureIcons[i] || featureIcons[0]}</div>
                 <h4 className={styles.featureTitle}>{f.title}</h4>
@@ -570,9 +714,9 @@ export default function PropertyPage({ data }: { data: any }) {
         <div className={styles.galleryInner}>
           <div className={styles.galleryHeader}>
             <div>
-              <p className={styles.eyebrow}>Galería</p>
-              <h2 className={styles.galleryTitle}>Momentos para enamorarte</h2>
-              <p className={styles.gallerySubtitle}>Una secuencia visual que sigue el recorrido natural de la propiedad: impacto, atmósfera y detalles.</p>
+              <p className={styles.eyebrow}>{lang === 'en' ? 'Gallery' : 'Galería'}</p>
+              <h2 className={styles.galleryTitle}>{lang === 'en' ? 'Spaces that speak before you do.' : 'Momentos para enamorarse.'}</h2>
+              <p className={styles.gallerySubtitle}>{lang === 'en' ? 'A visual sequence that follows the natural rhythm of the property — impact, atmosphere and detail.' : 'Una secuencia visual que sigue el recorrido natural de la propiedad: impacto, atmósfera y detalle.'}</p>
             </div>
           </div>
           {property.gallery && property.gallery.length > 0 && (
@@ -600,7 +744,7 @@ export default function PropertyPage({ data }: { data: any }) {
                 {property.gallery.slice(1, 5).map((img: any, i: number) => (
                   <div key={i} className={styles.galleryThumb} onClick={() => setPreviewIndex(i)}>
                     {img.isVideo ? (
-                      <video src={img.url} autoPlay muted loop playsInline />
+                      <video src={img.url} autoPlay muted loop playsInline poster={property.gallery[0]?.url} />
                     ) : (
                       <img loading="lazy" src={img.url} alt={img.caption} />
                     )}
@@ -609,7 +753,7 @@ export default function PropertyPage({ data }: { data: any }) {
               </div>
               <div className={styles.galleryCta}>
                 <button className={styles.galleryMoreBtn} onClick={() => setGalleryOpen(true)}>
-                  Ver galería completa <IconArrow />
+                  {lang === 'en' ? 'View full gallery' : 'Ver galería completa'} <IconArrow />
                 </button>
               </div>
             </div>
@@ -622,7 +766,7 @@ export default function PropertyPage({ data }: { data: any }) {
         <div className={styles.galleryPanel} onClick={() => setGalleryOpen(false)}>
           <div className={styles.galleryPanelInner} onClick={e => e.stopPropagation()}>
             <div className={styles.galleryPanelHeader}>
-              <p className={styles.galleryPanelTitle}>Galería completa · {property.gallery.length} imágenes</p>
+              <p className={styles.galleryPanelTitle}>{lang === 'en' ? `Full gallery · ${property.gallery.length} images` : `Galería completa · ${property.gallery.length} imágenes`}</p>
               <button className={styles.galleryPanelClose} onClick={() => setGalleryOpen(false)}><IconClose /></button>
             </div>
             <div className={styles.galleryPanelGrid}>
@@ -666,10 +810,10 @@ export default function PropertyPage({ data }: { data: any }) {
             {previewIndex > 0 && <button className={styles.lightboxPrev} onClick={e => { e.stopPropagation(); setPreviewIndex(previewIndex - 1) }}>←</button>}
             {isCtaSlide ? (
               <div className={styles.lightboxCtaSlide} onClick={e => e.stopPropagation()}>
-                <p className={styles.lightboxCtaEyebrow}>Hay mucho más por descubrir</p>
-                <h3 className={styles.lightboxCtaTitle}>{property.gallery.length} momentos en total</h3>
+                <p className={styles.lightboxCtaEyebrow}>{lang === 'en' ? 'There is much more to discover' : 'Hay mucho más por descubrir'}</p>
+                <h3 className={styles.lightboxCtaTitle}>{lang === 'en' ? `${property.gallery.length} moments in total` : `${property.gallery.length} momentos en total`}</h3>
                 <button className={styles.lightboxCtaBtn} onClick={() => { setPreviewIndex(null); setGalleryOpen(true) }}>
-                  Ver galería completa <IconArrow />
+                  {lang === 'en' ? 'View full gallery' : 'Ver galería completa'} <IconArrow />
                 </button>
               </div>
             ) : (
@@ -687,25 +831,87 @@ export default function PropertyPage({ data }: { data: any }) {
         )
       })()}
 
-      {/* AMENITIES */}
-      {property.amenities && property.amenities.length > 0 && (
-        <RevealSection className={styles.amenities} id="amenities">
-          <div className={styles.amenitiesLeft}>
-            <p className={styles.eyebrow}>Amenities</p>
-            <h2 className={styles.amenitiesTitle}>Bienestar en<br />cada detalle.</h2>
-            <p className={styles.amenitiesDesc}>Espacios diseñados para disfrutar en familia, recibir con elegancia y relajarse en completo confort.</p>
-            <div className={styles.amenitiesIcons}>
-              {property.amenities.map((label: string, i: number) => (
-                <div key={i} className={styles.amenityItem}>
-                  <div className={styles.amenityIcon}>{amenityIcons[label] || defaultIcon}</div>
-                  <span className={styles.amenityLabel}>{label}</span>
-                </div>
+      {/* AMENITIES — con categorías BIENESTAR / EXTERIOR / SERVICIOS */}
+      {property.amenities && property.amenities.length > 0 && (() => {
+        const cats = property.amenitiesCategorias
+        const catLabels: Record<string, { es: string, en: string }> = {
+          bienestar: { es: 'BIENESTAR', en: 'WELLNESS' },
+          exterior:  { es: 'EXTERIOR',  en: 'OUTDOORS' },
+          servicios: { es: 'SERVICIOS', en: 'SERVICES' },
+        }
+        const groups = cats
+          ? (['bienestar','exterior','servicios'] as const)
+              .filter(k => Array.isArray(cats[k]) && cats[k].length > 0)
+              .map(k => ({ key: k, label: catLabels[k][lang], items: cats[k] as string[] }))
+          : [{ key: 'all', label: lang === 'en' ? 'AMENITIES' : 'COMODIDADES', items: property.amenities as string[] }]
+        return (
+          <RevealSection className={styles.amenities} id="amenities">
+            <div className={styles.amenitiesLeft}>
+              <p className={styles.eyebrow}>{lang === 'en' ? 'Amenities' : 'Comodidades'}</p>
+              <h2 className={styles.amenitiesTitle}>{lang === 'en' ? 'Every comfort, considered.' : 'Bienestar en cada detalle.'}</h2>
+              <p className={styles.amenitiesDesc}>{lang === 'en' ? 'Spaces designed for family life, for entertaining with ease, and for genuine rest in complete comfort.' : 'Espacios diseñados para disfrutar en familia, recibir con elegancia y relajarse en completo confort.'}</p>
+              <div className={styles.amenitiesCategoriasWrap}>
+                {groups.map((g) => (
+                  <div key={g.key} className={styles.amenitiesCategoria}>
+                    <div className={styles.amenitiesCatHeader}>
+                      <span className={styles.amenitiesCatLabel}>{g.label}</span>
+                      <span className={styles.amenitiesCatCount}>{String(g.items.length).padStart(2, '0')}</span>
+                    </div>
+                    <div className={styles.amenitiesIcons}>
+                      {g.items.map((key: string, i: number) => {
+                        const label = amenityLabel(key, lang)
+                        const iconKey = key.toUpperCase()
+                        return (
+                          <div key={i} className={styles.amenityItem}>
+                            <div className={styles.amenityIcon}>{amenityIcons[iconKey] || amenityIcons[key] || defaultIcon}</div>
+                            <span className={styles.amenityLabel}>{label}</span>
+                          </div>
+                        )
+                      })}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className={styles.amenitiesRight}>
+              <img loading="lazy" src={property.amenitiesImage || property.posterHero} alt="Amenities" />
+              <div className={styles.amenitiesImgOverlay} />
+            </div>
+          </RevealSection>
+        )
+      })()}
+
+      {/* UN DÍA EN ESTA CASA — timeline */}
+      {property.unDiaEnCasa && property.unDiaEnCasa.length > 0 && (
+        <RevealSection className={styles.unDiaEnCasa} id="un-dia">
+          <div className={styles.unDiaInner}>
+            <div className={styles.unDiaHeader}>
+              <p className={styles.eyebrow}>{lang === 'en' ? 'A day in this house' : 'Un día en esta casa'}</p>
+              <h2 className={styles.unDiaTitle}>
+                {lang === 'en'
+                  ? 'Six moments that tell you everything.'
+                  : 'Del primer amanecer al final del día.'}
+              </h2>
+              <p className={styles.unDiaSubtitle}>
+                {lang === 'en'
+                  ? 'Six moments that show what living here actually feels like.'
+                  : 'Seis momentos que reflejan lo que significa vivir aquí.'}
+              </p>
+            </div>
+            <div className={styles.unDiaGrid}>
+              {property.unDiaEnCasa.map((m: any, i: number) => (
+                <article key={i} className={styles.unDiaCard}>
+                  <div className={styles.unDiaCardImg}>
+                    <img loading="lazy" src={m.imagen} alt={m.titulo} />
+                  </div>
+                  <div className={styles.unDiaCardBody}>
+                    <span className={styles.unDiaHora}>{m.hora}</span>
+                    <h3 className={styles.unDiaCardTitle}>{m.titulo}</h3>
+                    <p className={styles.unDiaCardDesc}>{m.desc}</p>
+                  </div>
+                </article>
               ))}
             </div>
-          </div>
-          <div className={styles.amenitiesRight}>
-            <img loading="lazy" src={property.amenitiesImage || property.posterHero} alt="Amenities" />
-            <div className={styles.amenitiesImgOverlay} />
           </div>
         </RevealSection>
       )}
@@ -724,8 +930,8 @@ export default function PropertyPage({ data }: { data: any }) {
                 {(property.lifestyle.introParagraphs || [property.lifestyle.intro]).filter(Boolean).map((para: string, i: number) => (
                   <p key={i} className={styles.lifestyleIntro} style={i > 0 ? { marginTop: '1.25rem' } : {}}>{para}</p>
                 ))}
-               <a href="/entorno" className={styles.locationBtnSecondary}>
-  Descubre San Bernardino →
+               <a href={lang === 'en' ? '/en/area' : '/entorno'} className={styles.locationBtnSecondary}>
+  {lang === 'en' ? 'Discover San Bernardino →' : 'Descubra San Bernardino →'}
 </a>
               </div>
             </div>
@@ -743,18 +949,18 @@ export default function PropertyPage({ data }: { data: any }) {
       )}
 
       {/* FULL BLEED BREAK 1 - Cambio 8: imagen de mayor resolución */}
-      <FullBleedBreak src="https://larumstudio.com/wp-content/uploads/2026/07/Piscina-2560px-upscaled.webp" caption="Residencia San Bernardino" />
+      <FullBleedBreak src="https://larumstudio.com/wp-content/uploads/2026/07/Piscina-2560px-upscaled.webp" caption="Villa San Bernardino" />
 
       {/* UBICACIÓN */}
       <RevealSection className={styles.location} id="ubicacion">
         <div className={styles.locationInner}>
           <div className={styles.locationLeft}>
-            <p className={styles.eyebrow}>Ubicación</p>
+            <p className={styles.eyebrow}>{lang === 'en' ? 'Location' : 'Ubicación'}</p>
             <h2 className={styles.locationTitle}>{property.location.city}</h2>
             {/* Cambio 2: Eliminada la descripción de ubicación */}
             {property.location.landmarks && property.location.landmarks.length > 0 && (
               <div className={styles.landmarksList}>
-                <p className={styles.landmarksNearby}>PUNTOS DE INTERÉS</p>
+                <p className={styles.landmarksNearby}>{lang === 'en' ? 'POINTS OF INTEREST' : 'PUNTOS DE INTERÉS'}</p>
                 <div className={styles.landmarksCols}>
                   <div className={styles.landmarksCol}>
                     {property.location.landmarks.slice(0, Math.ceil(property.location.landmarks.length / 2)).map((lm: any, i: number) => {
@@ -806,7 +1012,7 @@ export default function PropertyPage({ data }: { data: any }) {
             </div>
             {property.location.mapsUrl && (
               <div className={styles.locationMapBtn}>
-                <a href={property.location.mapsUrl} target="_blank" rel="noopener" className={styles.locationBtn}>Descubrir en el Mapa</a>
+                <a href={property.location.mapsUrl} target="_blank" rel="noopener" className={styles.locationBtn}>{lang === 'en' ? 'Open in Maps' : 'Descubrir en el Mapa'}</a>
               </div>
             )}
           </div>
@@ -818,16 +1024,16 @@ export default function PropertyPage({ data }: { data: any }) {
         <RevealSection className={styles.plano} id="plano">
           <div className={styles.planoInner}>
             <div className={styles.planoHeader}>
-              <p className={styles.eyebrow}>Un recorrido con sentido</p>
-              <h2 className={styles.planoTitleTop}>Donde cada espacio encuentra su razón de ser.</h2>
+              <p className={styles.eyebrow}>{lang === 'en' ? 'A layout that makes sense' : 'Un recorrido con sentido'}</p>
+              <h2 className={styles.planoTitleTop}>{lang === 'en' ? 'Where every space has its reason.' : 'Donde cada espacio encuentra su razón de ser.'}</h2>
             </div>
             <div className={styles.planoTwoCol}>
               {property.floorPlan.image && (
-                <div className={styles.planoImgCol}><img loading="lazy" src={property.floorPlan.image} alt="Plano" /></div>
+                <div className={styles.planoImgCol}><img loading="lazy" src={property.floorPlan.image} alt={lang === 'en' ? 'Floor plan' : 'Plano'} /></div>
               )}
               <div className={styles.planoTableCol}>
                 <table className={styles.areaTable}>
-                  <thead><tr><th>Ambiente</th><th>Superficie aprox.</th></tr></thead>
+                  <thead><tr><th>{lang === 'en' ? 'Room' : 'Ambiente'}</th><th>{lang === 'en' ? 'Approx. area' : 'Superficie aprox.'}</th></tr></thead>
                   <tbody>
                     {property.floorPlan.areas.map((a: any, i: number) => (
                       <tr key={i}><td>{a.ambiente}</td><td>{a.superficie}</td></tr>
@@ -845,7 +1051,7 @@ export default function PropertyPage({ data }: { data: any }) {
         <RevealSection className={styles.gastosSection}>
           <div className={styles.gastosInner}>
             <div style={{ marginBottom: '2rem' }}>
-              <p className={styles.eyebrow}>Gastos estimados</p>
+              <p className={styles.eyebrow}>{lang === 'en' ? 'Estimated running costs' : 'Gastos estimados'}</p>
             </div>
             <div className={styles.gastosGrid}>
               {property.gastos.map((g: any, i: number) => (
@@ -862,23 +1068,123 @@ export default function PropertyPage({ data }: { data: any }) {
         </RevealSection>
       )}
 
+      {/* EL VALOR ESTÁ EN LO INVISIBLE — detalles técnicos por categoría */}
+      {property.loQueNoSeVe && property.loQueNoSeVe.length > 0 && (
+        <RevealSection className={styles.invisible} id="invisible">
+          <div className={styles.invisibleInner}>
+            <div className={styles.invisibleHeader}>
+              <p className={styles.eyebrow}>{lang === 'en' ? 'Detail and craftsmanship' : 'Detalle y factura'}</p>
+              <h2 className={styles.invisibleTitle}>
+                {lang === 'en' ? 'The value lies in what you cannot see.' : 'El valor está en lo invisible.'}
+              </h2>
+              <p className={styles.invisibleSubtitle}>
+                {lang === 'en'
+                  ? 'Materials, systems and specifications that hold their value over time.'
+                  : 'Materiales, sistemas y especificaciones que sostienen el valor con el paso del tiempo.'}
+              </p>
+            </div>
+            <div className={styles.invisibleGrid}>
+              {property.loQueNoSeVe.map((cat: any, i: number) => (
+                <div key={i} className={styles.invisibleCol}>
+                  <div className={styles.invisibleColHeader}>
+                    <span className={styles.invisibleNum}>{String(i + 1).padStart(2, '0')}</span>
+                    <h3 className={styles.invisibleColTitle}>{cat.categoria}</h3>
+                  </div>
+                  <ul className={styles.invisibleList}>
+                    {cat.items.map((it: string, j: number) => (
+                      <li key={j} className={styles.invisibleListItem}>{it}</li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+          </div>
+        </RevealSection>
+      )}
+
+      {/* DIA Y NOCHE — una villa diseñada para brillar */}
+      {property.diaNoche && (property.diaNoche.imagenDia || property.diaNoche.videoTransicion) && (
+        <RevealSection className={styles.diaNoche} id="dia-noche">
+          <div className={styles.diaNocheInner}>
+            <div className={styles.diaNocheHeader}>
+              <p className={styles.eyebrow}>{lang === 'en' ? 'Light through the day' : 'La luz de cada hora'}</p>
+              <h2 className={styles.diaNocheTitle}>
+                {lang === 'en'
+                  ? 'A villa that looks just as striking after dark.'
+                  : 'Una villa diseñada para brillar.'}
+              </h2>
+              <p className={styles.diaNocheDesc}>{property.diaNoche.descripcion}</p>
+            </div>
+            <div className={styles.diaNocheMediaWrap}>
+              {property.diaNoche.videoTransicion ? (
+                <video
+                  className={styles.diaNocheVideo}
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  poster={property.diaNoche.imagenDia}
+                  preload="metadata"
+                >
+                  <source src={property.diaNoche.videoTransicion} type="video/mp4" />
+                </video>
+              ) : (
+                <div className={styles.diaNocheImgPair}>
+                  <img loading="lazy" src={property.diaNoche.imagenDia} alt={lang === 'en' ? 'By day' : 'De día'} />
+                  <img loading="lazy" src={property.diaNoche.imagenNoche} alt={lang === 'en' ? 'By night' : 'De noche'} />
+                </div>
+              )}
+              <div className={styles.diaNocheLabels}>
+                <span>{lang === 'en' ? 'By day' : 'De día'}</span>
+                <span>{lang === 'en' ? 'By night' : 'De noche'}</span>
+              </div>
+            </div>
+          </div>
+        </RevealSection>
+      )}
+
+      {/* INVERSIÓN Y LEGADO */}
+      {property.inversion && (
+        <RevealSection className={styles.inversion} id="inversion">
+          <div className={styles.inversionInner}>
+            <div className={styles.inversionHeader}>
+              <p className={styles.eyebrow}>{property.inversion.eyebrow || (lang === 'en' ? 'Investment and legacy' : 'Inversión y legado')}</p>
+              <h2 className={styles.inversionTitle}>{property.inversion.titulo}</h2>
+              <p className={styles.inversionDesc}>{property.inversion.descripcion}</p>
+            </div>
+            {property.inversion.datos && property.inversion.datos.length > 0 && (
+              <div className={styles.inversionGrid}>
+                {property.inversion.datos.map((d: any, i: number) => (
+                  <div key={i} className={styles.inversionCard}>
+                    <span className={styles.inversionCardLabel}>{d.label}</span>
+                    <span className={styles.inversionCardValue}>{d.valor}</span>
+                    <span className={styles.inversionCardTrend}>{d.tendencia}</span>
+                  </div>
+                ))}
+              </div>
+            )}
+            {property.inversion.plusvalia && (
+              <div className={styles.inversionPlusvalia}>
+                <h3 className={styles.inversionPlusvaliaTitle}>{property.inversion.plusvalia.titulo}</h3>
+                <p className={styles.inversionPlusvaliaDesc}>{property.inversion.plusvalia.descripcion}</p>
+              </div>
+            )}
+          </div>
+        </RevealSection>
+      )}
+
       {/* RECURSOS — GARANTÍAS + DESCARGABLES + CALCULADORAS */}
       <RevealSection className={styles.trustDocsSection}>
         <div className={styles.trustDocsHeader}>
-          <p className={styles.eyebrow}>Recursos</p>
-          <h2 className={styles.sectionTitle}>Todo lo que necesita para evaluar con criterio.</h2>
+          <p className={styles.eyebrow}>{lang === 'en' ? 'Resources' : 'Recursos'}</p>
+          <h2 className={styles.sectionTitle}>{lang === 'en' ? 'Everything you need to evaluate the residence with clarity.' : 'Todo lo que necesita para evaluar la residencia con criterio.'}</h2>
         </div>
         <div className={styles.trustDocsCols}>
           {/* COL 1: GARANTÍAS — ACCORDION */}
             <div className={styles.trustDocsCol}>
-              <h3 className={styles.trustDocsColTitle}>Garantías</h3>
+              <h3 className={styles.trustDocsColTitle}>{lang === 'en' ? 'Purchase assurances' : 'Garantías'}</h3>
               <div className={styles.garantiaAccordion}>
-                {[
-                  'Documentación al día y verificada',
-                  'Libre de gravámenes, impuestos e hipotecas',
-                  'Título original y lista para escriturar',
-                  'Proceso de compra acompañado y transparente',
-                ].map((item, i) => (
+                {(property.trust || []).map((item: string, i: number) => (
                   <details key={i} className={styles.garantiaAccItem}>
                     <summary className={styles.garantiaAccSummary}>
                       <span className={styles.garantiaAccCheck}><IconCheck /></span>
@@ -888,7 +1194,7 @@ export default function PropertyPage({ data }: { data: any }) {
                       </span>
                     </summary>
                     <div className={styles.garantiaAccBody}>
-                      <p>Verificado y documentado como parte del proceso de compra acompañada.</p>
+                      <p>{lang === 'en' ? 'Verified and documented as part of a fully supported purchase process.' : 'Verificado y documentado como parte de un proceso de compra transparente y acompañado.'}</p>
                     </div>
                   </details>
                 ))}
@@ -896,14 +1202,19 @@ export default function PropertyPage({ data }: { data: any }) {
             </div>
           {/* COL 2: DESCARGABLES - Cambio 4: URLs reales */}
           <div className={styles.trustDocsCol}>
-            <h3 className={styles.trustDocsColTitle}>Documentación</h3>
+            <h3 className={styles.trustDocsColTitle}>{lang === 'en' ? 'Documentation' : 'Documentación'}</h3>
             <div className={styles.descargablesStackV}>
               {property.descargables && property.descargables.length > 0 ? (
                 property.descargables.map((d: any, i: number) => (
                   <a key={i} href={d.url} target="_blank" rel="noopener" className={styles.descargableRow}>
                     <span className={styles.descargableRowNum}>{String(i + 1).padStart(2, '0')}</span>
                     <div className={styles.descargableRowInfo}>
-                      <span className={styles.descargableRowTitle}>{d.titulo}</span>
+                      <span className={styles.descargableRowTitle}>
+                        {d.titulo}
+                        {lang === 'en' && d.idiomaArchivo === 'es' && d.tipo !== 'qr' && (
+                          <span className={styles.docLangBadge}>Spanish version</span>
+                        )}
+                      </span>
                       {d.detalle && <span className={styles.descargableRowDetail}>{d.detalle}</span>}
                     </div>
                     <span className={styles.descargableRowIcon}><IconDownload /></span>
@@ -937,7 +1248,7 @@ export default function PropertyPage({ data }: { data: any }) {
           </div>
           {/* COL 3: CALCULADORAS */}
           <div className={styles.trustDocsCol}>
-            <h3 className={styles.trustDocsColTitle}>Calculadoras</h3>
+            <h3 className={styles.trustDocsColTitle}>{lang === 'en' ? 'Calculators' : 'Calculadoras'}</h3>
             <div className={styles.calcGrid}>
              <button
   type="button"
@@ -947,7 +1258,7 @@ export default function PropertyPage({ data }: { data: any }) {
                 <div className={styles.calcIconWrap}>
                   <svg width="28" height="28" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1}><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M8 6h8M8 10h2M14 10h2M8 14h2M14 14h2M8 18h2M14 18h2"/></svg>
                 </div>
-                <span className={styles.calcLabel}>Calcula tu hipoteca</span>
+                <span className={styles.calcLabel}>{lang === 'en' ? 'Estimate your mortgage →' : 'Calcule su hipoteca →'}</span>
                 <span className={styles.calcArrow}>→</span>
               </button>
               <button
@@ -958,7 +1269,7 @@ export default function PropertyPage({ data }: { data: any }) {
                 <div className={styles.calcIconWrap}>
                   <svg width="28" height="28" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1}><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/><path d="M9 22V12h6v10"/></svg>
                 </div>
-                <span className={styles.calcLabel}>Calcula el coste de compra</span>
+                <span className={styles.calcLabel}>{lang === 'en' ? 'Estimate your acquisition costs →' : 'Calcule los costes de adquisición →'}</span>
                 <span className={styles.calcArrow}>→</span>
               </button>
             </div>
@@ -966,17 +1277,87 @@ export default function PropertyPage({ data }: { data: any }) {
         </div>
       </RevealSection>
 
+      {/* POTENCIAL DE RENTA — bloque orientativo directamente debajo de calculadoras */}
+      <RevealSection className={styles.potencialRenta} id="potencial-renta">
+        <div className={styles.potencialRentaInner}>
+          <div className={styles.potencialRentaHeader}>
+            <p className={styles.eyebrow}>{lang === 'en' ? 'Rental potential' : 'Potencial de renta'}</p>
+            <h2 className={styles.potencialRentaTitle}>
+              {lang === 'en'
+                ? 'A residence with year-round rental demand.'
+                : 'Una residencia con demanda de alquiler durante todo el año.'}
+            </h2>
+            <p className={styles.potencialRentaDesc}>
+              {lang === 'en'
+                ? 'A first read on how the residence performs as a residential asset. Figures are indicative and should be validated with a current local market report.'
+                : 'Una primera lectura sobre el comportamiento de la residencia como activo. Las cifras son orientativas y deben validarse con un informe de mercado local actualizado.'}
+            </p>
+          </div>
+          <div className={styles.potencialRentaGrid}>
+            <div className={styles.potencialRentaCard}>
+              <span className={styles.potencialRentaLabel}>{lang === 'en' ? 'Long-term lease (annual)' : 'Alquiler de larga estancia (anual)'}</span>
+              <span className={styles.potencialRentaValue}>{lang === 'en' ? 'USD 3,500 – 5,500 / month' : 'USD 3.500 – 5.500 / mes'}</span>
+              <span className={styles.potencialRentaNote}>{lang === 'en' ? 'Furnished, full-year lease to a qualified tenant.' : 'Amueblada, contrato anual con inquilino cualificado.'}</span>
+            </div>
+            <div className={styles.potencialRentaCard}>
+              <span className={styles.potencialRentaLabel}>{lang === 'en' ? 'Peak season (December – February)' : 'Temporada alta (diciembre – febrero)'}</span>
+              <span className={styles.potencialRentaValue}>{lang === 'en' ? 'USD 800 – 1,200 / night' : 'USD 800 – 1.200 / noche'}</span>
+              <span className={styles.potencialRentaNote}>{lang === 'en' ? 'Short lets during Paraguayan summer, subject to concierge management.' : 'Estancias cortas durante el verano paraguayo, sujetas a gestión con conserjería.'}</span>
+            </div>
+            <div className={styles.potencialRentaCard}>
+              <span className={styles.potencialRentaLabel}>{lang === 'en' ? 'Corporate & events' : 'Corporativo y eventos'}</span>
+              <span className={styles.potencialRentaValue}>{lang === 'en' ? 'On request' : 'A consultar'}</span>
+              <span className={styles.potencialRentaNote}>{lang === 'en' ? 'Private retreats and off-site events for teams up to twenty guests.' : 'Retiros privados y eventos corporativos para grupos de hasta veinte personas.'}</span>
+            </div>
+          </div>
+          <p className={styles.potencialRentaDisclaimer}>
+            {lang === 'en'
+              ? 'Indicative figures based on comparable operations in the area. Actual performance depends on occupancy, management model, seasonality and tax structure. We can share a full market report on request.'
+              : 'Cifras orientativas basadas en operaciones comparables en la zona. El rendimiento real depende de la ocupación, el modelo de gestión, la estacionalidad y la estructura fiscal. Podemos compartir un informe de mercado detallado a solicitud.'}
+          </p>
+        </div>
+      </RevealSection>
+
+      {/* FAQ — La confianza comienza antes de la visita */}
+      {property.faq && property.faq.length > 0 && (
+        <RevealSection className={styles.faqSection} id="faq">
+          <div className={styles.faqInner}>
+            <div className={styles.faqHeader}>
+              <p className={styles.eyebrow}>{lang === 'en' ? 'Frequently asked' : 'Preguntas frecuentes'}</p>
+              <h2 className={styles.faqTitle}>{property.faqTitulo}</h2>
+              {property.faqSubtitulo && (
+                <p className={styles.faqSubtitle}>{property.faqSubtitulo}</p>
+              )}
+            </div>
+            <div className={styles.faqList}>
+              {property.faq.map((q: any, i: number) => (
+                <details key={i} className={styles.faqItem}>
+                  <summary className={styles.faqSummary}>
+                    <span className={styles.faqNum}>{String(i + 1).padStart(2, '0')}</span>
+                    <span className={styles.faqQuestion}>{q.pregunta}</span>
+                    <span className={styles.faqChevron}>
+                      <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.3}><path d="M6 9l6 6 6-6"/></svg>
+                    </span>
+                  </summary>
+                  <div className={styles.faqAnswer}><p>{q.respuesta}</p></div>
+                </details>
+              ))}
+            </div>
+          </div>
+        </RevealSection>
+      )}
+
       {/* BROCHURE - Cambio 7: QR actualizado */}
       <RevealSection className={styles.memoria} id="memoria">
         <div className={styles.memoriaBalanced}>
           <div className={styles.memoriaBalancedLeft}>
-            <p className={styles.eyebrow}>Documentación</p>
-            <h2 className={styles.memoriaTitle}>Memoria de la Residencia.</h2>
-            <p className={styles.memoriaDesc}>No es un catálogo.<br />Es un documento privado, elaborado con criterio y discreción, que reúne la esencia de esta propiedad: su historia, su contexto, los materiales y detalles que realmente importan, y una narrativa visual que permite comprenderla en profundidad.</p>
-            <p className={styles.memoriaDesc}>Diseñado para quienes evalúan con seriedad antes de visitar. Un material que puede compartirse con su familia, socios o asesores, y que transmite la verdadera experiencia de la residencia antes de pisarla.</p>
-            <p className={styles.memoriaMetaInline}>Documento privado · PDF exclusivo · envío inmediato</p>
+            <p className={styles.eyebrow}>{lang === 'en' ? 'Documentation' : 'Documentación'}</p>
+            <h2 className={styles.memoriaTitle}>{lang === 'en' ? 'The residence memoir.' : 'Memoria de la Residencia.'}</h2>
+            <p className={styles.memoriaDesc}>{lang === 'en' ? (<>Not a brochure.<br />A private document, prepared with care and discretion, that gathers the essence of this property: its history, its context, the materials and details that genuinely matter, and a visual narrative that allows the residence to be understood in depth.</>) : (<>No es un catálogo.<br />Es un documento privado, elaborado con criterio y discreción, que reúne la esencia de esta propiedad: su historia, su contexto, los materiales y detalles que realmente importan, y una narrativa visual que permite comprenderla en profundidad.</>)}</p>
+            <p className={styles.memoriaDesc}>{lang === 'en' ? 'Designed for those who evaluate seriously before visiting. A resource that can be shared with family, partners or advisors, conveying the real experience of the residence before setting foot inside.' : 'Diseñado para quienes evalúan con seriedad antes de visitar. Un material que puede compartirse con familia, socios o asesores, y que transmite la verdadera experiencia de la residencia antes de pisarla.'}</p>
+            <p className={styles.memoriaMetaInline}>{lang === 'en' ? 'Private document · Exclusive PDF · Sent immediately' : 'Documento privado · PDF exclusivo · envío inmediato'}</p>
             <div className={styles.memoriaInlineForm}>
-              <BrochureForm agentEmail={property.agentEmail} compact={true} privacidadTexto={property.privacidadTexto} privacidadUrl={property.privacidadUrl} />
+              <BrochureForm agentEmail={property.agentEmail} compact={true} privacidadTexto={property.privacidadTexto} privacidadUrl={property.privacidadUrl} lang={lang} brochureUrl={property.brochure} />
             </div>
           </div>
           {property.brochurePages && property.brochurePages.length > 0 && (
@@ -987,49 +1368,52 @@ export default function PropertyPage({ data }: { data: any }) {
         </div>
       </RevealSection>
 
-      {/* AGENTE EXPANDIDO - Cambios 5, 9, 10, 11 */}
+      {/* AGENTE EXPANDIDO — renderizado desde JSON */}
       {(agent.bio || agent.authority) && (
         <RevealSection className={styles.agentExpanded}>
           <div className={styles.agentExpandedInner}>
             <div className={styles.agentExpandedPhoto}>
-              {/* Cambio 9: nueva foto del agente */}
-              <img loading="lazy" src="https://larumstudio.com/wp-content/uploads/2026/07/William-Rowe-scaled.webp" alt="William Rowe" />
+              <img loading="lazy" src={agent.photo || 'https://larumstudio.com/wp-content/uploads/2026/07/William-Rowe-scaled.webp'} alt={agent.name || 'William Rowe'} />
             </div>
             <div className={styles.agentExpandedInfo}>
-              <p className={styles.agentExpandedCargo}>Senior Advisor · Luxury Properties</p>
-              {/* Cambio 10: nombre actualizado */}
-              <h2 className={styles.agentExpandedName}>William Rowe</h2>
-              <p className={styles.agentExpandedBio}>No trabaja con volumen. Trabaja con criterio.</p>
-              <p className={styles.agentExpandedBio}>Representa solo un número selecto de residencias al año —aquellas que poseen carácter, ubicación privilegiada y una historia que merece ser contada con precisión. Cada una es tratada como una obra singular: estudiada, narrada y posicionada para encontrar al comprador que realmente la entiende.</p>
-              <p className={styles.agentExpandedBio}>Su enfoque combina conocimiento profundo del mercado de alto nivel, discreción absoluta y una capacidad única para transmitir el valor emocional de cada propiedad.</p>
-              {/* Cambio 11: sección de idiomas */}
-              <p className={styles.agentExpandedBio} style={{ marginTop: '1.25rem', color: '#fff' }}>
-  Idiomas: Inglés, Español, Alemán
-</p>
+              <p className={styles.agentExpandedCargo}>{agent.cargo || agent.title}</p>
+              <h2 className={styles.agentExpandedName}>{agent.name}</h2>
+              {(agent.bio || agent.authority) && (
+                <p className={styles.agentExpandedBio}>{agent.bio || agent.authority}</p>
+              )}
+              {agent.bioExtendida && (
+                <p className={styles.agentExpandedBio}>{agent.bioExtendida}</p>
+              )}
+              {agent.idiomas && agent.idiomas.length > 0 && (
+                <p className={styles.agentExpandedBio} style={{ marginTop: '1.25rem', color: '#fff' }}>
+                  {lang === 'en' ? 'Languages' : 'Idiomas'}: {agent.idiomas.join(', ')}
+                </p>
+              )}
               {agent.credenciales && agent.credenciales.length > 0 && (
                 <div className={styles.agentExpandedCredenciales}>
-                  <p className={styles.agentCredencialesTitle}>Premios y Reconocimientos</p>
+                  <p className={styles.agentCredencialesTitle}>{lang === 'en' ? 'Credentials' : 'Credenciales'}</p>
                   {agent.credenciales.map((cr: string, i: number) => (
                     <span key={i} className={styles.agentCredencial}>{cr}</span>
                   ))}
                 </div>
               )}
-              {/* Cambio 10: logros actualizados */}
-              <div className={styles.agentStatsRow}>
-                <div className={styles.agentStatItem}><div className={styles.agentStatVal}>25</div><div className={styles.agentStatLabel}>propiedades de lujo</div></div>
-                <div className={styles.agentStatItem}><div className={styles.agentStatVal}>US$7.5M</div><div className={styles.agentStatLabel}>ventas concretadas</div></div>
-                <div className={styles.agentStatItem}><div className={styles.agentStatVal}>10 años</div><div className={styles.agentStatLabel}>asesorando élite</div></div>
-                <div className={styles.agentStatItem}><div className={styles.agentStatVal}>42 días</div><div className={styles.agentStatLabel}>tiempo de venta</div></div>
-              </div>
+              {agent.statsLogros && agent.statsLogros.length > 0 && (
+                <div className={styles.agentStatsRow}>
+                  {agent.statsLogros.map((s: any, i: number) => (
+                    <div key={i} className={styles.agentStatItem}>
+                      <div className={styles.agentStatVal}>{s.valor}</div>
+                      <div className={styles.agentStatLabel}>{s.label}</div>
+                    </div>
+                  ))}
+                </div>
+              )}
               <div className={styles.agentExpandedBtns}>
                 <a href={whatsappUrl || '#'} target="_blank" rel="noopener" className={styles.agentExpandedBtn}><IconWhatsapp /> WHATSAPP</a>
                 <a href={agent.email ? `mailto:${agent.email}` : '#'} className={styles.agentExpandedBtn}><IconMail /> EMAIL</a>
-                {/* Cambio 5: LinkedIn actualizado */}
-                <a href="https://www.linkedin.com/company/larumstudiohq/" target="_blank" rel="noopener" className={styles.agentExpandedBtn}><IconLinkedin /> LINKEDIN</a>
-                {/* Cambio 5: Instagram actualizado */}
-                <a href="https://www.instagram.com/larumstudio/" target="_blank" rel="noopener" className={styles.agentExpandedBtn}><IconInstagram /> INSTAGRAM</a>
+                <a href={agent.linkedin || 'https://www.linkedin.com/company/larumstudiohq/'} target="_blank" rel="noopener" className={styles.agentExpandedBtn}><IconLinkedin /> LINKEDIN</a>
+                <a href={agent.instagram || 'https://www.instagram.com/larumstudio/'} target="_blank" rel="noopener" className={styles.agentExpandedBtn}><IconInstagram /> INSTAGRAM</a>
                 {agent.scheduleUrl && (
-                  <a href={agent.scheduleUrl} target="_blank" rel="noopener" className={styles.agentExpandedBtn}><IconCalendar /> AGENDAR</a>
+                  <a href={agent.scheduleUrl} target="_blank" rel="noopener" className={styles.agentExpandedBtn}><IconCalendar /> {lang === 'en' ? 'BOOK' : 'AGENDAR'}</a>
                 )}
               </div>
             </div>
@@ -1044,47 +1428,136 @@ export default function PropertyPage({ data }: { data: any }) {
       <RevealSection className={styles.contact} id="contacto">
         <div className={styles.contactClean}>
           <div className={styles.contactCleanLeft}>
-            <p className={styles.contactEyebrow}>Acceso Privado</p>
-            <h2 className={styles.contactTitle}>Visitas bajo cita.</h2>
+            <p className={styles.contactEyebrow}>{lang === 'en' ? 'Private access' : 'Acceso privado'}</p>
+            <h2 className={styles.contactTitle}>{lang === 'en' ? 'By appointment only.' : 'Visitas bajo cita.'}</h2>
             <div className={styles.contactEditorial}>
-              <p>Esta residencia no se exhibe en portales. Las visitas se coordinan de forma privada y bajo cita previa.</p>
-              <p>Solo compartimos detalles con perfiles previamente cualificados. Si siente que esta propiedad merece ser parte de su historia, déjenos sus datos.</p>
+              {lang === 'en' ? (
+                <>
+                  <p>This residence is not shown on open portals. Viewings are arranged privately and by prior appointment.</p>
+                  <p>Full details are shared only with previously qualified buyers. If this property feels like part of the story you are writing, leave us your details.</p>
+                </>
+              ) : (
+                <>
+                  <p>Esta residencia no se exhibe en portales. Las visitas se coordinan de forma privada y bajo cita previa.</p>
+                  <p>Solo compartimos detalles con perfiles previamente cualificados. Si siente que esta propiedad merece ser parte de su historia, déjenos sus datos.</p>
+                </>
+              )}
             </div>
           </div>
           <div className={styles.contactQrCenter}>
             <img
               src="https://larumstudio.com/wp-content/uploads/2026/07/qr-code.png"
-              alt="QR"
+              alt={lang === 'en' ? 'QR code to open this property micro-site' : 'Código QR para abrir el micrositio de la propiedad'}
               style={{ width: '280px', height: '280px', maxWidth: '100%', objectFit: 'contain', display: 'block', margin: '0 auto' }}
             />
-            <span className={styles.contactQrLabel} style={{ marginTop: '1.5rem', display: 'block' }}>Escanea para acceder</span>
+            <span className={styles.contactQrLabel} style={{ marginTop: '1.5rem', display: 'block' }}>{lang === 'en' ? 'Scan to access' : 'Escanee para acceder'}</span>
           </div>
-          <div className={styles.contactForm}>
-            {[
-              { name: 'nombre', placeholder: 'NOMBRE', type: 'text' },
-              { name: 'email', placeholder: 'EMAIL', type: 'email' },
-              { name: 'telefono', placeholder: 'TELÉFONO', type: 'tel' },
-              { name: 'fecha', placeholder: 'FECHA PREFERIDA', type: 'text' },
-            ].map(field => (
-              <div key={field.name} className={styles.formField}>
-                <input type={field.type} name={field.name} placeholder={field.placeholder}
-                  value={form[field.name as keyof typeof form]}
-                  onChange={e => setForm({ ...form, [e.target.name]: e.target.value })}
-                  className={styles.formInput} />
+          <form
+            className={styles.contactForm}
+            onSubmit={async (e) => {
+              e.preventDefault()
+              if (formStatus === 'loading' || formStatus === 'success') return
+              setFormStatus('loading')
+              try {
+                const fd = new FormData()
+                fd.append('nombre', form.nombre || '—')
+                fd.append('email', form.email || '—')
+                fd.append('telefono', form.telefono || '—')
+                fd.append('fecha_preferida', form.fecha || '—')
+                fd.append('_subject', lang === 'en' ? 'Private viewing request' : 'Solicitud de visita privada')
+                fd.append('_captcha', 'false')
+                fd.append('_template', 'table')
+                await fetch(`https://formsubmit.co/${property.agentEmail}`, { method: 'POST', body: fd })
+                setFormStatus('success')
+              } catch (_) {
+                setFormStatus('error')
+              }
+            }}
+          >
+            {formStatus === 'success' ? (
+              <div className={styles.memoriaSuccess} role="status" aria-live="polite">
+                <p className={styles.memoriaSuccessTitle}>{lang === 'en' ? 'We have received your request.' : 'Hemos recibido su solicitud.'}</p>
+                <p className={styles.memoriaSuccessDesc}>{lang === 'en' ? 'We will be in touch shortly to arrange your visit.' : 'En breve nos pondremos en contacto con usted para coordinar la visita.'}</p>
               </div>
-            ))}
-            {property.privacidadTexto && (
-              <div className={styles.privacidadWrap}>
-                <input type="checkbox" className={styles.privacidadCheck} id="privacidad-contacto" />
-                <label htmlFor="privacidad-contacto" className={styles.privacidadLabel}>
-                  {property.privacidadUrl ? (
-                    <>{property.privacidadTexto.replace('política de privacidad', '').trim()} <a href={property.privacidadUrl} target="_blank" rel="noopener">política de privacidad</a></>
-                  ) : property.privacidadTexto}
-                </label>
-              </div>
+            ) : (
+              <>
+                {[
+                  { name: 'nombre', placeholder: lang === 'en' ? 'NAME' : 'NOMBRE', type: 'text' },
+                  { name: 'email', placeholder: 'EMAIL', type: 'email' },
+                  { name: 'telefono', placeholder: lang === 'en' ? 'PHONE' : 'TELÉFONO', type: 'tel' },
+                ].map(field => (
+                  <div key={field.name} className={styles.formField}>
+                    <input type={field.type} name={field.name} placeholder={field.placeholder}
+                      value={form[field.name as keyof typeof form]}
+                      onChange={e => setForm({ ...form, [e.target.name]: e.target.value })}
+                      className={styles.formInput}
+                      disabled={formStatus === 'loading'} />
+                  </div>
+                ))}
+                {/* Fecha preferida — clic abre Calendly en pestaña nueva si hay bookingUrl */}
+                <div className={styles.formField}>
+                  <input
+                    type="text"
+                    name="fecha"
+                    placeholder={lang === 'en' ? 'PREFERRED DATE' : 'FECHA PREFERIDA'}
+                    value={form.fecha}
+                    onChange={e => setForm({ ...form, fecha: e.target.value })}
+                    onFocus={() => {
+                      if (property.bookingUrl && typeof window !== 'undefined') {
+                        window.open(property.bookingUrl, '_blank', 'noopener,noreferrer')
+                      }
+                    }}
+                    onClick={() => {
+                      if (property.bookingUrl && typeof window !== 'undefined') {
+                        window.open(property.bookingUrl, '_blank', 'noopener,noreferrer')
+                      }
+                    }}
+                    className={styles.formInput}
+                    disabled={formStatus === 'loading'}
+                    readOnly={!!property.bookingUrl}
+                    aria-label={lang === 'en' ? 'Preferred date — opens calendar in new tab' : 'Fecha preferida — abre el calendario en pestaña nueva'}
+                    style={{ cursor: property.bookingUrl ? 'pointer' : 'text' }}
+                  />
+                </div>
+                {property.privacidadTexto && (
+                  <div className={styles.privacidadWrap}>
+                    <input type="checkbox" className={styles.privacidadCheck} id="privacidad-contacto" required />
+                    <label htmlFor="privacidad-contacto" className={styles.privacidadLabel}>
+                      {(() => {
+                        const raw = property.privacidadTexto.trim()
+                        const linkRegex = /(política de privacidad|Privacy Policy)/i
+                        const m = raw.match(linkRegex)
+                        if (!property.privacidadUrl || !m) return raw
+                        const [before, after] = raw.split(m[0])
+                        return (
+                          <>
+                            {before}
+                            <a href={property.privacidadUrl} target="_blank" rel="noopener">{m[0]}</a>
+                            {after}
+                          </>
+                        )
+                      })()}
+                    </label>
+                  </div>
+                )}
+                {formStatus === 'error' && (
+                  <p role="alert" aria-live="polite" style={{ color: '#b34a4a', fontSize: '0.8rem', letterSpacing: '0.05em' }}>
+                    {lang === 'en' ? 'Something went wrong. Please try again.' : 'No se pudo enviar. Por favor, inténtelo de nuevo.'}
+                  </p>
+                )}
+                <button
+                  type="submit"
+                  className={styles.formBtn}
+                  disabled={formStatus === 'loading'}
+                  style={{ opacity: formStatus === 'loading' ? 0.6 : 1 }}
+                >
+                  {formStatus === 'loading'
+                    ? (lang === 'en' ? 'Sending…' : 'Enviando…')
+                    : (lang === 'en' ? 'Request a private viewing' : 'Solicitar agenda privada')}
+                </button>
+              </>
             )}
-            <button type="button" className={styles.formBtn}>Solicitar agenda privada</button>
-          </div>
+          </form>
         </div>
       </RevealSection>
       {/* FOOTER - Cambio 7: QR del footer actualizado */}
@@ -1098,47 +1571,33 @@ export default function PropertyPage({ data }: { data: any }) {
             {navLinks.map(l => <a key={l.href} href={l.href} className={styles.footerLink}>{l.label}</a>)}
           </nav>
           <div className={styles.footerVisita}>
-            <p className={styles.footerVisitaTitle}>La visita</p>
+            <p className={styles.footerVisitaTitle}>{lang === 'en' ? 'Viewings' : 'La visita'}</p>
             <ul className={styles.footerVisitaList}>
-              <li>Las visitas se coordinan de forma privada.</li>
-              <li>Propiedad no disponible en acceso abierto.</li>
-              <li>Cada visita requiere cita previa en horario reservado.</li>
-              <li>Acompañamiento personalizado durante todo el proceso.</li>
+              {lang === 'en' ? (
+                <>
+                  <li>Viewings are arranged privately.</li>
+                  <li>Property not available on open access.</li>
+                  <li>Each visit is by prior appointment, in reserved time.</li>
+                  <li>Personal accompaniment throughout the process.</li>
+                </>
+              ) : (
+                <>
+                  <li>Las visitas se coordinan de forma privada.</li>
+                  <li>Propiedad no disponible en acceso abierto.</li>
+                  <li>Cada visita requiere cita previa en horario reservado.</li>
+                  <li>Acompañamiento personalizado durante todo el proceso.</li>
+                </>
+              )}
             </ul>
           </div>
-          {property.qrUrl && (
-  <div className={styles.footerQr} style={{ width: 'auto', maxWidth: 'none', height: 'auto' }}>
-    <a href="https://larumstudio.com/wp-content/uploads/2026/07/qr-code.png" target="_blank" rel="noopener" style={{ display: 'block' }}>
-      <img 
-        src="https://larumstudio.com/wp-content/uploads/2026/07/qr-code.png" 
-        alt="QR Villa San Bernardino"
-        style={{ 
-          width: '200px', 
-          height: '200px', 
-          minWidth: '200px',
-          minHeight: '200px',
-          objectFit: 'contain', 
-          display: 'block',
-          background: '#ffffff',
-          padding: '12px',
-          borderRadius: '6px'
-        }}
-      />
-    </a>
-  </div>
-)}
         </div>
         <div className={styles.footerBottom}>
-          <span>© 2026 {property.footerTitulo || 'Larum Studio'}. Todos los derechos reservados.</span>
-          <span style={{ opacity: 0.5, fontSize: '0.7rem', letterSpacing: '0.15em' }}>Presentación creada por <strong style={{ fontWeight: 400, color: '#c9a96e' }}>Larum Studio</strong></span>
+          <span>© {new Date().getFullYear()} {property.footerTitulo || 'Larum Studio'}. {lang === 'en' ? 'All rights reserved.' : 'Todos los derechos reservados.'}</span>
+          <span style={{ opacity: 0.5, fontSize: '0.7rem', letterSpacing: '0.15em' }}>{lang === 'en' ? 'Presentation by' : 'Presentación creada por'} <strong style={{ fontWeight: 400, color: '#c9a96e' }}>Larum Studio</strong></span>
         </div>
       </footer>
 
-      {agent.whatsapp && (
-        <a href={whatsappUrl} className={styles.waFloat} target="_blank" rel="noopener" aria-label="WhatsApp">
-          <IconWhatsapp />
-        </a>
-      )}
+      {/* WhatsApp flotante eliminado — decisión de posicionamiento premium */}
 
       <AnalyticsScripts ga4Id={property.ga4Id} metaPixelId={property.metaPixelId} />
     </div>

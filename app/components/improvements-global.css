@@ -1,0 +1,29 @@
+/* =========================================
+   Reglas globales extraídas de improvements.module.css
+   Importar en layout.tsx: import './components/improvements-global.css'
+   ========================================= */
+
+.revealVisible.stagger > * {
+  transition-timing-function: cubic-bezier(0.16,1,0.3,1) !important;
+}
+
+.parallaxWrap img,
+.parallaxWrap video,
+.fullBleedImgWrap img {
+  transform-origin: center center;
+  will-change: transform;
+}
+
+@media (max-width: 768px) {
+  .waFloat { bottom: 76px !important; }
+}
+
+/* #34 Velocidad carga - hero eager + galería lazy ya con CSS will-change */
+.heroBgVideo {
+  will-change: transform;
+  background: #0a0a0a;
+}
+/* Poster frame evita spinner negro en 4K video */
+.videoFeatureEl {
+  background: #000 url('https://larumstudio.com/wp-content/uploads/2026/04/unnamed-1.webp') center/cover no-repeat;
+}

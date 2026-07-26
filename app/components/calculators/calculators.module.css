@@ -313,3 +313,38 @@
     display: grid;
   }
 }
+/* Nota de referencia territorial — banner discreto pero visible */
+.territoryNote {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 16px;
+  align-items: start;
+  padding: 14px 18px;
+  margin: 0 0 30px;
+  border: 1px solid rgba(200, 164, 93, 0.28);
+  border-left: 2px solid #C8A45D;
+  background: rgba(200, 164, 93, 0.05);
+}
+.territoryNoteLabel {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.62rem;
+  font-weight: 500;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: #C8A45D;
+  padding-top: 2px;
+  white-space: nowrap;
+}
+.territoryNote p {
+  margin: 0;
+  font-family: 'Source Serif 4', serif;
+  font-size: 0.85rem;
+  line-height: 1.65;
+  color: rgba(246, 241, 232, 0.82);
+}
+@media (max-width: 640px) {
+  .territoryNote {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+}

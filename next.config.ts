@@ -1,4 +1,5 @@
 import type { NextConfig } from "next";
+
 const nextConfig: NextConfig = {
   images: {
     remotePatterns: [
@@ -7,6 +8,13 @@ const nextConfig: NextConfig = {
         hostname: 'larumstudio.com',
       },
     ],
+  },
+  async redirects() {
+    return [
+      // /en/entorno → /en/area (301 permanente)
+      { source: '/en/entorno', destination: '/en/area', permanent: true },
+      { source: '/en/entorno/', destination: '/en/area', permanent: true },
+    ];
   },
   async rewrites() {
     return [

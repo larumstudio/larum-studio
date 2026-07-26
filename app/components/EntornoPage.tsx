@@ -1,8 +1,12 @@
 import Link from "next/link";
 import styles from "./entorno.module.css";
+import { WA_ES, WA_EN } from "../lib/site";
+
+type Lang = 'es' | 'en';
 
 type EntornoPageProps = {
   location: any;
+  lang?: Lang;
 };
 
 const iconSymbols: Record<string, string> = {
@@ -12,10 +16,25 @@ const iconSymbols: Record<string, string> = {
   sport: "△",
   nature: "♧",
   family: "◎",
-  privacy: "□"
+  privacy: "□",
 };
 
-export default function EntornoPage({ location }: EntornoPageProps) {
+const UI = {
+  es: {
+    back: "Volver a la propiedad",
+    property: "Villa San Bernardino",
+  },
+  en: {
+    back: "Back to the property",
+    property: "Villa San Bernardino",
+  },
+} as const;
+
+export default function EntornoPage({ location, lang = "es" }: EntornoPageProps) {
+  const t = UI[lang];
+  const propertyHref = lang === "en" ? "/en" : "/";
+  const ctaHref = location?.cta?.buttonUrl || (lang === "en" ? WA_EN : WA_ES);
+
   return (
     <main className={styles.entornoPage}>
       <section className={styles.hero}>
@@ -28,8 +47,8 @@ export default function EntornoPage({ location }: EntornoPageProps) {
         <div className={styles.heroNav}>
           <div className={styles.logo}>LARUM</div>
 
-          <Link href="/" className={styles.backLink}>
-            Volver a la propiedad
+          <Link href={propertyHref} className={styles.backLink}>
+            {t.back}
           </Link>
         </div>
 
@@ -107,9 +126,8 @@ export default function EntornoPage({ location }: EntornoPageProps) {
                 {location.distances.items.map((item: any) => (
                   <div className={styles.distanceItem} key={item.place}>
                     <span className={styles.distancePlace}>{item.place}</span>
-                    <span className={styles.distanceTime}>
-                      {item.time} en coche
-                    </span>
+                    {/* Los tiempos vienen del JSON con la nota "en coche / by car" ya incluida. */}
+                    <span className={styles.distanceTime}>{item.time}</span>
                   </div>
                 ))}
               </div>
@@ -119,30 +137,30 @@ export default function EntornoPage({ location }: EntornoPageProps) {
       )}
 
       {location.living && (
-  <section className={styles.section}>
-    <div className={styles.sectionHeader}>
-      <div className={styles.eyebrow}>{location.living.eyebrow}</div>
-      <h2 className={styles.sectionTitle}>{location.living.title}</h2>
-    </div>
-
-    <div className={styles.livingGrid}>
-      {location.living.items.map((item: any) => (
-        <article className={styles.livingCard} key={item.title}>
-          {item.image && (
-            <div className={styles.livingImage}>
-              <img src={item.image} alt={item.title} />
-            </div>
-          )}
-
-          <div className={styles.livingBody}>
-            <h3>{item.title}</h3>
-            <p>{item.text}</p>
+        <section className={styles.section}>
+          <div className={styles.sectionHeader}>
+            <div className={styles.eyebrow}>{location.living.eyebrow}</div>
+            <h2 className={styles.sectionTitle}>{location.living.title}</h2>
           </div>
-        </article>
-      ))}
-    </div>
-  </section>
-)}
+
+          <div className={styles.livingGrid}>
+            {location.living.items.map((item: any) => (
+              <article className={styles.livingCard} key={item.title}>
+                {item.image && (
+                  <div className={styles.livingImage}>
+                    <img src={item.image} alt={item.title} />
+                  </div>
+                )}
+
+                <div className={styles.livingBody}>
+                  <h3>{item.title}</h3>
+                  <p>{item.text}</p>
+                </div>
+              </article>
+            ))}
+          </div>
+        </section>
+      )}
 
       {location.gastronomy?.items?.length > 0 && (
         <section className={styles.section}>
@@ -166,44 +184,44 @@ export default function EntornoPage({ location }: EntornoPageProps) {
       )}
 
       {location.quickFacts && (
-  <section className={styles.quickFactsSection}>
-    <div className={styles.quickFactsInner}>
-      <div className={styles.quickFactsTitle}>
-        {location.quickFacts.title}
-      </div>
+        <section className={styles.quickFactsSection}>
+          <div className={styles.quickFactsInner}>
+            <div className={styles.quickFactsTitle}>
+              {location.quickFacts.title}
+            </div>
 
-      <div className={styles.quickFactsGrid}>
-        {location.quickFacts.items.map((item: any) => (
-          <div className={styles.quickFactItem} key={item.label}>
-            <span>{item.label}</span>
-            <strong>{item.value}</strong>
+            <div className={styles.quickFactsGrid}>
+              {location.quickFacts.items.map((item: any) => (
+                <div className={styles.quickFactItem} key={item.label}>
+                  <span>{item.label}</span>
+                  <strong>{item.value}</strong>
+                </div>
+              ))}
+            </div>
           </div>
-        ))}
-      </div>
-    </div>
-  </section>
-)}
+        </section>
+      )}
 
       {location.gallery?.items?.length > 0 && (
-  <section className={styles.gallerySection}>
-    <div className={styles.galleryHeader}>
-      <div>
-        <div className={styles.eyebrow}>{location.gallery.eyebrow}</div>
-        {location.gallery.title && (
-          <h2 className={styles.sectionTitle}>{location.gallery.title}</h2>
-        )}
-      </div>
-    </div>
+        <section className={styles.gallerySection}>
+          <div className={styles.galleryHeader}>
+            <div>
+              <div className={styles.eyebrow}>{location.gallery.eyebrow}</div>
+              {location.gallery.title && (
+                <h2 className={styles.sectionTitle}>{location.gallery.title}</h2>
+              )}
+            </div>
+          </div>
 
-    <div className={styles.galleryGrid}>
-      {location.gallery.items.map((item: any) => (
-        <div className={styles.galleryItem} key={item.image}>
-          <img src={item.image} alt={item.alt || ""} />
-        </div>
-      ))}
-    </div>
-  </section>
-)}
+          <div className={styles.galleryGrid}>
+            {location.gallery.items.map((item: any) => (
+              <div className={styles.galleryItem} key={item.image}>
+                <img src={item.image} alt={item.alt || ""} />
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
 
       {location.market && (
         <section className={styles.section}>
@@ -237,9 +255,14 @@ export default function EntornoPage({ location }: EntornoPageProps) {
             <h2 className={styles.ctaTitle}>{location.cta.title}</h2>
             <p className={styles.ctaText}>{location.cta.text}</p>
 
-            <Link href="/" className={styles.ctaButton}>
+            <a
+              href={ctaHref}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.ctaButton}
+            >
               {location.cta.buttonLabel}
-            </Link>
+            </a>
           </div>
         </section>
       )}

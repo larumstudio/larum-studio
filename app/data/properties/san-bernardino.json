@@ -7,7 +7,7 @@
     "story": {
       "title": "Una residencia que\nse siente antes de verse.",
       "paragraphs": [
-        "Con 525 m² construidos sobre un lote de 3.200 m², esta villa en San Bernardino fue concebida para quienes buscan algo más que una casa: presencia, exclusividad y una experiencia de vida difícil de igualar.",
+        "Con 800 m² construidos sobre un lote de 3.900 m², esta villa en San Bernardino fue concebida para quienes buscan algo más que una casa: presencia, exclusividad y una experiencia de vida difícil de igualar.",
         "Desde el exterior, la propiedad impresiona por su escala y su arquitectura limpia. La piscina exterior se convierte en el corazón visual y emocional de la casa."
       ]
     },
@@ -101,8 +101,8 @@
       ]
     },
     "stats": {
-      "terreno": "3.200 m²",
-      "construidos": "525 m²",
+      "terreno": "3.900 m²",
+      "construidos": "800 m²",
       "dormitorios": "6",
       "banos": "5"
     },
@@ -177,8 +177,8 @@
         "Cercanía a autopista",
         "Estacionamiento privado",
         "Vista panorámica",
-        "Superficie vivienda 525 m²",
-        "Lote 800 m²"
+        "Superficie vivienda 800 m²",
+        "Lote 3.900 m²"
       ]
     },
     "amenities": [

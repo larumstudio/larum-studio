@@ -31,13 +31,19 @@
   border-bottom: 1px solid rgba(255,255,255,0.06);
 }
 .navInner {
-  max-width: 1600px;
+  /* §3.1 — ancho responsivo con guardia de gutter en móvil */
+  width: min(100% - 32px, 1440px);
   margin: 0 auto;
-  padding: 0 clamp(1.5rem, 4vw, 3rem);
-  display: flex;
+  padding: 0;
+  /* Grid de 3 zonas: logo · links · derecha (CTA + menú móvil).
+     Los links quedan centrados de verdad, no por proximidad. */
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
   align-items: center;
-  justify-content: space-between;
+  gap: clamp(1rem, 3vw, 2rem);
 }
+.navInner > :first-child { justify-self: start; }
+.navInner > :last-child { justify-self: end; }
 .navLogo {
   font-family: 'Cormorant Garamond', serif;
   font-size: 1.4rem;
@@ -433,6 +439,7 @@
   font-size: clamp(2rem, 3vw, 3rem);
   font-weight: 300;
   color: #ffffff;
+  white-space: nowrap;
 }
 .galleryMoreBtn {
   display: inline-flex;
@@ -483,6 +490,7 @@
   color: #ffffff;
   line-height: 1.08;
   margin-bottom: 1.5rem;
+  white-space: nowrap;
 }
 .amenitiesDesc {
   font-family: 'Source Serif 4', sans-serif;
@@ -1365,6 +1373,7 @@
   color: #F2F0EA;
   line-height: 1.1;
   margin-top: 0.75rem;
+  white-space: nowrap;
 }
 .videoFeatureFrame {
   position: relative;
@@ -1551,12 +1560,13 @@
   font-family: 'Cormorant Garamond', serif;
   font-size: 1.75rem;
   font-weight: 300;
-  color: #F2F0EA;
+  color: #1a1714;
 }
 .memoriaSuccessDesc {
   font-family: 'Outfit', sans-serif;
-  font-size: 0.8rem;
-  color: rgba(232,228,220,0.74);
+  font-size: 0.85rem;
+  line-height: 1.6;
+  color: rgba(30,25,15,0.72);
   margin-bottom: 1rem;
 }
 
@@ -1664,8 +1674,7 @@
 }
 .memoriaFormCompact .memoriaBtn {
   border-radius: 0;
-  border: none;
-  border-top: 1px solid rgba(0,0,0,0.15);
+  border: 1px solid #C8A45D;
   width: 100%;
   justify-content: center;
   background: #C8A45D;
@@ -1673,14 +1682,20 @@
   font-weight: 600;
   padding: 1.25rem 2rem;
   letter-spacing: 0.3em;
-  transition: background 0.3s ease, color 0.3s ease;
+  margin-top: 1.75rem;
+  transition: background 0.35s ease, color 0.35s ease, border-color 0.35s ease;
 }
 .memoriaFormCompact .memoriaBtn:hover {
-  background: #d6b574;
-  color: #0a0a0a;
+  background: #0a0a0a;
+  color: #C8A45D;
+  border-color: #0a0a0a;
 }
 .memoriaFormCompact .memoriaBtn:disabled {
   cursor: not-allowed;
+}
+.memoriaFormCompact .privacidadWrap {
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
 }
 
 /* ══════════════════════════════════════════════════
@@ -2821,6 +2836,24 @@
   text-align: center;
   z-index: 3;
   padding: 0 2rem;
+  isolation: isolate;
+}
+/* Capa de contraste detrás del contenido del hero — mejora legibilidad
+   en fondos claros del vídeo hero sin recurrir a un overlay opaco. */
+.heroCentered::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(
+      ellipse at center,
+      rgba(0, 0, 0, 0.55) 0%,
+      rgba(0, 0, 0, 0.30) 45%,
+      rgba(0, 0, 0, 0.10) 75%,
+      transparent 100%
+    );
+  pointer-events: none;
 }
 .heroCenteredEyebrow {
   font-family: 'Outfit', sans-serif;
@@ -3376,20 +3409,24 @@
 }
 
 /* ══════════════════════════════════════════════════
-   PREMIUM — FEATURES GRID SINGLE ROW LUXURY
+   PREMIUM — FEATURES GRID SINGLE ROW LUXURY (equal heights)
 ══════════════════════════════════════════════════ */
 .featuresGrid {
-  display: flex !important;
-  flex-wrap: nowrap !important;
+  display: grid !important;
+  grid-template-columns: repeat(6, 1fr) !important;
+  grid-auto-rows: 1fr !important;
   gap: 0 !important;
   border: 1px solid rgba(30,25,15,0.08) !important;
 }
 .featureItem {
-  flex: 1 !important;
   padding: 2.5rem 1.5rem !important;
   border-right: 1px solid rgba(30,25,15,0.08) !important;
   border-bottom: none !important;
   position: relative !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  height: 100% !important;
   transition: all 0.4s ease !important;
 }
 .featureItem:last-child { border-right: none !important; }
@@ -3406,11 +3443,17 @@
 }
 .featureItem:hover::before { width: 50% !important; }
 @media (max-width: 1200px) {
-  .featuresGrid { flex-wrap: wrap !important; }
-  .featureItem { flex: 0 0 33.33% !important; border-bottom: 1px solid rgba(30,25,15,0.08) !important; }
+  .featuresGrid { grid-template-columns: repeat(3, 1fr) !important; }
+  .featureItem { border-bottom: 1px solid rgba(30,25,15,0.08) !important; }
+  .featureItem:nth-child(3n) { border-right: none !important; }
+  .featureItem:nth-child(3n+1):nth-last-child(-n+3),
+  .featureItem:nth-child(3n+1):nth-last-child(-n+3) ~ .featureItem { border-bottom: none !important; }
 }
 @media (max-width: 768px) {
-  .featureItem { flex: 0 0 50% !important; }
+  .featuresGrid { grid-template-columns: repeat(2, 1fr) !important; }
+  .featureItem:nth-child(3n) { border-right: 1px solid rgba(30,25,15,0.08) !important; }
+  .featureItem:nth-child(2n) { border-right: none !important; }
+  .featureItem { border-bottom: 1px solid rgba(30,25,15,0.08) !important; }
 }
 
 /* ══════════════════════════════════════════════════
@@ -3527,6 +3570,7 @@
 .lifestyle .locationBtnSecondary {
   border-color: rgba(138,109,48,0.4) !important;
   color: #8a6d30 !important;
+  margin-top: 2.75rem !important;
 }
 .lifestyle .locationBtnSecondary:hover {
   background: rgba(138,109,48,0.08) !important;
@@ -4146,6 +4190,23 @@
   font-size: 0.9rem;
   font-weight: 400;
   color: #1a1714;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+.docLangBadge {
+  display: inline-block;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.55rem;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #8a6d30;
+  border: 1px solid rgba(138,109,48,0.35);
+  padding: 0.22rem 0.55rem;
+  line-height: 1;
+  white-space: nowrap;
 }
 .descargableRowDetail {
   font-family: 'Source Serif 4', serif;
@@ -4348,8 +4409,9 @@
   border-bottom: 1px solid rgba(255,255,255,0.06) !important;
 }
 .navInner {
-  max-width: 1600px !important;
-  padding: 0 clamp(1.5rem, 4vw, 3rem) !important;
+  width: min(100% - 32px, 1440px) !important;
+  max-width: none !important;
+  padding: 0 !important;
 }
 
 /* ✅ 2. DROP CAP "N": ocupa 3 líneas completas */
@@ -4367,16 +4429,17 @@
   padding-top: 0 !important;
 }
 
-/* ✅ 3. VIDEO MARKERS: 4 columnas en desktop (una fila) */
+/* ✅ 3. VIDEO MARKERS: N columnas en desktop (una fila) */
 .videoMarkers {
   display: grid !important;
-  grid-template-columns: repeat(4, 1fr) !important;
+  grid-template-columns: repeat(5, 1fr) !important;
   gap: 0 !important;
 }
 .videoMarker {
   border-right: 1px solid rgba(255,255,255,0.07) !important;
   border-bottom: none !important;
   min-width: unset !important;
+  padding: 1rem 0.75rem !important;
 }
 .videoMarker:last-child { border-right: none !important; }
 
@@ -4428,8 +4491,10 @@
     background: rgba(10, 10, 10, 0.98) !important;
   }
   .navInner {
-    padding: 0 1.25rem !important;
+    width: min(100% - 24px, 1440px) !important;
+    padding: 0 !important;
     align-items: center !important;
+    grid-template-columns: 1fr auto !important;
   }
 
    /* Logo dorado y ajustado — +50% de tamaño */
@@ -4520,7 +4585,7 @@
     object-fit: cover !important;
   }
 
-  /* Recorrido móvil: 2 cols x 2 filas */
+  /* Recorrido móvil: 2 cols; el 5º item queda en fila propia (centrado) */
   .videoFeature { padding: 4rem 0 3rem !important; }
   .videoFeatureInner { padding: 0 1rem !important; }
   .videoMarkers {
@@ -4534,7 +4599,12 @@
     text-align: center !important;
   }
   .videoMarker:nth-child(2n) { border-right: none !important; }
-  .videoMarker:nth-last-child(-n+2) { border-bottom: none !important; }
+  .videoMarker:last-child {
+    grid-column: 1 / -1 !important;
+    border-right: none !important;
+    border-bottom: none !important;
+  }
+  .videoMarker:nth-last-child(2) { border-bottom: none !important; }
 
   /* ✅ AGENTE MÓVIL: botones 2x2 (WhatsApp|Email / LinkedIn|Instagram) */
   .agentExpandedBtns {
@@ -4587,4 +4657,671 @@
   /* CTA móvil */
   .contact { padding-top: 3rem !important; }
   .contactClean { padding-top: 0 !important; margin-top: -1rem; }
+}
+/* ══════════════════════════════════════════════════
+   NAV ADAPTATIVO — TONO CLARO
+   ------------------------------------------------------------
+   Cuando el hook useAdaptiveNavTone detecta que la sección
+   bajo la barra es clara (positioning, story, features arena),
+   el <nav> recibe data-tone="light" y la barra invierte su
+   paleta. Sobre secciones oscuras (hero, video, footer) el
+   valor por defecto es data-tone="dark" y la barra mantiene
+   el fondo negro traslúcido de siempre.
+
+   Todas las reglas siguientes usan !important solo porque
+   los override "v2 desktop / móvil" más arriba en este mismo
+   archivo también usan !important. No es un patrón deseable;
+   es coherencia con el estilo existente.
+══════════════════════════════════════════════════ */
+
+.navbar {
+  transition: background 0.5s ease, border-color 0.5s ease, backdrop-filter 0.5s ease !important;
+}
+.navbar[data-tone="light"] {
+  background: rgba(250, 248, 244, 0.86) !important;
+  backdrop-filter: blur(18px) saturate(1.4) !important;
+  -webkit-backdrop-filter: blur(18px) saturate(1.4) !important;
+  border-bottom: 1px solid rgba(28, 24, 20, 0.06) !important;
+}
+
+/* Logo */
+.navbar[data-tone="light"] .navLogo {
+  color: #1a1714 !important;
+  transition: color 0.5s ease;
+}
+.navbar[data-tone="light"] .navLogo span {
+  color: rgba(26, 23, 20, 0.5) !important;
+}
+
+/* Enlaces principales — dorado más profundo para contraste sobre claro */
+.navbar[data-tone="light"] .navLink {
+  color: #8a6b32 !important;
+  transition: color 0.5s ease;
+}
+.navbar[data-tone="light"] .navLink:hover {
+  color: #6b5220 !important;
+}
+
+/* CTA — invertimos: sobre claro va con fondo oscuro y texto claro */
+.navbar[data-tone="light"] .navCta {
+  background: #1a1714 !important;
+  color: #f7f3ea !important;
+  transition: background 0.5s ease, color 0.5s ease;
+}
+.navbar[data-tone="light"] .navCta:hover {
+  background: #322b23 !important;
+}
+
+/* Botón menú móvil */
+.navbar[data-tone="light"] .menuBtn {
+  color: #1a1714 !important;
+  border-color: rgba(26, 23, 20, 0.25) !important;
+  transition: color 0.5s ease, border-color 0.5s ease;
+}
+
+/* LanguageSwitch dentro del nav — heredamos del CSS module compartido,
+   pero fuerza contraste correcto sobre fondo claro. */
+.navbar[data-tone="light"] a[hreflang] {
+  color: rgba(26, 23, 20, 0.42) !important;
+  transition: color 0.5s ease;
+}
+.navbar[data-tone="light"] a[hreflang]:hover {
+  color: rgba(26, 23, 20, 0.75) !important;
+}
+.navbar[data-tone="light"] a[hreflang][aria-current="true"] {
+  color: #8a6b32 !important;
+}
+
+/* Barrita separadora del LangSwitch */
+.navbar[data-tone="light"] [role="group"] > span[aria-hidden] {
+  background: rgba(26, 23, 20, 0.22) !important;
+}
+
+/* ══════════════════════════════════════════════════
+   NAV — AJUSTES DEL LANG SWITCH DENTRO DE LA BARRA
+   ══════════════════════════════════════════════════ */
+.navRight {
+  gap: 1.25rem !important;
+}
+.navRight > *:not(.menuBtn) {
+  display: inline-flex;
+  align-items: center;
+}
+@media (max-width: 768px) {
+  /* En móvil, la variante desktop del LangSwitch se oculta por su
+     propia media query (@900px). Se muestra la mobile dentro del
+     menú desplegable. */
+  .navRight {
+    gap: 0 !important;
+  }
+}
+
+/* ══════════════════════════════════════════════════
+   V6 — NUEVAS SECCIONES RESTAURADAS
+══════════════════════════════════════════════════ */
+
+/* ─── AMENITIES por categorías ─── */
+.amenitiesCategoriasWrap {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+  margin-top: 2rem;
+}
+.amenitiesCategoria {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+.amenitiesCatHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+.amenitiesCatLabel {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: #C8A45D;
+}
+.amenitiesCatCount {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.65rem;
+  font-weight: 400;
+  letter-spacing: 0.2em;
+  color: rgba(232,228,220,0.5);
+}
+
+/* ─── UN DÍA EN ESTA CASA ─── */
+.unDiaEnCasa {
+  background: #faf8f4;
+  padding: 7rem 0;
+  color: #1a1714;
+}
+.unDiaInner {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 2.5rem;
+}
+.unDiaHeader {
+  max-width: 700px;
+  margin-bottom: 4.5rem;
+}
+.unDiaTitle {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2.25rem, 3.5vw, 3.25rem);
+  font-weight: 300;
+  color: #1a1714;
+  line-height: 1.1;
+  margin: 1rem 0 1.25rem;
+  white-space: nowrap;
+}
+.unDiaSubtitle {
+  font-family: 'Source Serif 4', serif;
+  font-size: 1rem;
+  color: rgba(30,25,15,0.6);
+  line-height: 1.7;
+}
+.unDiaGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+}
+.unDiaCard {
+  background: #ffffff;
+  border: 1px solid rgba(30,25,15,0.06);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+}
+.unDiaCard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px rgba(30,25,15,0.08);
+}
+.unDiaCardImg {
+  width: 100%;
+  aspect-ratio: 4/3;
+  overflow: hidden;
+}
+.unDiaCardImg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s ease;
+}
+.unDiaCard:hover .unDiaCardImg img { transform: scale(1.05); }
+.unDiaCardBody {
+  padding: 1.75rem 1.75rem 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  flex: 1;
+}
+.unDiaHora {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.35em;
+  color: #C8A45D;
+}
+.unDiaCardTitle {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.5rem;
+  font-weight: 400;
+  color: #1a1714;
+  line-height: 1.2;
+  margin: 0.15rem 0 0.35rem;
+}
+.unDiaCardDesc {
+  font-family: 'Source Serif 4', serif;
+  font-size: 0.9rem;
+  line-height: 1.65;
+  color: rgba(30,25,15,0.7);
+}
+
+/* ─── EL VALOR ESTÁ EN LO INVISIBLE ─── */
+.invisible {
+  background: #0e0d0c;
+  padding: 7rem 0;
+  color: #F2F0EA;
+}
+.invisibleInner {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 2.5rem;
+}
+.invisibleHeader {
+  max-width: 720px;
+  margin-bottom: 4rem;
+}
+.invisibleTitle {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2.25rem, 3.5vw, 3.5rem);
+  font-weight: 300;
+  line-height: 1.1;
+  color: #F2F0EA;
+  margin: 1rem 0 1.25rem;
+  white-space: nowrap;
+}
+.invisibleSubtitle {
+  font-family: 'Source Serif 4', serif;
+  font-size: 1rem;
+  color: rgba(232,228,220,0.65);
+  line-height: 1.7;
+}
+.invisibleGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.06);
+}
+.invisibleCol {
+  background: #0e0d0c;
+  padding: 2.5rem 2.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+.invisibleColHeader {
+  display: flex;
+  align-items: baseline;
+  gap: 1.25rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+.invisibleNum {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 400;
+  letter-spacing: 0.2em;
+  color: #C8A45D;
+}
+.invisibleColTitle {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.4rem;
+  font-weight: 400;
+  color: #F2F0EA;
+  margin: 0;
+}
+.invisibleList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+.invisibleListItem {
+  font-family: 'Source Serif 4', serif;
+  font-size: 0.9rem;
+  line-height: 1.65;
+  color: rgba(232,228,220,0.78);
+  padding-left: 1rem;
+  position: relative;
+}
+.invisibleListItem::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.65rem;
+  width: 4px;
+  height: 4px;
+  background: #C8A45D;
+  border-radius: 50%;
+}
+
+/* ─── DIA Y NOCHE ─── */
+.diaNoche {
+  background: #0a0a0a;
+  padding: 7rem 0;
+  color: #F2F0EA;
+}
+.diaNocheInner {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 2.5rem;
+}
+.diaNocheHeader {
+  max-width: 720px;
+  margin-bottom: 3.5rem;
+}
+.diaNocheTitle {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2.25rem, 3.5vw, 3.5rem);
+  font-weight: 300;
+  line-height: 1.1;
+  color: #F2F0EA;
+  margin: 1rem 0 1.25rem;
+  white-space: nowrap;
+}
+.diaNocheDesc {
+  font-family: 'Source Serif 4', serif;
+  font-size: 1rem;
+  line-height: 1.75;
+  color: rgba(232,228,220,0.72);
+  max-width: 640px;
+}
+.diaNocheMediaWrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 21/9;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.08);
+}
+.diaNocheVideo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.diaNocheImgPair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  height: 100%;
+}
+.diaNocheImgPair img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.diaNocheLabels {
+  position: absolute;
+  bottom: 1.5rem;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 2rem;
+  pointer-events: none;
+}
+.diaNocheLabels span {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.65rem;
+  font-weight: 500;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: rgba(242,240,234,0.9);
+  padding: 0.5rem 1rem;
+  background: rgba(0,0,0,0.4);
+  backdrop-filter: blur(6px);
+}
+
+/* ─── INVERSIÓN Y LEGADO ─── */
+.inversion {
+  background: #faf8f4;
+  padding: 7rem 0;
+  color: #1a1714;
+}
+.inversionInner {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 2.5rem;
+}
+.inversionHeader {
+  max-width: 780px;
+  margin-bottom: 4rem;
+}
+.inversionTitle {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2.25rem, 3.5vw, 3.25rem);
+  font-weight: 300;
+  line-height: 1.15;
+  color: #1a1714;
+  margin: 1rem 0 1.5rem;
+  white-space: nowrap;
+}
+.inversionDesc {
+  font-family: 'Source Serif 4', serif;
+  font-size: 1rem;
+  line-height: 1.75;
+  color: rgba(30,25,15,0.72);
+}
+.inversionGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: rgba(30,25,15,0.08);
+  border: 1px solid rgba(30,25,15,0.08);
+  margin-bottom: 3.5rem;
+}
+.inversionCard {
+  background: #ffffff;
+  padding: 2.5rem 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+.inversionCardLabel {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.65rem;
+  font-weight: 500;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: rgba(30,25,15,0.55);
+}
+.inversionCardValue {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2rem;
+  font-weight: 400;
+  color: #8a6d30;
+  line-height: 1.1;
+}
+.inversionCardTrend {
+  font-family: 'Source Serif 4', serif;
+  font-size: 0.85rem;
+  line-height: 1.55;
+  color: rgba(30,25,15,0.65);
+  margin-top: 0.5rem;
+}
+.inversionPlusvalia {
+  max-width: 780px;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(30,25,15,0.08);
+}
+.inversionPlusvaliaTitle {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.5rem;
+  font-weight: 400;
+  color: #1a1714;
+  margin: 0 0 0.75rem;
+}
+.inversionPlusvaliaDesc {
+  font-family: 'Source Serif 4', serif;
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: rgba(30,25,15,0.7);
+}
+
+/* ─── POTENCIAL DE RENTA ─── */
+.potencialRenta {
+  background: #f5f2ec;
+  padding: 6rem 0;
+  color: #1a1714;
+  border-top: 1px solid rgba(30,25,15,0.06);
+}
+.potencialRentaInner {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 2.5rem;
+}
+.potencialRentaHeader {
+  max-width: 720px;
+  margin-bottom: 3.5rem;
+}
+.potencialRentaTitle {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(1.85rem, 3vw, 2.5rem);
+  font-weight: 300;
+  line-height: 1.15;
+  color: #1a1714;
+  margin: 0.75rem 0 1rem;
+  white-space: nowrap;
+}
+.potencialRentaDesc {
+  font-family: 'Source Serif 4', serif;
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: rgba(30,25,15,0.65);
+}
+.potencialRentaGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+.potencialRentaCard {
+  background: #ffffff;
+  border: 1px solid rgba(30,25,15,0.06);
+  padding: 2rem 1.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.potencialRentaLabel {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.62rem;
+  font-weight: 500;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: rgba(30,25,15,0.55);
+}
+.potencialRentaValue {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.4rem;
+  font-weight: 400;
+  color: #8a6d30;
+  margin: 0.35rem 0;
+  line-height: 1.25;
+}
+.potencialRentaNote {
+  font-family: 'Source Serif 4', serif;
+  font-size: 0.82rem;
+  line-height: 1.55;
+  color: rgba(30,25,15,0.6);
+}
+.potencialRentaDisclaimer {
+  font-family: 'Source Serif 4', serif;
+  font-size: 0.78rem;
+  line-height: 1.65;
+  color: rgba(30,25,15,0.5);
+  font-style: italic;
+  max-width: 900px;
+  margin-top: 1.5rem;
+}
+
+/* ─── FAQ ─── */
+.faqSection {
+  background: #ffffff;
+  padding: 7rem 0;
+  color: #1a1714;
+  border-top: 1px solid rgba(30,25,15,0.06);
+}
+.faqInner {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 2.5rem;
+}
+.faqHeader {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+.faqTitle {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2rem, 3.2vw, 3rem);
+  font-weight: 300;
+  line-height: 1.15;
+  color: #1a1714;
+  margin: 1rem 0 1.25rem;
+  white-space: nowrap;
+}
+.faqSubtitle {
+  font-family: 'Source Serif 4', serif;
+  font-size: 1rem;
+  line-height: 1.7;
+  color: rgba(30,25,15,0.6);
+  max-width: 620px;
+  margin: 0 auto;
+}
+.faqList {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid rgba(30,25,15,0.08);
+}
+.faqItem {
+  border-bottom: 1px solid rgba(30,25,15,0.08);
+}
+.faqSummary {
+  list-style: none;
+  cursor: pointer;
+  padding: 1.5rem 0;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 1.5rem;
+  transition: color 0.25s ease;
+}
+.faqSummary::-webkit-details-marker { display: none; }
+.faqNum {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.25em;
+  color: #C8A45D;
+}
+.faqQuestion {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.2rem;
+  font-weight: 400;
+  color: #1a1714;
+  line-height: 1.4;
+}
+.faqChevron {
+  color: rgba(30,25,15,0.4);
+  transition: transform 0.3s ease, color 0.3s ease;
+  display: inline-flex;
+}
+.faqItem[open] .faqChevron {
+  transform: rotate(180deg);
+  color: #C8A45D;
+}
+.faqItem[open] .faqQuestion {
+  color: #8a6d30;
+}
+.faqAnswer {
+  padding: 0 0 1.5rem 3.75rem;
+}
+.faqAnswer p {
+  font-family: 'Source Serif 4', serif;
+  font-size: 0.95rem;
+  line-height: 1.75;
+  color: rgba(30,25,15,0.72);
+  margin: 0;
+}
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 1024px) {
+  .unDiaGrid { grid-template-columns: repeat(2, 1fr); }
+  .invisibleGrid { grid-template-columns: 1fr; }
+  .inversionGrid { grid-template-columns: 1fr; }
+  .potencialRentaGrid { grid-template-columns: 1fr; }
+  .diaNocheMediaWrap { aspect-ratio: 16/10; }
+}
+@media (max-width: 768px) {
+  .unDiaEnCasa, .invisible, .diaNoche, .inversion, .potencialRenta, .faqSection { padding: 4.5rem 0; }
+  .unDiaInner, .invisibleInner, .diaNocheInner, .inversionInner, .potencialRentaInner, .faqInner { padding: 0 1.5rem; }
+  .unDiaGrid { grid-template-columns: 1fr; gap: 1.5rem; }
+  .invisibleCol { padding: 2rem 1.5rem; }
+  .diaNocheMediaWrap { aspect-ratio: 4/5; }
+  .diaNocheLabels { padding: 0 1rem; bottom: 1rem; }
+  .inversionCard { padding: 2rem 1.5rem; }
+  .potencialRentaCard { padding: 1.75rem 1.5rem; }
+  .faqSummary { gap: 1rem; padding: 1.25rem 0; }
+  .faqQuestion { font-size: 1.05rem; }
+  .faqAnswer { padding-left: 2.25rem; }
+  .amenitiesCategoriasWrap { gap: 2rem; }
 }

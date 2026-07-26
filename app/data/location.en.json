@@ -1,0 +1,145 @@
+{
+  "name": "San Bernardino",
+  "country": "Paraguay",
+  "hero": {
+    "title": "San Bernardino",
+    "subtitle": "Lakeside living, mature greenery and genuine privacy—less than an hour from Asunción.",
+    "image": "https://larumstudio.com/wp-content/uploads/2026/07/san-bernardino-hero.jpg.webp"
+  },
+  "intro": {
+    "eyebrow": "A singular setting",
+    "title": "A place to live differently",
+    "text": "San Bernardino lies on the shores of Lake Ypacaraí, forty-eight kilometres from Asunción. Its still water, mature trees and established residential character give it an identity entirely its own. Founded by German settlers in the 1880s, the town retains a distinct cultural heritage that remains visible today. Close enough to the capital when needed, yet far enough away for the pace to change.",
+    "image": "https://larumstudio.com/wp-content/uploads/2026/07/san-bernardino-calle-arbolada.jpg.webp"
+  },
+  "lifestyle": [
+    { "icon": "lake", "label": "Lakeside living" },
+    { "icon": "club", "label": "Private clubs" },
+    { "icon": "restaurant", "label": "Dining" },
+    { "icon": "sport", "label": "Sailing and sport" },
+    { "icon": "nature", "label": "Mature landscape" },
+    { "icon": "family", "label": "Family setting" },
+    { "icon": "privacy", "label": "Privacy" }
+  ],
+  "experiences": {
+    "eyebrow": "Experiences",
+    "title": "Ordinary days, elevated by the setting",
+    "items": [
+      {
+        "title": "Sunsets over the water",
+        "description": "At the close of day, Lake Ypacaraí reveals one of San Bernardino's defining qualities. Light, water and open horizon create an atmosphere of quiet distinction.",
+        "image": "https://larumstudio.com/wp-content/uploads/2026/07/san-bernardino-atardecer-lago.jpg.webp"
+      },
+      {
+        "title": "Clubs, sailing and social life",
+        "description": "A long tradition of yacht clubs and watersports gives the town a social and sporting dimension valued by families, second-home owners and those drawn to an active life on the water.",
+        "image": "https://larumstudio.com/wp-content/uploads/2026/07/san-bernardino-club-nautico.jpg.webp"
+      },
+      {
+        "title": "Food with its own character",
+        "description": "Restaurants, cafés and historic patisseries are part of the experience here. San Bernardino brings together German heritage, Paraguayan cuisine and contemporary dining in a relaxed, walkable setting.",
+        "image": "https://larumstudio.com/wp-content/uploads/2026/07/san-bernardino-gastronomia.jpg.webp"
+      }
+    ]
+  },
+  "distances": {
+    "eyebrow": "Connections",
+    "title": "Everything close, when you need it",
+    "image": "https://larumstudio.com/wp-content/uploads/2026/07/san-bernardino-muelle1.jpg.webp",
+    "items": [
+      { "place": "Asunción", "time": "60 min by car", "distance": "45–50 km (28–31 mi)" },
+      { "place": "Silvio Pettirossi International Airport", "time": "50 min by car", "distance": "40–45 km (25–28 mi)" },
+      { "place": "Caacupé", "time": "25 min by car", "distance": "18–20 km (11–12 mi)" },
+      { "place": "San Bernardino Yacht Club", "time": "5 min by car", "distance": "1.5 km (0.9 mi)" }
+    ]
+  },
+  "living": {
+    "eyebrow": "Before you move here",
+    "title": "What to know before living in San Bernardino",
+    "items": [
+      {
+        "title": "Beaches and the lake",
+        "text": "Lake Ypacaraí dominates the landscape. Its shoreline offers promenades, private clubs, town beaches and open-air spaces enjoyed throughout the year.",
+        "image": "https://larumstudio.com/wp-content/uploads/2026/07/san-bernardino-playa-lago.jpg.webp"
+      },
+      {
+        "title": "Shopping and services",
+        "text": "The town offers supermarkets, pharmacies, medical centres and everyday convenience shopping, with efficient connections to the larger retail destinations of San Lorenzo and Asunción.",
+        "image": "https://larumstudio.com/wp-content/uploads/2026/07/san-bernardino-servicios.jpg.webp"
+      },
+      {
+        "title": "Festivals and social life",
+        "text": "Throughout the summer, the town comes alive with concerts, cultural events, markets and festivals at venues including the José Asunción Flores Amphitheatre and Casa Hassler.",
+        "image": "https://larumstudio.com/wp-content/uploads/2026/07/san-bernardino-eventos.jpg.webp"
+      },
+      {
+        "title": "Where to eat",
+        "text": "The dining scene ranges from traditional restaurants and cafés to German-heritage patisseries and contemporary venues that follow the rhythm of the season.",
+        "image": "https://larumstudio.com/wp-content/uploads/2026/07/san-bernardino-donde-comer.jpg.webp"
+      }
+    ]
+  },
+  "gastronomy": {
+    "eyebrow": "Where to eat",
+    "title": "A food scene with its own character",
+    "items": [
+      {
+        "name": "Bistró Del Val",
+        "category": "International",
+        "price": "$$–$$$",
+        "description": "Thoughtfully prepared cuisine in an intimate setting, well suited to quiet dinners."
+      },
+      {
+        "name": "Café Francés",
+        "category": "French / international",
+        "price": "$$–$$$",
+        "description": "A local institution with European influence, valued for its cuisine and unhurried atmosphere."
+      },
+      {
+        "name": "La Alemana",
+        "category": "German patisserie",
+        "price": "$$",
+        "description": "A San Bernardino landmark, known for its baking and its connection to the town's German heritage."
+      }
+    ]
+  },
+  "quickFacts": {
+    "title": "At a glance",
+    "items": [
+      { "label": "Population (2022 Census)", "value": "12,216" },
+      { "label": "Languages", "value": "Spanish and Guaraní" },
+      { "label": "Currency", "value": "Paraguayan guaraní (PYG)" },
+      { "label": "Average annual temperature", "value": "approximately 22–24 °C (72–75 °F)" }
+    ]
+  },
+  "gallery": {
+    "eyebrow": "The area",
+    "items": [
+      { "image": "https://larumstudio.com/wp-content/uploads/2026/07/san-bernardino-galeria-01.jpg.webp", "alt": "View across Lake Ypacaraí" },
+      { "image": "https://larumstudio.com/wp-content/uploads/2026/07/san-bernardino-galeria-02.jpg.webp", "alt": "Sunset over the lake" },
+      { "image": "https://larumstudio.com/wp-content/uploads/2026/07/san-bernardino-galeria-03.jpg.webp", "alt": "Tree-lined residential street" },
+      { "image": "https://larumstudio.com/wp-content/uploads/2026/07/san-bernardino-galeria-04.jpg.webp", "alt": "Residential garden in San Bernardino" },
+      { "image": "https://larumstudio.com/wp-content/uploads/2026/07/san-bernardino-galeria-05.jpg.webp", "alt": "Sailing on Lake Ypacaraí" }
+    ]
+  },
+  "market": {
+    "eyebrow": "Residential value",
+    "title": "A market with depth and direction",
+    "text": "San Bernardino has neither been overdeveloped nor lost its character — rare for a lakeside town within an hour of a capital city. Shoreline land is finite, and demand from families choosing to live here year-round rather than seasonally continues to grow. Foreign buyers may acquire urban property in Paraguay without residency, subject to the appropriate legal, tax and title due diligence.",
+    "highlights": [
+      "Finite lakeside land",
+      "Growing demand for permanent residence",
+      "Character preserved, no over-development",
+      "Full freehold ownership available to foreign buyers",
+      "One hour from the capital and its airport"
+    ]
+  },
+  "cta": {
+    "title": "Considering San Bernardino?",
+    "text": "We advise a select number of buyers each year on lakeside residences in San Bernardino. If you would like to understand the area before travelling, we would be pleased to arrange a private call.",
+    "buttonLabel": "Request a private viewing",
+    "buttonUrl": "https://wa.me/595972186472?text=Hello%2C%20I%20saw%20the%20San%20Bernardino%20area%20page%20and%20would%20like%20to%20request%20a%20private%20viewing.",
+    "image": "https://larumstudio.com/wp-content/uploads/2026/07/san-bernardino-cta.jpg.webp"
+  },
+  "lang": "en"
+}

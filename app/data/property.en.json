@@ -1,0 +1,734 @@
+{
+  "agent": {
+    "name": "William Rowe",
+    "title": "Senior Advisor · Luxury Properties",
+    "cargo": "Senior Advisor · Luxury Properties",
+    "phone": "+595 972 186 472",
+    "whatsapp": "595972186472",
+    "email": "contacto@larumstudio.com",
+    "photo": "https://larumstudio.com/wp-content/uploads/2026/07/William-Rowe-scaled.webp",
+    "authority": "William Rowe represents a select number of exceptional residences each year—properties distinguished by character, setting and a story worth telling with precision. Each is approached as a singular work: carefully studied, thoughtfully presented and positioned for the buyer who truly understands its value.",
+    "bio": "William Rowe represents a select number of exceptional residences each year—properties distinguished by character, setting and a story worth telling with precision. Each is approached as a singular work: carefully studied, thoughtfully presented and positioned for the buyer who truly understands its value.",
+    "bioExtendida": "His approach combines deep knowledge of the high-end market, absolute discretion and the ability to convey a property's value to both domestic and international buyers. He oversees the process from the first private viewing through to completion and execution of the deed, coordinating the legal and tax professionals each transaction requires.",
+    "idiomas": [
+      "English",
+      "Spanish",
+      "German"
+    ],
+    "credenciales": [],
+    "scheduleUrl": "https://calendly.com/contactolarum/sesion-estrategica-larum?back=1",
+    "linkedin": "https://www.linkedin.com/company/larumstudiohq/",
+    "instagram": "https://www.instagram.com/larumstudio/",
+    "statsLogros": [
+      {
+        "valor": "40",
+        "label": "properties represented"
+      },
+      {
+        "valor": "US$125M",
+        "label": "total transaction volume"
+      },
+      {
+        "valor": "5 years’",
+        "label": "experience"
+      },
+      {
+        "valor": "3 in 10",
+        "label": "properties accepted for representation"
+      }
+    ]
+  },
+  "property": {
+    "name": "Villa San Bernardino",
+    "heroHeadline": "A house on Lake Ypacaraí, where nothing is ever rushed.",
+    "tagline": "Not a house for everyone. For those who understand that real luxury is space, silence, and time returned to you.",
+    "badge": "Luxury Villa · San Bernardino, Paraguay",
+    "precio": "USD 3,500,000",
+    "price": 3500000,
+    "footerTitulo": "LARUM STUDIO",
+    "footerDesc": "Private micro-sites for exceptional properties. Presented by appointment, never listed on portals.",
+    "posterHero": "https://larumstudio.com/wp-content/uploads/2026/05/noche.webp",
+    "posterVideo": "https://larumstudio.com/wp-content/uploads/2026/05/noche.webp",
+    "videoHero": "https://larumstudio.com/wp-content/uploads/2026/05/Transicion-dia-a-noche-cinematica-Optimizada-Web.mp4",
+    "videoPresentacion": "https://larumstudio.com/wp-content/uploads/2026/07/san-bernardino-1080p-Ingles_Optimizado_Web.mp4",
+    "videoDuration": "1:38",
+    "videoMarkers": [
+      {
+        "time": "0:00",
+        "label": "Arrival",
+        "seconds": 0
+      },
+      {
+        "time": "0:24",
+        "label": "Social life",
+        "seconds": 24
+      },
+      {
+        "time": "0:40",
+        "label": "Wellness",
+        "seconds": 40
+      },
+      {
+        "time": "0:49",
+        "label": "Suites",
+        "seconds": 49
+      },
+      {
+        "time": "1:15",
+        "label": "Outdoors",
+        "seconds": 75
+      }
+    ],
+    "stats": {
+      "terreno": "3,900 m²",
+      "construidos": "800 m²",
+      "dormitorios": "6",
+      "banos": "5",
+      "cocheras": "4",
+      "ano": "2018"
+    },
+    "positioning": {
+      "eyebrow": "The context",
+      "paragraphs": [
+        "In San Bernardino, lakefront homes are rarely listed — they pass quietly between those who already belong.",
+        "Eight hundred square metres built across 3,900 of private grounds, steps from the water and under an hour from Asunción. A residence conceived to be lived in year-round, not visited in summer."
+      ]
+    },
+    "story": {
+      "title": "What it feels like to arrive",
+      "image": "https://larumstudio.com/wp-content/uploads/2026/05/atardecer.webp",
+      "paragraphs": [
+        "There is a precise moment, just past the gate, when the noise of the world drops away. The drive opens, the trees close behind you, and all that remains is the lake glinting between the trunks. That feeling — of having arrived somewhere few people know — is the first thing this house offers, before you have even stepped inside.",
+        "Indoors, the architecture does not set out to impress. It sets out to accompany. Rooms that breathe, light that shifts through the day, and an infinity pool that dissolves the edge between terrace and water. Everything is arranged so that life happens without effort: a dinner that runs long, a morning with nothing in it, an afternoon with nowhere to be.",
+        "Eight hundred square metres that read less as a large house than as private territory. Six bedrooms, a gym, and 3,900 square metres of grounds: room for every member of the family to have their own, and to receive guests without anyone feeling like a visitor. Built to last, maintained to hand over today."
+      ]
+    },
+    "featuresGrid": {
+      "eyebrow": "Why this house, and not another",
+      "title": "The place you choose when you have stopped looking",
+      "items": [
+        {
+          "title": "Designed outdoor pool",
+          "desc": "A private body of water integrated into the landscape, rather than imposed upon it.",
+          "icono": "Hoja"
+        },
+        {
+          "title": "3,900 m² of grounds",
+          "desc": "Meaningful separation from the nearest neighbour. A degree of privacy rarely found in contemporary developments.",
+          "icono": "Escudo"
+        },
+        {
+          "title": "800 m² designed to feel generous, never crowded.",
+          "desc": "Six bedrooms with separate social and wellness wings. Room for a whole family and their guests.",
+          "icono": "Casa"
+        },
+        {
+          "title": "One hour from Asunción",
+          "desc": "Business in the capital, rest by the lake, the same day. Two lives without sacrificing either.",
+          "icono": "Ubicacion"
+        },
+        {
+          "title": "Ready to move into",
+          "desc": "No works, no waiting. Complete the purchase and move in. The investment is already made and maintained.",
+          "icono": "Llave"
+        },
+        {
+          "title": "An established address",
+          "desc": "San Bernardino has retained its character and demonstrated enduring appeal among Paraguay's established residential destinations.",
+          "icono": "Diamante"
+        }
+      ]
+    },
+    "amenities": [
+      "infinity_pool",
+      "private_gym",
+      "garden",
+      "private_terrace",
+      "indoor_jacuzzi",
+      "gourmet_kitchen",
+      "parking",
+      "security_24h",
+      "panoramic_view"
+    ],
+    "amenitiesImage": "https://larumstudio.com/wp-content/uploads/2026/04/unnamed-22.webp",
+    "amenitiesCategorias": {
+      "bienestar": [
+        "infinity_pool",
+        "private_gym",
+        "indoor_jacuzzi"
+      ],
+      "exterior": [
+        "garden",
+        "private_terrace",
+        "panoramic_view"
+      ],
+      "servicios": [
+        "gourmet_kitchen",
+        "parking",
+        "security_24h"
+      ]
+    },
+    "lifestyle": {
+      "eyebrow": "The area",
+      "title": "Living in San Bernardino",
+      "image": "https://larumstudio.com/wp-content/uploads/2026/06/lago-san-bernardino-ypacarai-posicionamiento-premium-viviendas-de-lujo.webp",
+      "intro": "Forty-eight kilometres from Asunción, San Bernardino has long since evolved beyond its origins as a summer destination. Today, it is home to a select group of families who choose to live here year-round.",
+      "introParagraphs": [
+        "Forty-eight kilometres from Asunción, San Bernardino has long since evolved beyond its origins as a summer destination. Today, it is home to a select group of families who choose to live here year-round: close to the capital when needed, and removed from it when not.",
+        "The setting combines privacy, mature greenery and convenient access to the town's amenities. It is a residential enclave for those who value quiet without withdrawing from community life or the pleasures of Lake Ypacaraí.",
+        "From this privileged position, the lake can be enjoyed with a greater sense of privacy—through spaces shaped by light, rest and the outdoors."
+      ],
+      "items": [
+        {
+          "title": "Very close to the lake.",
+          "desc": "Sailing, rowing, or simply an open horizon each morning. Lake Ypacaraí as your backyard, rather than a distant holiday postcard."
+        },
+        {
+          "title": "Asunción in an hour",
+          "desc": "The country's financial centre, accessible by motorway. Close enough for business, far enough for calm."
+        },
+        {
+          "title": "Privacy you can feel",
+          "desc": "Tree-lined roads, discreet entrances, and neighbours where privacy is understood and respected."
+        },
+        {
+          "title": "A community, not a development",
+          "desc": "International schools, yacht clubs and a dining scene that has evolved alongside the town. Minutes away, never crowded."
+        }
+      ]
+    },
+    "location": {
+      "city": "San Bernardino",
+      "country": "Paraguay",
+      "address": "San Bernardino, Cordillera Department, Paraguay",
+      "description": "On Lake Ypacaraí, in the most established residential corridor of San Bernardino. Sealed road to the entrance, direct connection to the Asunción motorway, and the water a few minutes away.",
+      "mapsUrl": "https://www.google.com/maps/place/San+Bernardino/@-25.3277542,-57.2992066,13z",
+      "mapImage": "https://larumstudio.com/wp-content/uploads/2026/06/mapa-san-bernardino.jpg",
+      "landmarks": [
+        {
+          "nombre": "Silvio Pettirossi International Airport (ASU)",
+          "icono": "aeropuerto",
+          "detalle": "35 km",
+          "minutos": 40,
+          "tipo": "transporte"
+        },
+        {
+          "nombre": "Asunción Golf Club",
+          "icono": "golf",
+          "detalle": "55 km",
+          "minutos": 55,
+          "tipo": "club"
+        },
+        {
+          "nombre": "Club Centenario",
+          "icono": "club",
+          "detalle": "48 km",
+          "minutos": 50,
+          "tipo": "club"
+        },
+        {
+          "nombre": "San Bernardino Yacht Club",
+          "icono": "nautico",
+          "detalle": "1.5 km",
+          "minutos": 3,
+          "tipo": "nautico",
+          "destacado": true
+        },
+        {
+          "nombre": "Shopping del Sol",
+          "icono": "shopping",
+          "detalle": "45 km",
+          "minutos": 50,
+          "tipo": "shopping"
+        },
+        {
+          "nombre": "Asunción financial district",
+          "icono": "financiero",
+          "detalle": "48 km",
+          "minutos": 55,
+          "tipo": "financiero"
+        },
+        {
+          "nombre": "Basilica of Caacupé",
+          "icono": "basilica",
+          "detalle": "23 km",
+          "minutos": 25,
+          "tipo": "cultura"
+        },
+        {
+          "nombre": "Bautista Medical Centre",
+          "icono": "medico",
+          "detalle": "48 km",
+          "minutos": 55,
+          "tipo": "salud"
+        }
+      ],
+      "pinsPersonalizados": [
+        {
+          "label": "The property",
+          "lat": -25.31,
+          "lng": -57.29,
+          "icono": "casa",
+          "color": "#C8A45D"
+        },
+        {
+          "label": "Yacht Club",
+          "lat": -25.32,
+          "lng": -57.3,
+          "icono": "nautico",
+          "color": "#7a8a6a"
+        },
+        {
+          "label": "ASU Airport",
+          "lat": -25.24,
+          "lng": -57.52,
+          "icono": "aeropuerto",
+          "color": "#8a7a6a"
+        },
+        {
+          "label": "Dining",
+          "lat": -25.31,
+          "lng": -57.29,
+          "icono": "restaurante",
+          "color": "#c9a96e"
+        }
+      ]
+    },
+    "floorPlan": {
+      "image": "https://larumstudio.com/wp-content/uploads/2026/05/plano-3d-san-bernardino.webp",
+      "note": "Approximate layout and areas of the principal interior rooms. Exact verification available during due diligence.",
+      "areas": [
+        {
+          "ambiente": "Entrance hall and gallery",
+          "superficie": "50 m² (538 sq ft)"
+        },
+        {
+          "ambiente": "Living and dining room",
+          "superficie": "120 m² (1,292 sq ft)"
+        },
+        {
+          "ambiente": "Kitchen and pantry",
+          "superficie": "55 m² (592 sq ft)"
+        },
+        {
+          "ambiente": "Principal suite (dressing room and bathroom)",
+          "superficie": "95 m² (1,023 sq ft)"
+        },
+        {
+          "ambiente": "Bedrooms 2 to 4 (en suite)",
+          "superficie": "130 m² (1,399 sq ft)"
+        },
+        {
+          "ambiente": "Bedrooms 5 and 6",
+          "superficie": "70 m² (753 sq ft)"
+        },
+        {
+          "ambiente": "Gym and wellness",
+          "superficie": "55 m² (592 sq ft)"
+        },
+        {
+          "ambiente": "Bathrooms, laundry and services",
+          "superficie": "95 m² (1,023 sq ft)"
+        },
+        {
+          "ambiente": "Circulation",
+          "superficie": "130 m² (1,399 sq ft)"
+        }
+      ]
+    },
+    "trust": [
+      "Current, verified documentation",
+      "Free of liens and mortgages, subject to current title verification.",
+      "Original title deed",
+      "Property taxes up to date",
+      "Ready for immediate conveyance",
+      "A transparent, fully supported purchase process"
+    ],
+    "gastos": [
+      {
+        "concepto": "Community charges",
+        "valor": "USD 450 / month",
+        "icono": "edificio",
+        "detalle": "Gated community maintenance"
+      },
+      {
+        "concepto": "24h security",
+        "valor": "Included",
+        "icono": "seguridad",
+        "detalle": "Permanent guard and CCTV"
+      },
+      {
+        "concepto": "Garden and pool",
+        "valor": "USD 350 / month",
+        "icono": "jardin",
+        "detalle": "Full maintenance"
+      },
+      {
+        "concepto": "Electricity",
+        "valor": "USD 180 / month",
+        "icono": "electricidad",
+        "detalle": "Annual average, excluding heavy air conditioning"
+      }
+    ],
+    "descargables": [
+      {
+        "titulo": "Floor plans",
+        "detalle": "PDF · 2.4 MB · Scaled plans and sections",
+        "url": "https://larumstudio.com/wp-content/uploads/2026/07/planos-villa-san-bernardino_compressed.pdf",
+        "tipo": "plano",
+        "preview": "⌖",
+        "thumbnailUrl": "https://larumstudio.com/wp-content/uploads/2026/05/plano-3d-san-bernardino.webp",
+        "idiomaArchivo": "es"
+      },
+      {
+        "titulo": "Energy performance certificate",
+        "detalle": "PDF · 1.1 MB · Class C",
+        "url": "https://larumstudio.com/wp-content/uploads/2026/07/Certificado_Eficiencia_Energetica_Villa_San_Bernardino_compressed.pdf",
+        "tipo": "certificacion",
+        "preview": "◈",
+        "thumbnailUrl": "",
+        "idiomaArchivo": "es"
+      },
+      {
+        "titulo": "Technical specification",
+        "detalle": "PDF · 0.9 MB · Materials and finishes",
+        "url": "https://larumstudio.com/wp-content/uploads/2026/07/Ficha_Tecnica_Villa_San_Bernardino_compressed.pdf",
+        "tipo": "ficha",
+        "preview": "⬙",
+        "thumbnailUrl": "",
+        "idiomaArchivo": "es"
+      },
+      {
+        "titulo": "QR code for sharing",
+        "detalle": "PNG · High resolution · For partners and family",
+        "url": "https://larumstudio.com/wp-content/uploads/2026/07/qr-code.png",
+        "tipo": "qr",
+        "preview": "QR"
+      }
+    ],
+    "brochure": "https://larumstudio.com/wp-content/uploads/2026/07/english-brochure.pdf",
+    "brochurePages": [
+      "https://larumstudio.com/wp-content/uploads/2026/07/BROCHURE-PROPIEDAD-SAN-BERNARDINO.webp"
+    ],
+    "gallery": [
+      {
+        "url": "https://larumstudio.com/wp-content/uploads/2026/05/amanecer.webp",
+        "caption": "Sunrise over the property — 6:42 AM"
+      },
+      {
+        "url": "https://larumstudio.com/wp-content/uploads/2026/04/unnamed-5.webp",
+        "caption": "Terrace with lake views"
+      },
+      {
+        "url": "https://larumstudio.com/wp-content/uploads/2026/05/Transicion-dia-a-noche-cinematica-Optimizada-Web.mp4",
+        "caption": "Day to night — the same frame, twelve hours apart",
+        "isVideo": true
+      },
+      {
+        "url": "https://larumstudio.com/wp-content/uploads/2026/04/unnamed-3.webp",
+        "caption": "Main living room"
+      },
+      {
+        "url": "https://larumstudio.com/wp-content/uploads/2026/04/unnamed-10.webp",
+        "caption": "Outdoor terrace"
+      },
+      {
+        "url": "https://larumstudio.com/wp-content/uploads/2026/04/unnamed-22.webp",
+        "caption": "Private gym"
+      },
+      {
+        "url": "https://larumstudio.com/wp-content/uploads/2026/04/unnamed-11.webp",
+        "caption": "Principal suite"
+      },
+      {
+        "url": "https://larumstudio.com/wp-content/uploads/2026/04/unnamed-2.webp",
+        "caption": "Dining room"
+      },
+      {
+        "url": "https://larumstudio.com/wp-content/uploads/2026/04/unnamed-8.webp",
+        "caption": "View towards the exterior"
+      },
+      {
+        "url": "https://larumstudio.com/wp-content/uploads/2026/04/unnamed-9.webp",
+        "caption": "Passage to the garden"
+      },
+      {
+        "url": "https://larumstudio.com/wp-content/uploads/2026/04/unnamed-18.webp",
+        "caption": "Bedroom 2"
+      },
+      {
+        "url": "https://larumstudio.com/wp-content/uploads/2026/04/unnamed-21.webp",
+        "caption": "Bedroom 3"
+      },
+      {
+        "url": "https://larumstudio.com/wp-content/uploads/2026/04/unnamed-16.webp",
+        "caption": "Bedroom 4"
+      },
+      {
+        "url": "https://larumstudio.com/wp-content/uploads/2026/04/unnamed-6.webp",
+        "caption": "Social lounge"
+      },
+      {
+        "url": "https://larumstudio.com/wp-content/uploads/2026/04/unnamed-15.webp",
+        "caption": "Bedroom 5"
+      },
+      {
+        "url": "https://larumstudio.com/wp-content/uploads/2026/04/unnamed-17.webp",
+        "caption": "Bedroom 6"
+      },
+      {
+        "url": "https://larumstudio.com/wp-content/uploads/2026/04/unnamed-13.webp",
+        "caption": "En-suite bathroom"
+      },
+      {
+        "url": "https://larumstudio.com/wp-content/uploads/2026/04/unnamed-27.webp",
+        "caption": "Entertainment bar area"
+      },
+      {
+        "url": "https://larumstudio.com/wp-content/uploads/2026/04/unnamed-4.webp",
+        "caption": "Covered terrace"
+      },
+      {
+        "url": "https://larumstudio.com/wp-content/uploads/2026/04/unnamed-19.webp",
+        "caption": "Guest bathroom"
+      },
+      {
+        "url": "https://larumstudio.com/wp-content/uploads/2026/04/unnamed-20.webp",
+        "caption": "Marble rain shower"
+      },
+      {
+        "url": "https://larumstudio.com/wp-content/uploads/2026/04/unnamed-12.webp",
+        "caption": "Principal en-suite bathroom"
+      },
+      {
+        "url": "https://larumstudio.com/wp-content/uploads/2026/04/unnamed-24.webp",
+        "caption": "Statement staircase"
+      },
+      {
+        "url": "https://larumstudio.com/wp-content/uploads/2026/04/unnamed-23.webp",
+        "caption": "Fitness equipment"
+      },
+      {
+        "url": "https://larumstudio.com/wp-content/uploads/2026/04/unnamed-1.webp",
+        "caption": "Entrance hall"
+      },
+      {
+        "url": "https://larumstudio.com/wp-content/uploads/2026/04/unnamed-7.webp",
+        "caption": "Designer lighting"
+      },
+      {
+        "url": "https://larumstudio.com/wp-content/uploads/2026/04/unnamed-26.webp",
+        "caption": "Indoor jacuzzi"
+      },
+      {
+        "url": "https://larumstudio.com/wp-content/uploads/2026/04/unnamed-28.webp",
+        "caption": "Secondary staircase"
+      },
+      {
+        "url": "https://larumstudio.com/wp-content/uploads/2026/05/larum-process.webp",
+        "caption": "Premium materials"
+      },
+      {
+        "url": "https://larumstudio.com/wp-content/uploads/2026/04/unnamed-25.webp",
+        "caption": "Indoor spa"
+      },
+      {
+        "url": "https://larumstudio.com/wp-content/uploads/2026/04/unnamed-29.webp",
+        "caption": "Premium design finishes"
+      },
+      {
+        "url": "https://larumstudio.com/wp-content/uploads/2026/05/noche.webp",
+        "caption": "Villa at night — signature lighting"
+      }
+    ],
+    "cta": {
+      "eyebrow": "Viewings",
+      "title": "Viewings are arranged privately.",
+      "desc": "This property is not shown on open access. Each visit is booked by appointment, in reserved time, and accompanied throughout.\n\nAccess is limited to previously qualified buyers.\n\nFull information is shared once genuine interest has been confirmed."
+    },
+    "agentEmail": "contacto@larumstudio.com",
+    "privacidadTexto": "I agree to the Privacy Policy.",
+    "privacidadUrl": "/en/privacy",
+    "qrUrl": "https://larumstudio.com/wp-content/uploads/2026/07/qr-code.png",
+    "ga4Id": "",
+    "metaPixelId": "",
+    "bookingUrl": "https://calendly.com/contactolarum/sesion-estrategica-larum?back=1",
+    "testimonioPropietario": null,
+    "unDiaEnCasa": [
+      {
+        "hora": "07:00",
+        "titulo": "Waking to light off the lake",
+        "desc": "Light filters through the trees. Coffee on the terrace, unhurried, Ypacaraí in front of you. No traffic, only birds.",
+        "icono": "amanecer",
+        "imagen": "https://larumstudio.com/wp-content/uploads/2026/05/amanecer.webp"
+      },
+      {
+        "hora": "11:00",
+        "titulo": "A light working morning",
+        "desc": "Stable connection, a quiet study looking onto the garden. Video calls with green behind you instead of a white wall.",
+        "icono": "estudio",
+        "imagen": "https://larumstudio.com/wp-content/uploads/2026/04/unnamed-4.webp"
+      },
+      {
+        "hora": "14:00",
+        "titulo": "Lunch that runs long",
+        "desc": "The grill is lit, the pool is set to 28°C, and conversation unfolds without reference to the clock. Here time is not watched, it is inhabited.",
+        "icono": "quincho",
+        "imagen": "https://larumstudio.com/wp-content/uploads/2026/04/unnamed-3.webp"
+      },
+      {
+        "hora": "16:00",
+        "titulo": "An active pause, with a view",
+        "desc": "Private gym with natural light over the garden. Training does not interrupt the day, it completes it. No schedules, no compromises, and no shared facilities.",
+        "icono": "gimnasio",
+        "imagen": "https://larumstudio.com/wp-content/uploads/2026/04/unnamed-23.webp"
+      },
+      {
+        "hora": "18:30",
+        "titulo": "Sunset at the jetty",
+        "desc": "A three-minute drive to the San Bernardino Yacht Club. The sun drops onto the water and the day closes quietly. Sailing, should the mood take you.",
+        "icono": "nautico",
+        "imagen": "https://larumstudio.com/wp-content/uploads/2026/07/san-bernardino-atardecer-lago.jpg.webp"
+      },
+      {
+        "hora": "21:00",
+        "titulo": "Dinner with friends",
+        "desc": "Open gourmet kitchen, living room extending onto the terrace. Comfortably seats ten, while ensuring every guest feels at home. The house receives; it never feels full.",
+        "icono": "cena",
+        "imagen": "https://larumstudio.com/wp-content/uploads/2026/07/noche-salon-comedor.webp"
+      }
+    ],
+    "inversion": {
+      "eyebrow": "Investment and legacy",
+      "titulo": "A retreat that holds its value when everything else moves",
+      "descripcion": "San Bernardino is one of the few areas in Paraguay that has neither been overdeveloped nor lost its character. Lakefront supply is structurally limited, and demand for private residential land continues to grow.",
+      "datos": [
+        {
+          "label": "Lakefront supply",
+          "valor": "Limited",
+          "tendencia": "Finite land, no new development",
+          "icono": "tendencia"
+        },
+        {
+          "label": "Premium residential demand",
+          "valor": "Growing",
+          "tendencia": "Families seeking a permanent residence",
+          "icono": "demanda"
+        },
+        {
+          "label": "Character of the area",
+          "valor": "Preserved",
+          "tendencia": "No over-development, no loss of identity",
+          "icono": "preservado"
+        }
+      ],
+      "plusvalia": {
+        "titulo": "Long-term potential",
+        "descripcion": "The structural scarcity of lakefront land and the preserved character of the area are factors that have historically supported the long-term appeal of assets of this kind. Specific projections should be assessed through a current market report.",
+        "porcentaje": ""
+      }
+    },
+    "faq": [
+      {
+        "pregunta": "Can viewings be arranged from abroad?",
+        "respuesta": "Yes. Each viewing is prepared with a video call beforehand so that the essentials are covered before you travel, and the visit itself is accompanied throughout. Advisory services are available in English, Spanish and German."
+      },
+      {
+        "pregunta": "Can a foreign buyer purchase without residency?",
+        "respuesta": "Yes. Paraguayan law allows foreign individuals and companies to acquire urban property in full freehold, with no residency requirement and no restriction on repatriating proceeds on resale. Independent legal and tax advice is arranged as part of the process."
+      },
+      {
+        "pregunta": "Is the furniture included?",
+        "respuesta": "Partly, and it is negotiable. The kitchen is handed over fully fitted. Some of the living, dining and suite furniture can be included by agreement; the technical specification sets out exactly what is and is not included."
+      },
+      {
+        "pregunta": "What does the purchase process involve?",
+        "respuesta": "Five stages: profile validation, private viewing, a 10% reservation deposit under private contract, legal due diligence and title verification, and execution of the public deed. The advisor coordinates with the legal and tax professionals at each stage."
+      },
+      {
+        "pregunta": "What condition is it in, and when is it available?",
+        "respuesta": "Available immediately. The residence is owner-occupied and meticulously maintained: no outstanding works, no waiting. Handed over following a deep clean and full preparation of garden and pool."
+      },
+      {
+        "pregunta": "What are the real monthly running costs?",
+        "respuesta": "Community charges, garden and pool maintenance, and electricity. The breakdown is set out in the running costs section. Municipal taxes are paid and up to date."
+      }
+    ],
+    "faqTitulo": "Trust begins before the visit.",
+    "faqSubtitulo": "We answer what others leave for later. Elegant transparency.",
+    "loQueNoSeVe": [
+      {
+        "categoria": "Security and privacy",
+        "icono": "escudo",
+        "items": [
+          "12-camera Hikvision CCTV system with remote access",
+          "Electrified perimeter fence and automated gate",
+          "Gated community with 24-hour security and controlled access",
+          "A 45-metre landscaped buffer to the nearest neighbour"
+        ]
+      },
+      {
+        "categoria": "Efficiency and materials",
+        "icono": "eficiencia",
+        "items": [
+          "Double-glazed window units throughout the principal living areas",
+          "Premium 90 × 90 cm porcelain tile flooring, with natural timber flooring in the suites",
+          "Anodised aluminium window systems",
+          "Colonial tile roof with thermal insulation over a lightweight slab"
+        ]
+      },
+      {
+        "categoria": "Climate and autonomy",
+        "icono": "clima",
+        "items": [
+          "Eight-outlet Daikin Inverter ducted air-conditioning system, supplemented by split units in the bedrooms",
+          "300-litre solar water heater with automatic electric backup",
+          "Private artesian well, 5,000-litre water tank and pressure pump",
+          "15 kVA generator with automatic transfer switch"
+        ]
+      },
+      {
+        "categoria": "Details that hold value",
+        "icono": "diamante",
+        "items": [
+          "Infinity pool with automatic filtration and LED lighting",
+          "Covered grill area with professional barbecue, clay oven and climate-controlled wine cellar",
+          "Custom-fitted dressing rooms in every suite with warm LED lighting",
+          "Automated irrigation and landscape lighting throughout the garden"
+        ]
+      }
+    ],
+    "diaNoche": {
+      "titulo": "A villa that comes alive at every hour of the day.",
+      "descripcion": "From peaceful mornings and sun-filled afternoons to spectacular sunsets and elegant evenings, each moment offers a unique atmosphere. The changing light enhances the architecture, creating a home that feels different—and equally captivating—throughout the day.",
+      "imagenDia": "https://larumstudio.com/wp-content/uploads/2026/05/amanecer.webp",
+      "imagenNoche": "https://larumstudio.com/wp-content/uploads/2026/05/noche.webp",
+      "videoTransicion": "https://larumstudio.com/wp-content/uploads/2026/05/Transicion-dia-a-noche-cinematica-Optimizada-Web.mp4"
+    },
+    "miniMapa": {
+      "embedUrl": "",
+      "pins": []
+    },
+    "urgenciaSutil": {
+      "texto": "Availability subject to schedule.",
+      "subtexto": "Viewings arranged with 48 hours' notice.",
+      "variante": "elegante"
+    },
+    "videoHeroLoop": {
+      "url": "https://larumstudio.com/wp-content/uploads/2026/07/Piscina-2560px-upscaled.mp4",
+      "poster": "",
+      "descripcion": "Infinity pool — 12s hero loop",
+      "duracion": "12s"
+    },
+    "performance": {
+      "heroPriority": true,
+      "lazyGallery": true,
+      "videoPreload": "auto for hero, metadata for 4K tour",
+      "mobileFirst": true,
+      "poster4K": "https://larumstudio.com/wp-content/uploads/2026/04/unnamed-1.webp"
+    },
+    "garantiasNota": "Full documentation is made available to qualified buyers, coordinated with the advisor and the legal professionals involved.",
+    "lang": "en",
+    "brochureIdioma": "en"
+  }
+}
