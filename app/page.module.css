@@ -439,7 +439,6 @@
   font-size: clamp(2rem, 3vw, 3rem);
   font-weight: 300;
   color: #ffffff;
-  white-space: nowrap;
 }
 .galleryMoreBtn {
   display: inline-flex;
@@ -490,7 +489,6 @@
   color: #ffffff;
   line-height: 1.08;
   margin-bottom: 1.5rem;
-  white-space: nowrap;
 }
 .amenitiesDesc {
   font-family: 'Source Serif 4', sans-serif;
@@ -1373,7 +1371,6 @@
   color: #F2F0EA;
   line-height: 1.1;
   margin-top: 0.75rem;
-  white-space: nowrap;
 }
 .videoFeatureFrame {
   position: relative;
@@ -4817,7 +4814,6 @@
   color: #1a1714;
   line-height: 1.1;
   margin: 1rem 0 1.25rem;
-  white-space: nowrap;
 }
 .unDiaSubtitle {
   font-family: 'Source Serif 4', serif;
@@ -4905,7 +4901,6 @@
   line-height: 1.1;
   color: #F2F0EA;
   margin: 1rem 0 1.25rem;
-  white-space: nowrap;
 }
 .invisibleSubtitle {
   font-family: 'Source Serif 4', serif;
@@ -4997,7 +4992,6 @@
   line-height: 1.1;
   color: #F2F0EA;
   margin: 1rem 0 1.25rem;
-  white-space: nowrap;
 }
 .diaNocheDesc {
   font-family: 'Source Serif 4', serif;
@@ -5073,7 +5067,6 @@
   line-height: 1.15;
   color: #1a1714;
   margin: 1rem 0 1.5rem;
-  white-space: nowrap;
 }
 .inversionDesc {
   font-family: 'Source Serif 4', serif;
@@ -5160,7 +5153,6 @@
   line-height: 1.15;
   color: #1a1714;
   margin: 0.75rem 0 1rem;
-  white-space: nowrap;
 }
 .potencialRentaDesc {
   font-family: 'Source Serif 4', serif;
@@ -5237,7 +5229,6 @@
   line-height: 1.15;
   color: #1a1714;
   margin: 1rem 0 1.25rem;
-  white-space: nowrap;
 }
 .faqSubtitle {
   font-family: 'Source Serif 4', serif;
